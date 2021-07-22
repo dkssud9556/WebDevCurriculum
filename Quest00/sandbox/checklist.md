@@ -24,7 +24,7 @@
 
 3. git과 GitHub는 어떻게 다를까?
 
-    git은 분산형 형상관리 시스템이다. GitHub는 git의 중앙서버 역할을 한다. (Remote Repository라고 한다.)
+    git은 분산형 형상관리 시스템이다. GitHub는 git의 중앙서버(원격 저장소) 역할을 한다.
 
 4. git의 clone/add/commit/push/pull/branch/stash 명령은 무엇이며 어떨 때 이용할까? 그리고 어떻게 사용할까?
 
