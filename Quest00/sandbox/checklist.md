@@ -66,7 +66,7 @@
 
     - Commit
 
-      Commit은 blob과 tree를 통해 만든 소프트웨어 구조에 해당 Commit을 만든 사용자의 이름과 이메일, Commit이 만들어진 시간과 같은 정보를 저장하는 Object이다.
+      Commit은 blob과 tree를 통해 만든 소프트웨어 구조에 해당 Commit을 만든 사용자의 이름과 이메일, Commit이 만들어진 시간과 같은 정보를 저장하는 Object이다. 또한 각 커밋은 이전 커밋에 대한 참조를 가짐으로써 히스토리를 만들게된다.
 
     - Head
 
