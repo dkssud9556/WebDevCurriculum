@@ -35,8 +35,6 @@
     - git : 분산형 형상관리 시스템
     - GitHub : git의 원격 저장소를 제공하는 클라우드 서버. 여러 사용자들에게 코드를 공유할 수 있으며 Pull Request, Issue 등과 같은 기존의 git에 없는 새로운 기능을 제공한다.
 
-    git은 분산형 형상관리 시스템이다. GitHub는 git의 원격 저장소를 제공하는 클라우드 서버이다.
-
 4. git의 clone/add/commit/push/pull/branch/stash 명령은 무엇이며 어떨 때 이용할까? 그리고 어떻게 사용할까?
 
     - git clone
