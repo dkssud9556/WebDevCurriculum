@@ -95,3 +95,20 @@
 
 - Blob : git에서 저장하는 파일들의 데이터를 그대로 가지고있는 Object이다. (파일의 이름에 관한 정보는 가지고 있지 않다.)
 - Tree : Tree에는 Blob들의 이름(파일명)과 해당 Blob의 체크섬(SHA-1), Blob의 파일 종류와 같은 정보를 가지고 있다. Tree는 Blob뿐만 아니라 다른 Tree에 대한 정보도 가질 수 있다. 일종의 디렉토리 같은 느낌이다.
+
+---
+
+## Mercurial은 어떤 형상관리 시스템일까요? 어떤 장점이 있을까요?
+
+Mercurial은 Git과 같은 DVCS(분산형 버전 관리 시스템)이다.
+
+- Mercurial은 C언어로 작성된 Git과 달리 파이썬으로 작성되었다. 따라서 Git은 Linux에 친화적이고, Mercurial은 Windows에 친화적이다.
+
+- Mercurial은 Git에 비해 쉽게 배울 수 있으며, 필요한 기능이 이미 Extension으로 거의 포함되어 있다. 하지만 Git에 비해 사용자가 직접 기능을 확장하기는 어렵다.
+
+- Git은 스냅샷 기반의 저장소이지만 Mercurial은 파일별 변경분을 추적하는 방식을 사용한다. Git에 비해 저장소의 크기가 완만하게 증가한다.
+
+## 실리콘밸리의 테크 대기업들은 어떤 형상관리 시스템을 쓰고 있을까요?
+
+- Git : Google, Facebook, Microsoft, Netflix, LinkedIn 등
+- Mercurial : Facebook, Mozilla 등
