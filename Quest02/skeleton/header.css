@@ -1,0 +1,46 @@
+#header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+}
+
+.menu {
+    padding: 10px;
+    border: solid 1px #F2F2F2;
+    border-radius: 24px;
+    background-color: #F5F6F8;
+    color: black;
+    text-decoration: none;
+}
+
+#qr-check-in {
+    color: black;
+}
+
+#logo {
+    font-size: 60px;
+    color: #5AC467;
+    margin-bottom: 15px;
+}
+
+#header-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#search-form {
+    border: 2px solid #67DC91;
+    padding: 5px;
+    width: 35%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#search-form > input {
+    padding: 10px;
+    border: none;
+    outline: none;
+}
