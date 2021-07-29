@@ -1,0 +1,8 @@
+body {
+    background: linear-gradient(to bottom, white 50%, #E9F2F7 60%, #F2F5F7);
+    padding: 10px;
+}
+
+a {
+    text-decoration: none;
+}
