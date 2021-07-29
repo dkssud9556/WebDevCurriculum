@@ -1,0 +1,94 @@
+body {
+    background: linear-gradient(to bottom, white 50%, #E9F2F7 60%, #F2F5F7);
+    padding: 10px;
+}
+
+.main {
+    margin-left: 30%;
+    margin-right: 30%;
+}
+
+#main-top {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#logo {
+    font-size: 60px;
+    color: #02C75B;
+    margin-bottom: 5px;
+}
+
+#search-form {
+    background-color: white;
+    border: 2px solid #67DC91;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    flex-wrap: wrap;
+}
+
+#search-input {
+    padding: 10px;
+    flex-grow: 1;
+    outline: none;
+    border: none;
+    font-size: 15px;
+}
+
+#main-navigation-list {
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-row-gap: 20px;
+    grid-column-gap: 50px;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.main-navigation-list-item > span {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #808386;
+}
+
+.main-navigation-list-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-navigation-list-item:hover {
+    cursor: pointer;
+}
+
+.main-navigation-list-item-image {
+    background-color: #F3F7FB;
+    padding: 15px;
+    border-radius: 18px;
+}
+
+.search-button {
+    margin-right: 15px;
+}
+
+.search-button:hover {
+    cursor: pointer;
+}
+
+#main-bottom {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#main-bottom > section {
+    width: 100%;
+    border-radius: 10px;
+    background-color: white;
+    margin-top: 10px;
+}
