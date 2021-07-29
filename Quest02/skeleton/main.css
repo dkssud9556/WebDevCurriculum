@@ -108,7 +108,7 @@
     flex-grow: 1;
 }
 
-#covid > section > a > div:first-child {
+.section-title {
     color: #383B40;
     font-weight: bold;
 }
@@ -153,4 +153,51 @@
     background-color: #F5F7F9;
     padding: 10px;
     border-radius: 2px;
+}
+
+#detail-weather-list {
+    list-style: none;
+    display: flex;
+    padding: 0;
+}
+
+.detail-weather-list-item-button {
+    background-color: #F4F6FC;
+    border: none;
+    padding: 10px;
+    border-radius: 2px;
+    margin-right: 5px;
+}
+
+.detail-weather-list-item-button:active {
+    background-color: #7694CD;
+    color: white;
+}
+
+#detail-weather > section {
+    display: flex;
+    justify-content: space-around;
+}
+
+#detail-weather > section > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.temperature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.temperature > p {
+    margin: 5px;
+}
+
+#notice-button {
+    color: #00D05C;
+    border: 2px solid #00D05C;
+    background: none;
+    border-radius: 24px;
 }
