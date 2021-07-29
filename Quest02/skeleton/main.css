@@ -75,15 +75,82 @@
 }
 
 #main-bottom {
-    margin-top: 100px;
+    margin-top: 120px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 #main-bottom > section {
+    padding: 18px;
+    box-sizing: border-box;
     width: 100%;
     border-radius: 10px;
     background-color: white;
     margin-top: 10px;
+}
+
+#simple-weather {
+    display: flex;
+    justify-content: space-between;
+}
+
+#simple-weather > section {
+    display: flex;
+    align-items: center;
+}
+
+#covid {
+    display: flex;
+}
+
+#covid > section {
+    flex-grow: 1;
+}
+
+#covid > section > a > div:first-child {
+    color: #383B40;
+    font-weight: bold;
+}
+
+#covid > section > a > div:nth-child(2) {
+    color: #696B72;
+}
+
+#provisional-government {
+    text-align: center;
+}
+
+#naver-app {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#naver-app-button {
+    color: #4E99DF;
+    background-color: white;
+    border: 1px solid #4E99DF;
+    border-radius: 2px;
+    padding: 8px;
+}
+
+#popular-subject-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#popular-subject-navigation {
+    margin-top: 20px;
+    display: grid;
+    grid-gap: 5px;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+}
+
+#popular-subject-navigation > a {
+    background-color: #F5F7F9;
+    padding: 10px;
+    border-radius: 2px;
 }
