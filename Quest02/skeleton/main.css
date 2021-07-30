@@ -3,20 +3,20 @@
     margin-right: 30%;
 }
 
-#main-top {
+.main__division--position-top {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#logo {
+.logo {
     font-size: 60px;
     color: #02C75B;
     margin-bottom: 5px;
 }
 
-#search-form {
+.search-form {
     background-color: white;
     border: 2px solid #67DC91;
     width: 100%;
@@ -27,7 +27,7 @@
     flex-wrap: wrap;
 }
 
-#search-input {
+.search-form__input {
     padding: 10px;
     flex-grow: 1;
     outline: none;
@@ -35,7 +35,15 @@
     font-size: 15px;
 }
 
-#main-navigation-list {
+.search-form__button {
+    margin-right: 15px;
+}
+
+.search-form__button:hover {
+    cursor: pointer;
+}
+
+.main-nav__list {
     padding: 0;
     list-style: none;
     display: grid;
@@ -45,44 +53,36 @@
     grid-template-columns: repeat(4, 1fr);
 }
 
-.main-navigation-list-item > span {
+.main-nav__item > span {
     margin-top: 5px;
     font-size: 14px;
     color: #808386;
 }
 
-.main-navigation-list-item {
+.main-nav__item {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.main-navigation-list-item:hover {
+.main-nav__item:hover {
     cursor: pointer;
 }
 
-.main-navigation-list-item-image {
+.main-nav__item > img {
     background-color: #F3F7FB;
     padding: 15px;
     border-radius: 18px;
 }
 
-.search-button {
-    margin-right: 15px;
-}
-
-.search-button:hover {
-    cursor: pointer;
-}
-
-#main-bottom {
+.main__division--position-bottom {
     margin-top: 120px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#main-bottom > section {
+.main__section {
     padding: 18px;
     box-sizing: border-box;
     width: 100%;
@@ -91,21 +91,21 @@
     margin-top: 10px;
 }
 
-#simple-weather {
+.simple-weather-section {
     display: flex;
     justify-content: space-between;
 }
 
-#simple-weather > section {
+.simple-weather-section > section {
     display: flex;
     align-items: center;
 }
 
-#covid {
+.covid-section {
     display: flex;
 }
 
-#covid > section {
+.covid-section > section {
     flex-grow: 1;
 }
 
@@ -114,21 +114,21 @@
     font-weight: bold;
 }
 
-#covid > section > a > div:nth-child(2) {
+.covid-section > section > a > div:nth-child(2) {
     color: #696B72;
 }
 
-#provisional-government {
+.provisional-government-section {
     text-align: center;
 }
 
-#naver-app {
+.naver-app-section {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-#naver-app-button {
+.naver-app-section__button {
     color: #4E99DF;
     background-color: white;
     border: 1px solid #4E99DF;
@@ -136,13 +136,13 @@
     padding: 8px;
 }
 
-#popular-subject-top {
+.popular-subject-section__division--position-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-#popular-subject-navigation {
+.popular-subject-section__nav {
     margin-top: 20px;
     display: grid;
     grid-gap: 5px;
@@ -150,19 +150,19 @@
     grid-template-columns: repeat(2, 1fr);
 }
 
-#popular-subject-navigation > a {
+.popular-subject-section__nav > a {
     background-color: #F5F7F9;
     padding: 10px;
     border-radius: 2px;
 }
 
-#detail-weather-list {
+.detail-weather-nav__list {
     list-style: none;
     display: flex;
     padding: 0;
 }
 
-.detail-weather-list-item-button {
+.detail-weather-list__item {
     background-color: #F4F6FC;
     border: none;
     padding: 10px;
@@ -170,17 +170,17 @@
     margin-right: 5px;
 }
 
-.detail-weather-list-item-button:active {
+.detail-weather-list__item--selected {
     background-color: #7694CD;
     color: white;
 }
 
-#detail-weather > section {
+.detail-weather-section > section {
     display: flex;
     justify-content: space-around;
 }
 
-#detail-weather > section > div {
+.detail-weather-section > section > div {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -196,7 +196,7 @@
     margin: 5px;
 }
 
-#notice-button {
+.naver-app-update-section__button {
     color: #00D05C;
     border: 2px solid #00D05C;
     background: none;

@@ -11,15 +11,15 @@
     <!-- TODO: 또 무엇이 필요할까요? -->
 </head>
 <body>
-<header>
+<header class="header">
     <a href="#">
         <img src="https://cdns.iconmonstr.com/wp-content/assets/preview/2018/240/iconmonstr-menu-thin.png" width="30px"
              height="30px">
     </a>
-    <nav>
-        <a href="#" id="qr-check-in">QR 체크인</a>
-        <a href="#" class="menu">N Pay</a>
-        <a href="#" class="menu">
+    <nav class="header__nav">
+        <a href="#" class="header__link--qr-check-in">QR 체크인</a>
+        <a href="#" class="header__link">N Pay</a>
+        <a href="#" class="header__link">
             <img src="https://cdns.iconmonstr.com/wp-content/assets/preview/2017/240/iconmonstr-email-15.png"
                  width="20px" height="20px">
         </a>
@@ -28,63 +28,63 @@
 </header>
 
 <section class="main">
-    <div id="main-top">
-        <h1 id="logo">NAVER</h1>
-        <form id="search-form">
-            <input type="text" placeholder="검색어를 입력해주세요." id="search-input"/>
+    <div class="main__division--position-top">
+        <h1 class="logo">NAVER</h1>
+        <form class="search-form">
+            <input type="text" placeholder="검색어를 입력해주세요." class="search-form__input"/>
             <img src="https://cdns.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-microphone-5.png"
-                 width="25px" height="25px" alt="음성 검색" class="search-button">
+                 width="25px" height="25px" alt="음성 검색" class="search-form__button">
             <img src="https://cdns.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-photo-camera-9.png"
-                 width="25px" height="25px" alt="이미지 검색" class="search-button">
+                 width="25px" height="25px" alt="이미지 검색" class="search-form__button">
             <img src="https://cdns.iconmonstr.com/wp-content/assets/preview/2013/240/iconmonstr-location-2.png"
-                 width="25px" height="25px" alt="위치 검색" class="search-button">
+                 width="25px" height="25px" alt="위치 검색" class="search-form__button">
         </form>
-        <nav>
-            <ul id="main-navigation-list">
-                <li class="main-navigation-list-item">
+        <nav class="main-nav">
+            <ul class="main-nav__list">
+                <li class="main-nav__item">
                     <img src="https://cdns.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-newspaper-3.png"
-                         width="25px" height="25px" alt="뉴스판" class="main-navigation-list-item-image">
+                         width="25px" height="25px" alt="뉴스판">
                     <span>뉴스판</span>
                 </li>
-                <li class="main-navigation-list-item">
+                <li class="main-nav__item">
                     <img src="https://cdns.iconmonstr.com/wp-content/assets/preview/2013/240/iconmonstr-coin-10.png"
-                         width="25px" height="25px" alt="경제지표판" class="main-navigation-list-item-image">
+                         width="25px" height="25px" alt="경제지표판">
                     <span>경제지표판</span>
                 </li>
-                <li class="main-navigation-list-item">
+                <li class="main-nav__item">
                     <img src="https://cdns.iconmonstr.com/wp-content/assets/preview/2018/240/iconmonstr-heart-thin.png"
-                         width="25px" height="25px" alt="연애판" class="main-navigation-list-item-image">
+                         width="25px" height="25px" alt="연애판">
                     <span>연애판</span>
                 </li>
-                <li class="main-navigation-list-item">
+                <li class="main-nav__item">
                     <img src="https://cdns.iconmonstr.com/wp-content/assets/preview/2017/240/iconmonstr-whats-hot-1.png"
-                         width="25px" height="25px" alt="트렌드판" class="main-navigation-list-item-image">
+                         width="25px" height="25px" alt="트렌드판">
                     <span>트렌드판</span>
                 </li>
-                <li class="main-navigation-list-item">
+                <li class="main-nav__item">
                     <img src="https://cdns.iconmonstr.com/wp-content/assets/preview/2017/240/iconmonstr-email-15.png"
-                         width="25px" height="25px" alt="메일" class="main-navigation-list-item-image">
+                         width="25px" height="25px" alt="메일">
                     <span>메일</span>
                 </li>
-                <li class="main-navigation-list-item">
+                <li class="main-nav__item">
                     <img src="https://cdns.iconmonstr.com/wp-content/assets/preview/2013/240/iconmonstr-coffee-7.png"
-                         width="25px" height="25px" alt="카페" class="main-navigation-list-item-image">
+                         width="25px" height="25px" alt="카페">
                     <span>카페</span>
                 </li>
-                <li class="main-navigation-list-item">
+                <li class="main-nav__item">
                     <img src="https://cdns.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-speech-bubble-18.png"
-                         width="25px" height="25px" alt="블로그" class="main-navigation-list-item-image">
+                         width="25px" height="25px" alt="블로그">
                     <span>블로그</span>
                 </li>
-                <li class="main-navigation-list-item">
+                <li class="main-nav__item">
                     <img src="https://image.flaticon.com/icons/png/512/13/13292.png"
-                         width="25px" height="25px" alt="그외" class="main-navigation-list-item-image">
+                         width="25px" height="25px" alt="그외">
                 </li>
             </ul>
         </nav>
     </div>
-    <div id="main-bottom">
-        <section id="simple-weather">
+    <div class="main__division--position-bottom">
+        <section class="main__section simple-weather-section">
             <section>
                 <img src="https://cdns.iconmonstr.com/wp-content/assets/preview/2016/240/iconmonstr-weather-114.png"
                      alt="달" width="30px" height="30px">
@@ -98,23 +98,15 @@
                 <div>지금 방송중</div>
             </aside>
         </section>
-        <section id="detail-weather">
+        <section class="main__section detail-weather-section">
             <span class="section-title">날씨</span>
             <span>서울시 잠실동</span>
             <nav>
-                <ul id="detail-weather-list">
-                    <li class="detail-weather-list-item">
-                        <button class="detail-weather-list-item-button">시간대별 날씨</button>
-                    </li>
-                    <li class="detail-weather-list-item">
-                        <button class="detail-weather-list-item-button">시간대별 미세먼지</button>
-                    </li>
-                    <li class="detail-weather-list-item">
-                        <button class="detail-weather-list-item-button">주간 날씨</button>
-                    </li>
-                    <li class="detail-weather-list-item">
-                        <button class="detail-weather-list-item-button">주간 미세먼지</button>
-                    </li>
+                <ul class="detail-weather-nav__list">
+                    <li class="detail-weather-list__item">시간대별 날씨</li>
+                    <li class="detail-weather-list__item">시간대별 미세먼지</li>
+                    <li class="detail-weather-list__item detail-weather-list__item--selected">주간 날씨</li>
+                    <li class="detail-weather-list__item">주간 미세먼지</li>
                 </ul>
             </nav>
             <section>
@@ -210,7 +202,7 @@
                 </div>
             </section>
         </section>
-        <section id="covid">
+        <section class="main__section covid-section">
             <section>
                 <a href="#">
                     <div class="section-title">코로나19</div>
@@ -224,31 +216,31 @@
                 </a>
             </section>
         </section>
-        <section id="provisional-government">
+        <section class="main__section provisional-government-section">
             제102주년 <span class="section-title">대한민국 임시정부 수립일</span>
         </section>
-        <section id="naver-app">
+        <section class="main__section naver-app-section">
             <span>앱으로 <strong>새로운 네이버</strong>를 더 쾌적하게 사용해 보세요.</span>
-            <button id="naver-app-button">앱 사용하기</button>
+            <button class="naver-app-section__button">앱 사용하기</button>
         </section>
-        <section>
+        <section class="main__section">
             <p class="section-title">웹툰</p>
         </section>
-        <section id="popular-subject">
-            <div id="popular-subject-top">
+        <section class="main__section popular-subject-section">
+            <div class="popular-subject-section__division--position-top">
                 <span class="section-title">인기 주제 판을 확인해 보세요!</span>
                 <span><a href="#">판 관리</a></span>
             </div>
-            <nav id="popular-subject-navigation">
+            <nav class="popular-subject-section__nav">
                 <a href="#">영화판</a>
                 <a href="#">뿜판</a>
                 <a href="#">웹툰판</a>
                 <a href="#">경제M판</a>
             </nav>
         </section>
-        <section>
+        <section class="main__section">
             <a href="#">
-                <button id="notice-button">알립니다</button>
+                <button class="naver-app-update-section__button">알립니다</button>
                 <span>네이버앱 업데이트 사전 안내</span>
                 <span>></span>
             </a>
@@ -257,18 +249,18 @@
     <!-- TODO: main은 어떤 식으로 나눌 수 있을까요? -->
 </section>
 
-<footer>
+<footer class="footer">
     <div>
-        <a href="#">로그인</a> <span class="separator">|</span>
-        <a href="#">전체서비스</a> <span class="separator">|</span>
-        <a href="#">PC버전</a>
+        <a href="#" class="footer__link">로그인</a> <span class="footer__separator">|</span>
+        <a href="#" class="footer__link">전체서비스</a> <span class="footer__separator">|</span>
+        <a href="#" class="footer__link">PC버전</a>
     </div>
     <div>
-        <a href="#">이용약관</a> <span class="separator">|</span>
-        <a href="#" id="privacy-policy">개인정보처리방침</a> <span class="separator">|</span>
-        <a href="#">고객센터</a>
+        <a href="#" class="footer__link">이용약관</a> <span class="footer__separator">|</span>
+        <a href="#" class="footer__link footer__link--privacy-policy">개인정보처리방침</a> <span class="footer__separator">|</span>
+        <a href="#" class="footer__link">고객센터</a>
     </div>
-    <a href="#" id="footer-logo">NAVER</a>
+    <a href="#" class="footer__logo">NAVER</a>
     <!-- TODO: 하단의 여러 가지 링크들은 어떻게 처리하면 좋을까요? -->
 </footer>
 </body>
