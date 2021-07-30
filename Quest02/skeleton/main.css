@@ -3,14 +3,14 @@
     margin-right: 30%;
 }
 
-.main__division--position-top {
+.main--top {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.logo {
+.main__logo {
     font-size: 60px;
     color: #02C75B;
     margin-bottom: 5px;
@@ -53,7 +53,7 @@
     grid-template-columns: repeat(4, 1fr);
 }
 
-.main-nav__item > span {
+.main-nav__item > .main-nav__text {
     margin-top: 5px;
     font-size: 14px;
     color: #808386;
@@ -69,13 +69,13 @@
     cursor: pointer;
 }
 
-.main-nav__item > img {
+.main-nav__item > .main-nav__img {
     background-color: #F3F7FB;
     padding: 15px;
     border-radius: 18px;
 }
 
-.main__division--position-bottom {
+.main--bottom {
     margin-top: 120px;
     display: flex;
     flex-direction: column;
@@ -96,7 +96,7 @@
     justify-content: space-between;
 }
 
-.simple-weather-section > section {
+.simple-weather-section > .simple-weather-section__content {
     display: flex;
     align-items: center;
 }
@@ -105,16 +105,16 @@
     display: flex;
 }
 
-.covid-section > section {
+.covid-section > .covid-section__content {
     flex-grow: 1;
 }
 
-.section-title {
+.covid-section > .covid-section__content > .covid-section__link > .covid-section__text--bold {
     color: #383B40;
     font-weight: bold;
 }
 
-.covid-section > section > a > div:nth-child(2) {
+.covid-section > .covid-section__content > .covid-section__link > .covid-section__text {
     color: #696B72;
 }
 
@@ -122,10 +122,20 @@
     text-align: center;
 }
 
+.provisional-government-section > .provisional-government-section__text--bold {
+    color: #383B40;
+    font-weight: bold;
+}
+
 .naver-app-section {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.naver-app-section__text--bold {
+    color: #383B40;
+    font-weight: bold;
 }
 
 .naver-app-section__button {
@@ -136,10 +146,20 @@
     padding: 8px;
 }
 
-.popular-subject-section__division--position-top {
+.webtoon-section > .webtoon-section__text--bold {
+    color: #383B40;
+    font-weight: bold;
+}
+
+.popular-subject-section--top {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.popular-subject-section__text--bold {
+    color: #383B40;
+    font-weight: bold;
 }
 
 .popular-subject-section__nav {
@@ -150,10 +170,15 @@
     grid-template-columns: repeat(2, 1fr);
 }
 
-.popular-subject-section__nav > a {
+.popular-subject-section__nav > .popular-subject-section__link {
     background-color: #F5F7F9;
     padding: 10px;
     border-radius: 2px;
+}
+
+.detail-weather-section > .detail-weather-section__text--bold {
+    color: #383B40;
+    font-weight: bold;
 }
 
 .detail-weather-nav__list {
@@ -162,7 +187,7 @@
     padding: 0;
 }
 
-.detail-weather-list__item {
+.detail-weather-nav__item {
     background-color: #F4F6FC;
     border: none;
     padding: 10px;
@@ -170,17 +195,17 @@
     margin-right: 5px;
 }
 
-.detail-weather-list__item--selected {
+.detail-weather-nav__item--selected {
     background-color: #7694CD;
     color: white;
 }
 
-.detail-weather-section > section {
+.detail-weather-section > .detail-weather-section__content {
     display: flex;
     justify-content: space-around;
 }
 
-.detail-weather-section > section > div {
+.detail-weather-section > .detail-weather-section__content > .detail-weather-content__item {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -192,7 +217,7 @@
     align-items: center;
 }
 
-.temperature > p {
+.temperature > .temperature__text {
     margin: 5px;
 }
 
