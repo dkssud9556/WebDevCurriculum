@@ -109,6 +109,10 @@
     flex-grow: 1;
 }
 
+.covid-section > .covid-section__content > .covid-section__link {
+    text-decoration: none;
+}
+
 .covid-section > .covid-section__content > .covid-section__link > .covid-section__text--bold {
     color: #383B40;
     font-weight: bold;
@@ -170,10 +174,17 @@
     grid-template-columns: repeat(2, 1fr);
 }
 
+.popular-subject-section__link--top {
+    text-decoration: none;
+    color: #8C9099;
+}
+
 .popular-subject-section__nav > .popular-subject-section__link {
     background-color: #F5F7F9;
     padding: 10px;
     border-radius: 2px;
+    text-decoration: none;
+    color: #8C9099;
 }
 
 .detail-weather-section > .detail-weather-section__text--bold {
@@ -226,4 +237,9 @@
     border: 2px solid #00D05C;
     background: none;
     border-radius: 24px;
+}
+
+.naver-app-update-section__link {
+    text-decoration: none;
+    color: #8C9099;
 }

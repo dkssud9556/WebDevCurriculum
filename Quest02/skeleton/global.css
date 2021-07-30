@@ -2,8 +2,3 @@ body {
     background: linear-gradient(to bottom, white 30%, #E9F2F7 40%, #F2F5F7);
     padding: 10px;
 }
-
-a {
-    text-decoration: none;
-    color: #8C9099;
-}
