@@ -1,1 +1,27 @@
-/* TODO: 자유롭게 바탕화면 시스템의 CSS를 만들어 보세요! */
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+.desktop {
+    border: 1px solid black;
+    flex-grow: 1;
+    height: 100%;
+}
+
+.icon {
+    background-image: url("https://cdns.iconmonstr.com/wp-content/assets/preview/2012/96/iconmonstr-file-2.png");
+    width: 96px;
+    height: 96px;
+}
+
+.folder {
+    background-image: url("https://cdns.iconmonstr.com/wp-content/assets/preview/2012/96/iconmonstr-folder-20.png");
+    width: 96px;
+    height: 96px;
+}
