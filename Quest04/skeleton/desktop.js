@@ -2,20 +2,26 @@ class Desktop {
   #desktop;
   #desktopElements = [];
 
-  constructor(desktopElem, {iconNum, folderNum}) {
-    this.#desktop = desktopElem;
+  constructor(desktop, {iconNum, folderNum}) {
+    this.#desktop = desktop;
     this.#addDesktopElements(iconNum, (iconElement) => new Icon(iconElement));
     this.#addDesktopElements(folderNum, (folderElement) => new Folder(folderElement));
+
+    this.#desktopElements.forEach(desktopElement => {
+      desktopElement.addTo(this.#desktop);
+      desktopElement.setRandomPosition();
+    });
   }
 
   #addDesktopElements = (count, makeDesktopElement) => {
     this.#desktopElements = this.#desktopElements.concat(
-      new Array(count).fill(0).map(() => {
-        const newElement = document.createElement('div');
-        this.#desktop.appendChild(newElement);
-        return makeDesktopElement(newElement);
-      })
+      this.#makeDesktopElements(count, makeDesktopElement)
     );
+  }
+
+  #makeDesktopElements = (count, makeDesktopElement) => {
+    return new Array(count).fill(0)
+      .map(() => makeDesktopElement(document.createElement('div')));
   }
 }
 
@@ -58,14 +64,13 @@ class DesktopElement extends Draggable {
     super(element);
     element.classList.add('desktop-element');
     this.#element = element;
-    this.#setRandomPosition();
   }
 
   get element() {
     return this.#element;
   }
 
-  #setRandomPosition = () => {
+  setRandomPosition = () => {
     const element = this.element;
     const parentElement = element.parentElement;
     if (parentElement === null) {
@@ -73,6 +78,10 @@ class DesktopElement extends Draggable {
     }
     element.style.left = (Math.random() * (parentElement.offsetWidth - element.offsetWidth)) + parentElement.offsetLeft + 'px';
     element.style.top = (Math.random() * (parentElement.offsetHeight - element.offsetHeight)) + parentElement.offsetTop + 'px';
+  }
+
+  addTo = (parentElement) => {
+    parentElement.appendChild(this.#element);
   }
 }
 
