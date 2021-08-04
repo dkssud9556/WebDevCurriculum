@@ -1,22 +1,21 @@
 class Desktop {
-  #desktopElem;
-  #icons;
-  #folders;
+  #desktop;
+  #desktopElements = [];
 
-  constructor(desktopElem, iconNum, folderNum) {
-    this.#desktopElem = desktopElem;
+  constructor(desktopElem, {iconNum, folderNum}) {
+    this.#desktop = desktopElem;
+    this.#addDesktopElements(iconNum, (iconElement) => new Icon(iconElement));
+    this.#addDesktopElements(folderNum, (folderElement) => new Folder(folderElement));
+  }
 
-    this.#icons = new Array(iconNum).fill(0).map(() => {
-      const iconElem = document.createElement('div');
-      this.#desktopElem.appendChild(iconElem);
-      return new Icon(iconElem);
-    });
-
-    this.#folders = new Array(folderNum).fill(0).map(() => {
-      const folderElem = document.createElement('div');
-      this.#desktopElem.appendChild(folderElem);
-      return new Folder(folderElem);
-    });
+  #addDesktopElements = (count, makeDesktopElement) => {
+    this.#desktopElements = this.#desktopElements.concat(
+      new Array(count).fill(0).map(() => {
+        const newElement = document.createElement('div');
+        this.#desktop.appendChild(newElement);
+        return makeDesktopElement(newElement);
+      })
+    );
   }
 }
 
@@ -25,10 +24,18 @@ class Draggable {
     element.onmousedown = e => {
       const {offsetX, offsetY} = e;
 
-      this.#moveAt(element, e.pageX - offsetX, e.pageY - offsetY);
+      this.#moveAt({
+        element,
+        xPosition: e.pageX - offsetX,
+        yPosition: e.pageY - offsetY
+      });
 
       element.parentElement.onmousemove = e => {
-        this.#moveAt(element, e.pageX - offsetX, e.pageY - offsetY);
+        this.#moveAt({
+          element,
+          xPosition: e.pageX - offsetX,
+          yPosition: e.pageY - offsetY
+        });
       }
 
       element.onmouseup = () => {
@@ -38,9 +45,9 @@ class Draggable {
     }
   }
 
-  #moveAt = (element, x, y) => {
-    element.style.left = x + 'px';
-    element.style.top = y + 'px';
+  #moveAt = ({element, xPosition, yPosition}) => {
+    element.style.left = xPosition + 'px';
+    element.style.top = yPosition + 'px';
   }
 }
 
@@ -77,6 +84,8 @@ class Icon extends DesktopElement {
 }
 
 class Folder extends DesktopElement {
+  #window;
+
   constructor(element) {
     element.classList.add('folder');
     super(element);
@@ -84,9 +93,14 @@ class Folder extends DesktopElement {
   }
 
   #onDoubleClick = e => {
-    const windowElem = document.createElement('div');
-    this.element.parentElement.appendChild(windowElem);
-    const window = new Window(windowElem);
+    if (this.#window) {
+      this.#window.element.parentElement.removeChild(this.#window.element);
+      this.#window = null;
+    } else {
+      const windowElem = document.createElement('div');
+      this.element.parentElement.appendChild(windowElem);
+      this.#window = new Window(windowElem);
+    }
   }
 }
 
