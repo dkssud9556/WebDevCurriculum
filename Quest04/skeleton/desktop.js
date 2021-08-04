@@ -1,85 +1,98 @@
 class Desktop {
+  #desktopElem;
+  #icons;
+  #folders;
+
   constructor(desktopElem, iconNum, folderNum) {
-    this.element = desktopElem;
-    this.icons = new Array(iconNum).fill(0).map(() => {
+    this.#desktopElem = desktopElem;
+
+    this.#icons = new Array(iconNum).fill(0).map(() => {
       const iconElem = document.createElement('div');
-      iconElem.classList.add('icon');
+      this.#desktopElem.appendChild(iconElem);
       return new Icon(iconElem);
     });
-    this.folders = new Array(folderNum).fill(0).map(() => {
+
+    this.#folders = new Array(folderNum).fill(0).map(() => {
       const folderElem = document.createElement('div');
-      folderElem.classList.add('folder');
-      return new Folder(folderElem, this.element);
+      this.#desktopElem.appendChild(folderElem);
+      return new Folder(folderElem);
     });
-  }
-
-  showIcons() {
-    this.icons.forEach(icon => this.element.appendChild(icon.element));
-  }
-
-  showFolders() {
-    this.folders.forEach(folder => this.element.appendChild(folder.element));
   }
 }
 
 class Draggable {
+  constructor(element) {
+    element.onmousedown = e => {
+      const {offsetX, offsetY} = e;
+
+      this.#moveAt(element, e.pageX - offsetX, e.pageY - offsetY);
+
+      element.parentElement.onmousemove = e => {
+        this.#moveAt(element, e.pageX - offsetX, e.pageY - offsetY);
+      }
+
+      element.onmouseup = () => {
+        element.parentElement.onmousemove = null;
+        element.onmouseup = null;
+      }
+    }
+  }
+
+  #moveAt = (element, x, y) => {
+    element.style.left = x + 'px';
+    element.style.top = y + 'px';
+  }
+}
+
+class DesktopElement extends Draggable {
   #element;
 
   constructor(element) {
+    super(element);
+    element.classList.add('desktop-element');
     this.#element = element;
-    this.#element.onmousedown = e => {
-      const { offsetX, offsetY } = e;
-      this.#element.style.position = 'absolute';
-      this.#element.style.zIndex = 1000;
-
-      document.onmousemove = e => {
-        this.#moveAt(e.pageX, e.pageY, offsetX, offsetY);
-      }
-
-      this.#element.onmouseup = () => {
-        document.onmousemove = null;
-        this.#element.onmouseup = null;
-      }
-    }
+    this.#setRandomPosition();
   }
 
   get element() {
     return this.#element;
   }
 
-  #moveAt(pageX, pageY, offsetX, offsetY) {
-    this.#element.style.left = pageX - offsetX + 'px';
-    this.#element.style.top = pageY - offsetY + 'px';
-  }
-}
-
-class Icon extends Draggable {
-  constructor(element) {
-    super(element);
-  }
-}
-
-class Folder extends Draggable {
-  #parentElem;
-
-  constructor(element, parentElem) {
-    super(element);
-    this.#parentElem = parentElem;
-    this.#onDoubleClick();
-  }
-
-  #onDoubleClick() {
-    this.element.ondblclick = e => {
-      const windowElem = document.createElement('div');
-      windowElem.classList.add('window');
-      const window = new Window(windowElem);
-      this.#parentElem.appendChild(window.element);
+  #setRandomPosition = () => {
+    const element = this.element;
+    const parentElement = element.parentElement;
+    if (parentElement === null) {
+      throw new Error('should be appended before setting position');
     }
+    element.style.left = (Math.random() * (parentElement.offsetWidth - element.offsetWidth)) + parentElement.offsetLeft + 'px';
+    element.style.top = (Math.random() * (parentElement.offsetHeight - element.offsetHeight)) + parentElement.offsetTop + 'px';
   }
 }
 
-class Window extends Draggable {
+class Icon extends DesktopElement {
   constructor(element) {
+    element.classList.add('icon');
+    super(element);
+  }
+}
+
+class Folder extends DesktopElement {
+  constructor(element) {
+    element.classList.add('folder');
+    super(element);
+    this.element.ondblclick = this.#onDoubleClick;
+  }
+
+  #onDoubleClick = e => {
+    const windowElem = document.createElement('div');
+    this.element.parentElement.appendChild(windowElem);
+    const window = new Window(windowElem);
+  }
+}
+
+class Window extends DesktopElement {
+  constructor(element) {
+    element.classList.add('window');
     super(element);
   }
 }

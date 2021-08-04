@@ -8,15 +8,15 @@
 <body>
 <section class="desktop">
 </section>
+<section class="desktop"></section>
 
 <script>
-  let myDesktop = new Desktop(
-    document.querySelector('.desktop'),
-    4, 5
-  );
-
-  myDesktop.showIcons();
-  myDesktop.showFolders();
+  document.querySelectorAll('.desktop')
+    .forEach(desktop => {
+      const newDesktop = new Desktop(
+        desktop, 5, 5
+      );
+    });
 </script>
 </body>
 </html>
