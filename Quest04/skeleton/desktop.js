@@ -21,10 +21,8 @@ class Desktop {
   }
 
   #setUpComponents = () => {
-    this.#desktopComponents.forEach(desktopComponent => {
-      desktopComponent.addTo(this.#desktopElement);
-      desktopComponent.setRandomPosition();
-    });
+    this.#desktopComponents.forEach(desktopComponent =>
+      desktopComponent.setUpTo(this.#desktopElement));
   }
 }
 
@@ -73,17 +71,24 @@ class DesktopComponent extends Draggable {
     return this.#element;
   }
 
-  setRandomPosition = () => {
-    const element = this.element;
-    const parentElement = element.parentElement;
-    if (parentElement === null) {
-      throw new Error('should be appended before setting position');
-    }
-    element.style.left = (Math.random() * (parentElement.offsetWidth - element.offsetWidth)) + parentElement.offsetLeft + 'px';
-    element.style.top = (Math.random() * (parentElement.offsetHeight - element.offsetHeight)) + parentElement.offsetTop + 'px';
+  get parentElement() {
+    return this.#element.parentElement;
   }
 
-  addTo = (parentElement) => {
+  setUpTo = (parentElement) => {
+    this.#appendTo(parentElement);
+    this.#setRandomPosition();
+}
+
+  #setRandomPosition = () => {
+    if (this.parentElement === null) {
+      throw new Error('should be appended before setting position');
+    }
+    this.element.style.left = (Math.random() * (this.parentElement.offsetWidth - this.element.offsetWidth)) + this.parentElement.offsetLeft + 'px';
+    this.element.style.top = (Math.random() * (this.parentElement.offsetHeight - this.element.offsetHeight)) + this.parentElement.offsetTop + 'px';
+  }
+
+  #appendTo = (parentElement) => {
     parentElement.appendChild(this.#element);
   }
 }
@@ -106,13 +111,21 @@ class Folder extends DesktopComponent {
 
   #onDoubleClick = e => {
     if (this.#window) {
-      this.#window.element.parentElement.removeChild(this.#window.element);
-      this.#window = null;
+      this.#closeFolder();
     } else {
-      const windowElem = document.createElement('div');
-      this.element.parentElement.appendChild(windowElem);
-      this.#window = new Window(windowElem);
+      this.#openFolder();
     }
+  }
+
+  #openFolder = () => {
+    const windowElem = document.createElement('div');
+    this.#window = new Window(windowElem);
+    this.#window.setUpTo(this.parentElement);
+  }
+
+  #closeFolder = () => {
+    this.#window.parentElement.removeChild(this.#window.element);
+    this.#window = null;
   }
 }
 
