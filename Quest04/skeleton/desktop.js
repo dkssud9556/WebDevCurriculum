@@ -1,27 +1,30 @@
 class Desktop {
-  #desktop;
-  #desktopElements = [];
+  #desktopElement;
+  #desktopComponents = [];
 
-  constructor(desktop, {iconNum, folderNum}) {
-    this.#desktop = desktop;
-    this.#addDesktopElements(iconNum, (iconElement) => new Icon(iconElement));
-    this.#addDesktopElements(folderNum, (folderElement) => new Folder(folderElement));
-
-    this.#desktopElements.forEach(desktopElement => {
-      desktopElement.addTo(this.#desktop);
-      desktopElement.setRandomPosition();
-    });
+  constructor(desktopElement, {iconNum, folderNum}) {
+    this.#desktopElement = desktopElement;
+    this.#addDesktopComponents(iconNum, (iconElement) => new Icon(iconElement));
+    this.#addDesktopComponents(folderNum, (folderElement) => new Folder(folderElement));
+    this.#setUpComponents();
   }
 
-  #addDesktopElements = (count, makeDesktopElement) => {
-    this.#desktopElements = this.#desktopElements.concat(
-      this.#makeDesktopElements(count, makeDesktopElement)
+  #addDesktopComponents = (count, makeDesktopComponent) => {
+    this.#desktopComponents = this.#desktopComponents.concat(
+      this.#makeDesktopComponents(count, makeDesktopComponent)
     );
   }
 
-  #makeDesktopElements = (count, makeDesktopElement) => {
+  #makeDesktopComponents = (count, makeDesktopComponent) => {
     return new Array(count).fill(0)
-      .map(() => makeDesktopElement(document.createElement('div')));
+      .map(() => makeDesktopComponent(document.createElement('div')));
+  }
+
+  #setUpComponents = () => {
+    this.#desktopComponents.forEach(desktopComponent => {
+      desktopComponent.addTo(this.#desktopElement);
+      desktopComponent.setRandomPosition();
+    });
   }
 }
 
@@ -57,7 +60,7 @@ class Draggable {
   }
 }
 
-class DesktopElement extends Draggable {
+class DesktopComponent extends Draggable {
   #element;
 
   constructor(element) {
@@ -85,14 +88,14 @@ class DesktopElement extends Draggable {
   }
 }
 
-class Icon extends DesktopElement {
+class Icon extends DesktopComponent {
   constructor(element) {
     element.classList.add('icon');
     super(element);
   }
 }
 
-class Folder extends DesktopElement {
+class Folder extends DesktopComponent {
   #window;
 
   constructor(element) {
@@ -113,7 +116,7 @@ class Folder extends DesktopElement {
   }
 }
 
-class Window extends DesktopElement {
+class Window extends DesktopComponent {
   constructor(element) {
     element.classList.add('window');
     super(element);
