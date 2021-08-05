@@ -118,8 +118,7 @@ class Folder extends DesktopComponent {
   }
 
   #openFolder = () => {
-    const windowElement = document.createElement('div');
-    this.#window = new Window(windowElement);
+    this.#window = new Window(document.createElement('div'));
     this.#window.setUpTo(this.parentElement);
   }
 
