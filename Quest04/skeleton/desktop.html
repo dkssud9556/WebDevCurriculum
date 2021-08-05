@@ -11,10 +11,11 @@
 
 <script>
   document.querySelectorAll('.desktop')
-    .forEach(desktop => {
-      const newDesktop = new Desktop(
-        desktop, { iconNum: 5, folderNum: 5}
-      );
+    .forEach(desktopElement => {
+      const newDesktop = new Desktop(desktopElement);
+      newDesktop.addDesktopComponents(10, (element) => new Icon(element));
+      newDesktop.addDesktopComponents(10, (element) => new Folder(element));
+      newDesktop.setUpComponents();
     });
 </script>
 </body>

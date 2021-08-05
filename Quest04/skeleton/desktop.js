@@ -2,14 +2,11 @@ class Desktop {
   #desktopElement;
   #desktopComponents = [];
 
-  constructor(desktopElement, {iconNum, folderNum}) {
+  constructor(desktopElement) {
     this.#desktopElement = desktopElement;
-    this.#addDesktopComponents(iconNum, (iconElement) => new Icon(iconElement));
-    this.#addDesktopComponents(folderNum, (folderElement) => new Folder(folderElement));
-    this.#setUpComponents();
   }
 
-  #addDesktopComponents = (count, makeDesktopComponent) => {
+  addDesktopComponents = (count, makeDesktopComponent) => {
     this.#desktopComponents = this.#desktopComponents.concat(
       this.#makeDesktopComponents(count, makeDesktopComponent)
     );
@@ -20,7 +17,7 @@ class Desktop {
       .map(() => makeDesktopComponent(document.createElement('div')));
   }
 
-  #setUpComponents = () => {
+  setUpComponents = () => {
     this.#desktopComponents.forEach(desktopComponent =>
       desktopComponent.setUpTo(this.#desktopElement));
   }
