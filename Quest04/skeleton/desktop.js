@@ -63,8 +63,8 @@ class DesktopComponent extends Draggable {
 
   constructor(element) {
     super(element);
-    element.classList.add('desktop-element');
     this.#element = element;
+    element.classList.add('desktop-element');
   }
 
   get element() {
@@ -78,7 +78,7 @@ class DesktopComponent extends Draggable {
   setUpTo = (parentElement) => {
     this.#appendTo(parentElement);
     this.#setRandomPosition();
-}
+  }
 
   #setRandomPosition = () => {
     if (this.parentElement === null) {
@@ -118,8 +118,8 @@ class Folder extends DesktopComponent {
   }
 
   #openFolder = () => {
-    const windowElem = document.createElement('div');
-    this.#window = new Window(windowElem);
+    const windowElement = document.createElement('div');
+    this.#window = new Window(windowElement);
     this.#window.setUpTo(this.parentElement);
   }
 
