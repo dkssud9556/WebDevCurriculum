@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./desktop.css">
+    <script src="./desktop-func.js"></script>
+</head>
+<body>
+<section class="desktop">
+</section>
+
+<script>
+  document.querySelectorAll('.desktop')
+    .forEach(desktopElement => {
+      const newDesktop = desktop(desktopElement);
+      newDesktop.addDesktopComponents(4, iconComponent);
+      newDesktop.addDesktopComponents(2, folderComponent);
+      newDesktop.setUpComponents();
+    });
+</script>
+</body>
+</html>
