@@ -58,7 +58,7 @@ class Notepad {
 
   #selectExistentTab = (tab) => {
     this.#textArea.setValue(tab.content);
-    this.#tabBar.changeSelectedTab(tab.element);
+    this.#tabBar.changeSelectedTab(tab.fileName);
   }
 
   #openNewTab = (fileName) => {

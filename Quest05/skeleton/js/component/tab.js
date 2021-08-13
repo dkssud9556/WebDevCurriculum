@@ -15,10 +15,6 @@ class Tab {
     return this.#content;
   }
 
-  get element() {
-    return this.#tab;
-  }
-
   get saved() {
     return this.#saved;
   }
@@ -28,14 +24,18 @@ class Tab {
     this.#content = content;
     this.#saved = saved;
     this.#tab = this.#createTab(parent);
-    this.#tab.onclick = e => {
-      EventManager.emit(e, 'selectTab', {fileName});
-      EventManager.emit(e, 'setTextAreaValue', {content: this.#content});
-    }
-    this.#closeButton.onclick = e => {
-      e.stopPropagation();
-      EventManager.emit(e, 'removeTab', {tab: this.#tab, fileName: this.#fileName});
-    }
+    this.#tab.onclick = this.#onClickTab;
+    this.#closeButton.onclick = this.#onClickCloseButton;
+  }
+
+  #onClickTab = e => {
+    EventManager.emit(e, 'selectTab', {fileName: this.#fileName});
+    EventManager.emit(e, 'setTextAreaValue', {content: this.#content});
+  }
+
+  #onClickCloseButton = e => {
+    e.stopPropagation();
+    EventManager.emit(e, 'removeTab', {tab: this.#tab, fileName: this.#fileName});
   }
 
   #createTab = (parent) => {
