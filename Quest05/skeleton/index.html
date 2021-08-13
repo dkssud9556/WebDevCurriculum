@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="./style.css">
-    <script src="./notepad.js"></script>
+    <script src="js/component/notepad.js"></script>
+    <script src="js/component/tabBar.js"></script>
+    <script src="js/storage/localStorage.js"></script>
+    <script src="js/component/explorer.js"></script>
+    <script src="js/component/textArea.js"></script>
+    <script src="js/util/elementCreator.js"></script>
+    <script src="js/util/eventManager.js"></script>
 </head>
 <body>
 <script>
-    let notepad = new Notepad(new LocalStorage());
+  let notepad = new Notepad(new LocalStorage());
 </script>
 </body>
 </html>
