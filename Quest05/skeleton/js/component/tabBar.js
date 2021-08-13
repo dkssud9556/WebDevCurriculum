@@ -17,7 +17,7 @@ class TabBar {
   }
 
   setSelectedTabSaved = () => {
-    this.#selectedTab?.saved();
+    this.#selectedTab?.setSaved();
   }
 
   updateTabName = (newFileName) => {
@@ -52,7 +52,7 @@ class TabBar {
 
   updateSelectedTabContent = (content) => {
     this.#selectedTab.updateContent(content);
-    this.#selectedTab.unsaved();
+    this.#selectedTab.setUnsaved();
   }
 
   #createNewTab = ({fileName, content, saved}) => {

@@ -65,11 +65,11 @@ class Tab {
     this.#tab.classList.remove('tab-component-selected');
   }
 
-  unsaved = () => {
+  setUnsaved = () => {
     this.#tab.classList.add('tab-component-unsaved');
   }
 
-  saved = () => {
+  setSaved = () => {
     this.#tab.classList.remove('tab-component-unsaved');
   }
 }

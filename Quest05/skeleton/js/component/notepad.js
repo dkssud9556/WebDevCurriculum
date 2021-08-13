@@ -33,6 +33,7 @@ class Notepad {
       if (this.#tabBar.isExistsTabByFileName('newfile')) {
         return;
       }
+
       this.#tabBar.openNewTab({saved: false});
       this.#textArea.setValue('');
     }
@@ -69,7 +70,6 @@ class Notepad {
   #onSaveFile = () => {
     const tab = this.#tabBar.getSelectedTab();
     if (tab.saved) {
-      console.log(tab);
       this.#storage.save({
         fileName: tab.fileName,
         content: tab.content
@@ -85,8 +85,9 @@ class Notepad {
     if (this.#storage.isExistsFileName(newFileName)) {
       return alert('파일명이 중복되었습니다.');
     }
+
     this.#storage.saveAndUpdateFileNames({
-      newFileName,
+      fileName: newFileName,
       content: tab.content
     });
     this.#explorer.loadFile(newFileName);

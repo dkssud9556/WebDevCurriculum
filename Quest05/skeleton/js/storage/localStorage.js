@@ -13,11 +13,14 @@ class LocalStorage {
   }
 
   updateFileNames(fileName) {
+    if (!localStorage.getItem('fileNames')) {
+      return localStorage.setItem('fileNames', fileName);
+    }
     localStorage.setItem('fileNames', localStorage.getItem('fileNames') + ':' + fileName);
   }
 
   getFileNames() {
-    return localStorage.getItem('fileNames').split(':');
+    return localStorage.getItem('fileNames')?.split(':') ?? [];
   }
 
   isExistsFileName(fileName) {
