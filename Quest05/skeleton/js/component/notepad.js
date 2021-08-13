@@ -33,7 +33,7 @@ class Notepad {
       if (this.#tabBar.isExistsTabByFileName('newfile')) {
         return;
       }
-      this.#tabBar.openNewTab({saved: false, textArea: this.#textArea});
+      this.#tabBar.openNewTab({saved: false});
       this.#textArea.setValue('');
     }
   }
@@ -47,17 +47,17 @@ class Notepad {
   }
 
   #onClickFile = e => {
-    const tabInfo = this.#tabBar.getTabInfoByFileName(e.detail.fileName);
-    if (tabInfo) {
-      this.#selectExistentTab(tabInfo);
+    const tab = this.#tabBar.getTabByFileName(e.detail.fileName);
+    if (tab) {
+      this.#selectExistentTab(tab);
     } else {
       this.#openNewTab(e.detail.fileName);
     }
   }
 
-  #selectExistentTab = (tabInfo) => {
-    this.#textArea.setValue(tabInfo.content);
-    this.#tabBar.changeSelectedTab(tabInfo.element);
+  #selectExistentTab = (tab) => {
+    this.#textArea.setValue(tab.content);
+    this.#tabBar.changeSelectedTab(tab.element);
   }
 
   #openNewTab = (fileName) => {
@@ -67,21 +67,28 @@ class Notepad {
   }
 
   #onSaveFile = () => {
-    const tabInfo = this.#tabBar.getSelectedTabInfo();
-    if (tabInfo.saved) {
-      this.#storage.save(tabInfo);
+    const tab = this.#tabBar.getSelectedTab();
+    if (tab.saved) {
+      console.log(tab);
+      this.#storage.save({
+        fileName: tab.fileName,
+        content: tab.content
+      });
       this.#tabBar.setSelectedTabSaved();
     } else {
-      this.#saveNewFile(tabInfo);
+      this.#saveNewFile(tab);
     }
   }
 
-  #saveNewFile = (tabInfo) => {
+  #saveNewFile = (tab) => {
     const newFileName = prompt('저장할 파일명을 입력해주세요.');
     if (this.#storage.isExistsFileName(newFileName)) {
       return alert('파일명이 중복되었습니다.');
     }
-    this.#storage.saveAndUpdateFileNames({...tabInfo, newFileName});
+    this.#storage.saveAndUpdateFileNames({
+      newFileName,
+      content: tab.content
+    });
     this.#explorer.loadFile(newFileName);
     this.#tabBar.updateTabName(newFileName);
   }

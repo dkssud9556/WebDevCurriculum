@@ -1,7 +1,6 @@
 class Explorer {
   #explorerSection;
 
-
   constructor(parent) {
     this.#explorerSection = this.#createSection(parent);
   }

@@ -1,0 +1,75 @@
+class Tab {
+  #fileName;
+  #content;
+  #saved;
+
+  #tab;
+  #closeButton;
+  #fileNameSpan;
+
+  get fileName() {
+    return this.#fileName;
+  }
+
+  get content() {
+    return this.#content;
+  }
+
+  get element() {
+    return this.#tab;
+  }
+
+  get saved() {
+    return this.#saved;
+  }
+
+  constructor(parent, {fileName = 'newfile', content = '', saved = false}) {
+    this.#fileName = fileName;
+    this.#content = content;
+    this.#saved = saved;
+    this.#tab = this.#createTab(parent);
+    this.#tab.onclick = e => {
+      EventManager.emit(e, 'selectTab', {fileName});
+      EventManager.emit(e, 'setTextAreaValue', {content: this.#content});
+    }
+    this.#closeButton.onclick = e => {
+      e.stopPropagation();
+      EventManager.emit(e, 'removeTab', {tab: this.#tab, fileName: this.#fileName});
+    }
+  }
+
+  #createTab = (parent) => {
+    this.#closeButton = ElementCreator.create({tag: 'button', textContent: 'X'});
+    this.#fileNameSpan = ElementCreator.create({tag: 'span', textContent: this.#fileName});
+    return ElementCreator.create({classList: ['tab-component'], children: [this.#fileNameSpan, this.#closeButton], parent});
+  }
+
+  updateFileName = (fileName) => {
+    this.#fileName = fileName;
+    this.#fileNameSpan.textContent = fileName;
+  }
+
+  updateSaved = (saved) => {
+    this.#saved = saved;
+  }
+
+  updateContent = (content) => {
+    this.#content = content;
+  }
+
+  select = () => {
+    this.#tab.classList.add('tab-component-selected');
+  }
+
+  unselect = () => {
+    this.#tab.classList.remove('tab-component-selected');
+  }
+
+  unsaved = () => {
+    this.#tab.classList.add('tab-component-unsaved');
+  }
+
+  saved = () => {
+    this.#tab.classList.remove('tab-component-unsaved');
+  }
+}
