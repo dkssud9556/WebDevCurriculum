@@ -11,11 +11,16 @@ class TabBar {
     return ElementCreator.create({tag: 'section', classList: ['tab'], parent});
   }
 
+  setSelectedTabSaved = () => {
+    this.#selectedTab?.classList.remove('tab-component-unsaved');
+  }
+
   updateTabName = (fileName) => {
     const index = this.#tabList.findIndex(tabInfo => tabInfo.element === this.#selectedTab);
     this.#tabList[index].fileName = fileName;
     this.#tabList[index].saved = true;
     this.#selectedTab.children[0].textContent = fileName;
+    this.setSelectedTabSaved();
   }
 
   isExistsTabByFileName = (fileName) => {

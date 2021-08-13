@@ -70,6 +70,7 @@ class Notepad {
     const tabInfo = this.#tabBar.getSelectedTabInfo();
     if (tabInfo.saved) {
       this.#storage.save(tabInfo);
+      this.#tabBar.setSelectedTabSaved();
     } else {
       this.#saveNewFile(tabInfo);
     }
