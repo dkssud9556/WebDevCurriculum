@@ -11,7 +11,7 @@ class Explorer {
 
   loadFile = (fileName) => {
     const fileDiv = ElementCreator.create({textContent: fileName, classList: ['file']});
-    fileDiv.onclick = (e) => EventManager.emit(e, 'clickFile', {fileName});
+    fileDiv.onclick = (e) => EventEmitter.emit(e, 'clickFile', {fileName});
     this.#explorerSection.appendChild(fileDiv);
   }
 

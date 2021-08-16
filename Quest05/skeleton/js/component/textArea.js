@@ -16,13 +16,13 @@ class TextArea {
   }
 
   #setSelectedTabUnsaved = (e) => {
-    EventManager.emit(e, 'contentModification', {content: this.#textArea.value});
+    EventEmitter.emit(e, 'contentModification', {content: this.#textArea.value});
   }
 
   #onKeydown = (e) => {
     if (e.key === 's' && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
-      EventManager.emit(e, 'saveFile');
+      EventEmitter.emit(e, 'saveFile');
     }
   }
 }

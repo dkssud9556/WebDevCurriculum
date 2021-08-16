@@ -29,13 +29,13 @@ class Tab {
   }
 
   #onClickTab = e => {
-    EventManager.emit(e, 'selectTab', {fileName: this.#fileName});
-    EventManager.emit(e, 'setTextAreaValue', {content: this.#content});
+    EventEmitter.emit(e, 'selectTab', {fileName: this.#fileName});
+    EventEmitter.emit(e, 'setTextAreaValue', {content: this.#content});
   }
 
   #onClickCloseButton = e => {
     e.stopPropagation();
-    EventManager.emit(e, 'removeTab', {tab: this.#tab, fileName: this.#fileName});
+    EventEmitter.emit(e, 'removeTab', {tab: this.#tab, fileName: this.#fileName});
   }
 
   #createTab = (parent) => {
