@@ -119,7 +119,22 @@ nrt13s51-in-f100.1e100.net (172.217.25.100)
 
 ### 어떤 헤더들이 있나요?
 
+Date, Expires, Cache-Control, Content-Type, Server, X-XSS-Protection, X-Frame-Options, Set-Cookie, Accept-Ranges, Vary, Transfer-Encoding
+
 ### 그 헤더들은 어떤 역할을 하나요?
+
+- Date : 패킷이 만들어진 날짜와 시간
+- Expires : 응답 컨텐츠가 언제 만료되는지 나타냄.
+- Cache-Control : 캐시를 허용할지 안 할지 정한다.
+- Content-Type : body 데이터의 미디어 타입과 문자열 인코딩 지정
+- Server : 요청을 처리하기 위한 오리진 서버의 소프트웨어 정보를 표시
+- X-XSS-Protection : XSS 공격을 감지할 때 페이지 로드를 중지시키는 역할
+- X-Frame-Options : 해당 페이지를 `<frame>`, `<iframe>`, 또는 `<object>` 에서 렌더링할 수 있는지 여부를 나타냄.
+- Set-Cookie : 클라이언트에게 키=값 으로 되어있는 쿠키를 저장하라는 뜻
+- Set-Cookie : 클라이언트에게 키=값 으로 되어있는 쿠키를 저장하라는 뜻
+- Accept-Ranges : 부분 요청의 지원을 알리는 용도 (서버)
+- Vary : 캐시된 응답을 향후 요청들에서 오리진 서버로 새로운 요청 헤더를 요청하는 대신 사용할 수 있는지 여부를 결정함.
+- Transfer-Encoding : 사용자에게 엔티티를 안전하게 전송하기 위해 사용하는 인코딩 형식 지정
 
 # Advanced
 
