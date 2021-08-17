@@ -5,7 +5,6 @@ class TabBar {
 
   constructor(parent) {
     this.#tabSection = this.#createSection(parent);
-    this.#tabSection.addEventListener('selectTab', e => this.changeSelectedTab(e.detail.fileName));
     this.#tabSection.addEventListener('removeTab', this.#onRemoveTab)
   }
 

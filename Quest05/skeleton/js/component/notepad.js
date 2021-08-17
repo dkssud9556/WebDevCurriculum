@@ -12,6 +12,7 @@ class Notepad {
     this.#notepadSection.addEventListener('contentModification', this.#onContentModification);
     this.#notepadSection.addEventListener('clickFile', this.#onClickFile);
     this.#notepadSection.addEventListener('saveFile', this.#onSaveFile);
+    this.#notepadSection.addEventListener('selectTab', this.#onSelectTab);
     document.addEventListener('keydown', this.#onNewFile);
     this.#explorer.loadFiles(storage.getFileNames());
   }
@@ -27,7 +28,7 @@ class Notepad {
     document.body.appendChild(this.#notepadSection);
   }
 
-  #onNewFile = e => {
+  #onNewFile = (e) => {
     if (e.key === 'n' && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
       if (this.#tabBar.isExistsTabByFileName('newfile')) {
@@ -39,15 +40,15 @@ class Notepad {
     }
   }
 
-  #onSetTextAreaValue = e => {
+  #onSetTextAreaValue = (e) => {
     this.#textArea.setValue(e.detail.content);
   }
 
-  #onContentModification = e => {
+  #onContentModification = (e) => {
     this.#tabBar.updateSelectedTabContent(e.detail.content);
   }
 
-  #onClickFile = e => {
+  #onClickFile = (e) => {
     const tab = this.#tabBar.getTabByFileName(e.detail.fileName);
     if (tab) {
       this.#selectExistentTab(tab);
@@ -67,7 +68,7 @@ class Notepad {
     this.#tabBar.openNewTab({fileName, content, saved: true});
   }
 
-  #onSaveFile = () => {
+  #onSaveFile = (e) => {
     const tab = this.#tabBar.getSelectedTab();
     if (tab.saved) {
       this.#storage.save({
@@ -92,6 +93,11 @@ class Notepad {
     });
     this.#explorer.loadFile(newFileName);
     this.#tabBar.updateTabName(newFileName);
+  }
+
+  #onSelectTab = (e) => {
+    this.#tabBar.changeSelectedTab(e.detail.fileName);
+    this.#textArea.setValue(e.detail.content);
   }
 }
 

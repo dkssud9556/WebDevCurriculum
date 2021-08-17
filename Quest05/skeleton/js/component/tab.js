@@ -28,20 +28,27 @@ class Tab {
     this.#closeButton.onclick = this.#onClickCloseButton;
   }
 
-  #onClickTab = e => {
-    EventEmitter.emit(e, 'selectTab', {fileName: this.#fileName});
-    EventEmitter.emit(e, 'setTextAreaValue', {content: this.#content});
+  #onClickTab = (e) => {
+    this.#tab.dispatchEvent(new CustomEvent('selectTab', {
+      bubbles: true, detail: {fileName: this.#fileName, content: this.#content}
+    }));
   }
 
-  #onClickCloseButton = e => {
+  #onClickCloseButton = (e) => {
     e.stopPropagation();
-    EventEmitter.emit(e, 'removeTab', {tab: this.#tab, fileName: this.#fileName});
+    this.#tab.dispatchEvent(new CustomEvent('removeTab', {
+      bubbles: true, detail: {tab: this.#tab, fileName: this.#fileName}
+    }));
   }
 
   #createTab = (parent) => {
     this.#closeButton = ElementCreator.create({tag: 'button', textContent: 'X'});
     this.#fileNameSpan = ElementCreator.create({tag: 'span', textContent: this.#fileName});
-    return ElementCreator.create({classList: ['tab-component'], children: [this.#fileNameSpan, this.#closeButton], parent});
+    return ElementCreator.create({
+      classList: ['tab-component'],
+      children: [this.#fileNameSpan, this.#closeButton],
+      parent
+    });
   }
 
   updateFileName = (fileName) => {

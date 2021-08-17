@@ -16,13 +16,17 @@ class TextArea {
   }
 
   #setSelectedTabUnsaved = (e) => {
-    EventEmitter.emit(e, 'contentModification', {content: this.#textArea.value});
+    this.#textArea.dispatchEvent(new CustomEvent('contentModification', {
+      bubbles: true, detail: {content: this.#textArea.value}
+    }));
   }
 
   #onKeydown = (e) => {
     if (e.key === 's' && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
-      EventEmitter.emit(e, 'saveFile');
+      this.#textArea.dispatchEvent(new CustomEvent('saveFile', {
+        bubbles: true
+      }));
     }
   }
 }
