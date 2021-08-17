@@ -3,7 +3,7 @@ class Tab {
   #content;
   #saved;
 
-  #tab;
+  #tabDOM;
   #closeButton;
   #fileNameSpan;
 
@@ -23,21 +23,21 @@ class Tab {
     this.#fileName = fileName;
     this.#content = content;
     this.#saved = saved;
-    this.#tab = this.#createTab(parent);
-    this.#tab.onclick = this.#onClickTab;
+    this.#tabDOM = this.#createTab(parent);
+    this.#tabDOM.onclick = this.#onClickTab;
     this.#closeButton.onclick = this.#onClickCloseButton;
   }
 
   #onClickTab = (e) => {
-    this.#tab.dispatchEvent(new CustomEvent('selectTab', {
+    this.#tabDOM.dispatchEvent(new CustomEvent('selectTab', {
       bubbles: true, detail: {fileName: this.#fileName, content: this.#content}
     }));
   }
 
   #onClickCloseButton = (e) => {
     e.stopPropagation();
-    this.#tab.dispatchEvent(new CustomEvent('removeTab', {
-      bubbles: true, detail: {tab: this.#tab, fileName: this.#fileName}
+    this.#tabDOM.dispatchEvent(new CustomEvent('removeTab', {
+      bubbles: true, detail: {tab: this.#tabDOM, fileName: this.#fileName}
     }));
   }
 
@@ -65,18 +65,18 @@ class Tab {
   }
 
   select = () => {
-    this.#tab.classList.add('tab-component-selected');
+    this.#tabDOM.classList.add('tab-component-selected');
   }
 
   unselect = () => {
-    this.#tab.classList.remove('tab-component-selected');
+    this.#tabDOM.classList.remove('tab-component-selected');
   }
 
   setUnsaved = () => {
-    this.#tab.classList.add('tab-component-unsaved');
+    this.#tabDOM.classList.add('tab-component-unsaved');
   }
 
   setSaved = () => {
-    this.#tab.classList.remove('tab-component-unsaved');
+    this.#tabDOM.classList.remove('tab-component-unsaved');
   }
 }

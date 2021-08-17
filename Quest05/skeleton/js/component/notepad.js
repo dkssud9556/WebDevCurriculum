@@ -1,5 +1,5 @@
 class Notepad {
-  #notepadSection;
+  #notepadDOM;
   #explorer;
   #tabBar;
   #textArea;
@@ -8,24 +8,24 @@ class Notepad {
   constructor(storage) {
     this.#storage = storage;
     this.#render();
-    this.#notepadSection.addEventListener('setTextAreaValue', this.#onSetTextAreaValue);
-    this.#notepadSection.addEventListener('contentModification', this.#onContentModification);
-    this.#notepadSection.addEventListener('clickFile', this.#onClickFile);
-    this.#notepadSection.addEventListener('saveFile', this.#onSaveFile);
-    this.#notepadSection.addEventListener('selectTab', this.#onSelectTab);
+    this.#notepadDOM.addEventListener('setTextAreaValue', this.#onSetTextAreaValue);
+    this.#notepadDOM.addEventListener('contentModification', this.#onContentModification);
+    this.#notepadDOM.addEventListener('clickFile', this.#onClickFile);
+    this.#notepadDOM.addEventListener('saveFile', this.#onSaveFile);
+    this.#notepadDOM.addEventListener('selectTab', this.#onSelectTab);
     document.addEventListener('keydown', this.#onNewFile);
     this.#explorer.loadFiles(storage.getFileNames());
   }
 
   #render = () => {
-    this.#notepadSection = ElementCreator.create({
+    this.#notepadDOM = ElementCreator.create({
       tag: 'section',
       classList: ['notepad']
     });
-    this.#explorer = new Explorer(this.#notepadSection);
-    this.#tabBar = new TabBar(this.#notepadSection);
-    this.#textArea = new TextArea(this.#notepadSection);
-    document.body.appendChild(this.#notepadSection);
+    this.#explorer = new Explorer(this.#notepadDOM);
+    this.#tabBar = new TabBar(this.#notepadDOM);
+    this.#textArea = new TextArea(this.#notepadDOM);
+    document.body.appendChild(this.#notepadDOM);
   }
 
   #onNewFile = (e) => {

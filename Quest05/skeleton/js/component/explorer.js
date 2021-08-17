@@ -1,8 +1,8 @@
 class Explorer {
-  #explorerSection;
+  #explorerDOM;
 
   constructor(parent) {
-    this.#explorerSection = this.#createSection(parent);
+    this.#explorerDOM = this.#createSection(parent);
   }
 
   #createSection = (parent) => {
@@ -11,10 +11,10 @@ class Explorer {
 
   loadFile = (fileName) => {
     const fileDiv = ElementCreator.create({textContent: fileName, classList: ['file']});
-    fileDiv.onclick = (e) => this.#explorerSection.dispatchEvent(new CustomEvent('clickFile', {
+    fileDiv.onclick = (e) => this.#explorerDOM.dispatchEvent(new CustomEvent('clickFile', {
       bubbles: true, detail: {fileName}
     }));
-    this.#explorerSection.appendChild(fileDiv);
+    this.#explorerDOM.appendChild(fileDiv);
   }
 
   loadFiles = (fileNames) => {

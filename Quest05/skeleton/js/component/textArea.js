@@ -1,10 +1,10 @@
 class TextArea {
-  #textArea;
+  #textAreaDOM;
 
   constructor(parent) {
     this.#textArea = this.#createTextArea(parent);
-    this.#textArea.oninput = this.#setSelectedTabUnsaved;
-    this.#textArea.onkeydown = this.#onKeydown;
+    this.#textAreaDOM.oninput = this.#setSelectedTabUnsaved;
+    this.#textAreaDOM.onkeydown = this.#onKeydown;
   }
 
   #createTextArea = (parent) => {
@@ -12,19 +12,19 @@ class TextArea {
   }
 
   setValue = (content) => {
-    this.#textArea.value = content;
+    this.#textAreaDOM.value = content;
   }
 
   #setSelectedTabUnsaved = (e) => {
-    this.#textArea.dispatchEvent(new CustomEvent('contentModification', {
-      bubbles: true, detail: {content: this.#textArea.value}
+    this.#textAreaDOM.dispatchEvent(new CustomEvent('contentModification', {
+      bubbles: true, detail: {content: this.#textAreaDOM.value}
     }));
   }
 
   #onKeydown = (e) => {
     if (e.key === 's' && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
-      this.#textArea.dispatchEvent(new CustomEvent('saveFile', {
+      this.#textAreaDOM.dispatchEvent(new CustomEvent('saveFile', {
         bubbles: true
       }));
     }
