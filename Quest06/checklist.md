@@ -87,11 +87,7 @@ nrt13s51-in-f100.1e100.net (172.217.25.100)
 
 성남 (ISP : KT)
 
-서울 (ISP : KT)
-
-미국 댈러스 (ISP : Google)
-
-미국 캔자스 (ISP : Google)
+미국 마운틴뷰 구글 플렉스 (ISP : Google)
 
 ## Wireshark를 통해 www.google.com으로 요청을 날렸을 때 어떤 TCP 패킷이 오가는지 확인해 보세요.
 
