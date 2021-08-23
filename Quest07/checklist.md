@@ -24,7 +24,7 @@ npm(Node Package Manager)은 Node.js로 작성된 라이브러리, 모듈 등을
   - version : 현재 프로젝트의 버전
   - description : 현재 프로젝트에 대한 설명
   - main : 현재 프로젝트의 메인 파일명, 엔트리 포인트
-  - scripts : nom 명령어 지정
+  - scripts : npm 명령어 지정
   - keywords : 현재 프로젝트의 키워드
   - author : 현재 프로젝트의 작성자
   - license : 현재 프로젝트의 라이센스 정보
@@ -38,11 +38,55 @@ npx는 일회성으로 npm 레지스트리에 저장되어 있는 실행형 패�
 
 ## 자바스크립트 코드에서 다른 파일의 코드를 부르는 시도들은 지금까지 어떤 것이 있었을까요? CommonJS 대신 ES Modules가 등장한 이유는 무엇일까요?
 
+- 자바스크립트 코드에서 다른 파일의 코드를 부르는 시도
+  - `<script src="">` 으로 불러오기
+    - 다른 파일의 코드를 불러올 수 있지만 변수의 스코프 문제가 발생한다.
+    - 위 문제를 해결하기 위해 즉시 실행 함수를 사용하는 등 모듈화를 위한 노력이 있었다.
+  - CommonJS (require, module.export)
+    - 자바스크립트의 모듈화 명세를 만든 CommonJS의 명세. node.js의 표준으로 사용되는 명세이기도 하다.
+    - 하지만 CommonJS의 모듈 명세는 모든 파일이 로컬 디스크에 있어 필요할 때 바로 불러올 수 있는 환경, 즉 서버사이드 자바스크립트 환경을 전제로 한다.
+  - AMD (Asychronous Module Definition)
+    - AMD는 필요한 모듈을 네트워크를 통해 내려받을 수 있도록 하는 것에 중점을 두었다. 즉, 자바스크립트를 브라우저에서 탈출시키는 것이 목표였던 CommonJS와는 다르게 AMD는 브라우저 내에서의 실행에 중점을 두었다.
+    - 브라우저 환경에서는 AMD가 CommonJS보다 더 유연한 방법을 제공한다.
+  - UMD (Universal Module Definition)
+    - CommonJS와 AMD의 호환성 문제를 해결하기 위해 고안된 코드 작성 패턴.
+  - ES Modules (import, export)
+    - ES6부터 자바스크립트 자체에서 지원하기 시작한 모듈화 명세이다.
+- CommonJS 대신 ES Modules가 등장한 이유
+
+  CommonJS는 모든 모듈을 동기적으로 인스턴스 화 및 평가를 진행한다. 즉, 모든 모듈 파일을 평가하는 동안 주 스레드가 다른 작업을 하지 못하게 된다. 이를 브라우저에 적용시키게 되면 모듈을 모두 불러올 때까지 다른 작업을 못하기 때문에 적합하지 않다. 특히 브라우저는 모든 파일이 로컬 디스크에 저장되어 있는 서버 환경과 달리 네트워크를 통해 파일들을 불러와야 하기 때문에 더욱 속도가 느려진다.
+
 ## ES Modules는 기존의 `require()`와 동작상에 어떤 차이가 있을까요? CommonJS는 할 수 있으나 ES Modules가 할 수 없는 일에는 어떤 것이 있을까요?
 
+ES Modules는 구성, 인스턴스 화, 평가 세 가지의 단계로 동작한다.
+
+1. 모듈 파일들을 구문 분석하여 import하는 파일들을 불러와서 모듈 레코드로 만든다.
+2. 모듈 레코드들을 의존성에 맞게 연결한다.
+3. 코드를 실행하여 값을 평가한다.
+
+ES Modules는 값을 마지막에 평가하기 때문에 import 구문의 module specifier에 변수를 사용할 수 없다. CommonJS는 값을 평가하면서 파일들을 로드하기 때문에 변수를 사용할 수 있다.
+
+```javascript
+import module from `module/${lang}` // 불가
+```
+
+```javascript
+const module = require(`module/${lang}`) // 가능
+```
+
 ## node.js에서 ES Modules를 사용하려면 어떻게 해야 할까요? ES Modules 기반의 코드에서 CommonJS 기반의 패키지를 불러오려면 어떻게 해야 할까요? 그 반대는 어떻게 될까요?
+
+- node.js에서 ES Modules 사용하는 방법
+  - package.json 파일이 없을 때 : ES Modules를 사용하는 파일의 확장자를 mjs로 한다.
+  - package.json 파일이 있을 때 : package.json 파일에 "type": "module" 프로퍼티를 추가한다.
+- ES Modules 기반의 코드에서 CommonJS 기반의 패키지를 불러오는 법
+  - 원래대로 `import from` 구문을 사용하여 불러올 수 있다.
+- CommonJS 기반의 코드에서 ES Modules 기반의 패키지를 불러오는 법
+  - ES Modules은 `require()` 구문을 통해 불러올 수 없고, CommonJS 기반의 코드에서는 `import from` 구문을 사용할 수 없기 때문에 `import()` 함수를 통해 ES Modules를 동적으로 불러와야 한다.
 
 # Advanced
 
 ## node.js 외의 자바스크립트 런타임에는 어떤 것이 있을까요?
 
+- 브라우저
+- Deno
