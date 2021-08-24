@@ -89,4 +89,5 @@ const module = require(`module/${lang}`) // 가능
 ## node.js 외의 자바스크립트 런타임에는 어떤 것이 있을까요?
 
 - 브라우저
-- Deno
+- Deno : node.js를 만들었던 라이언 달이 node.js의 문제점을 보완하여 만든 런타임
+- RingoJS : JVM 위에서 돌아가는 자바스크립트 런타임
