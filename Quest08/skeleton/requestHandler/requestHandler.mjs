@@ -5,17 +5,17 @@ export default class RequestHandler {
     this.#handlers = new Map();
   }
 
-  register(request, callback) {
-    this.#handlers.set(request, callback);
+  register(method, url, callback) {
+    this.#handlers.set(`${method} ${url}`, callback);
     return this;
   }
 
   get(url, callback) {
-    return this.register(`GET ${url}`, callback);
+    return this.register('GET', url, callback);
   }
 
   post(url, callback) {
-    return this.register(`POST ${url}`, callback);
+    return this.register('POST', url, callback);
   }
 
   has(request) {
