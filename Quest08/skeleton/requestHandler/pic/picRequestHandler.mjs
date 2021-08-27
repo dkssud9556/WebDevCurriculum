@@ -11,18 +11,19 @@ export default class PicRequestHandler extends RequestHandler {
   }
 
   #init() {
-    this.post('/pic/upload', async (req, res) => {
-      if (!req.body) {
-        res.statusCode = 400;
-      } else {
-        try {
-          await this.#picService.uploadPicture(req.body);
-        } catch (e) {
-          res.statusCode = 500;
+    this
+      .post('/pic/upload', async (req, res) => {
+        if (!req.body) {
+          res.statusCode = 400;
+        } else {
+          try {
+            await this.#picService.uploadPicture(req.body);
+          } catch (e) {
+            res.statusCode = 500;
+          }
         }
-      }
-      res.end();
-    })
+        res.end();
+      })
       .get('/pic/show', async (req, res) => {
         try {
           const picture = await this.#picService.getPicture();

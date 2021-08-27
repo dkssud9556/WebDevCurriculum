@@ -11,15 +11,19 @@ export default class FooRequestHandler extends RequestHandler {
   }
 
   #init() {
-    this.get('/foo', (req, res) => {
-      if (!req.query.bar) {
-        res.statusCode = 400;
-      } else {
-        const result = this.#fooService.hello(req.query.bar);
-        res.write(result);
-      }
-      res.end();
-    })
+    this
+      .get('/', (req, res) => {
+        res.end('Hello World!');
+      })
+      .get('/foo', (req, res) => {
+        if (!req.query.bar) {
+          res.statusCode = 400;
+        } else {
+          const result = this.#fooService.hello(req.query.bar);
+          res.write(result);
+        }
+        res.end();
+      })
       .post('/foo', (req, res) => {
         if (!req.body.bar) {
           res.statusCode = 400;
