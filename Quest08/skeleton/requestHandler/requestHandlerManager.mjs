@@ -7,15 +7,14 @@ export default class RequestHandlerManager {
 
   async handle(req, res) {
     await this.#parseRequestData(req);
-    const request = `${req.method} ${req.pathname}`
     const requestHandler = this.#requestHandlers.find(
-      requestHandler => requestHandler.has(request)
+      requestHandler => requestHandler.has(req.method, req.pathname)
     );
     if (!requestHandler) {
       res.statusCode = 404;
       return res.end();
     }
-    await requestHandler.handle(request, {req, res});
+    await requestHandler.handle(req.method, req.pathname, {req, res});
   }
 
   #parseRequestData = async (req) => {

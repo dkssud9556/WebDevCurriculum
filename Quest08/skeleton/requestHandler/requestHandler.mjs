@@ -18,15 +18,11 @@ export default class RequestHandler {
     return this.register('POST', url, callback);
   }
 
-  has(request) {
-    return this.#handlers.has(request);
+  has(method, url) {
+    return this.#handlers.has(`${method} ${url}`);
   }
 
-  handle(request, {req, res}) {
-    if (this.#handlers.has(request)) {
-      return this.#handlers.get(request)(req, res);
-    }
-    res.statusCode = 404;
-    res.end();
+  handle(method, url, {req, res}) {
+    this.#handlers.get(`${method} ${url}`)(req, res);
   }
 }
