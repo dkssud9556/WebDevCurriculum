@@ -1,6 +1,3 @@
-import fs from 'fs/promises';
-import path from 'path';
-
 import RequestHandler from "../requestHandler.mjs";
 import PicService from "./picService.mjs";
 
