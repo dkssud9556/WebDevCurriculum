@@ -29,11 +29,28 @@ body를 통해 데이터를 보낼 때 데이터의 Media Type을 나타내는�
 
 ### Postman에서 POST 요청을 보내는 여러 가지 방법(`form-data`, `x-www-form-urlencoded`, `raw`, `binary`) 각각은 어떤 용도를 가지고 있나요?
 
+- `form-data` : 키-값 쌍의 데이터를 보내고, Content-Type을 지정할 수 있다. 이미지, 동영상과 같은 파일 데이터를 보낼 때도 사용한다.
+- `x-www-form-urlencoded` : 데이터를 `키=값`으로 표현하며, `&`를 통해 여러 데이터를 구분하는 형식이다. ASCII로 표현되지 않는 문자는 url 인코딩하여 전송한다.
+- `raw` : JSON, XML과 같이 작성한 텍스트를 그대로 body에 담아 보내고 싶을 때 사용한다.
+- `binary` : 바이너리 데이터를 요청 본문과 함께 Postman 편집기에 수동으로 입력할 수 없을 때 사용한다.
+
 ## node.js의 `http` 모듈을 통해 HTTP 요청을 처리할 때,
 
 ### `req`와 `res` 객체에는 어떤 정보가 담겨있을까요?
 
+- `req`
+  - http 버전
+  - http 요청 헤더
+  - 요청 url
+  - 요청 method
+- `res`
+  - http 응답 코드
+  - http 응답 헤더
+  - http 응답 메시지
+
 ### GET과 POST에 대한 처리 형태가 달라지는 이유는 무엇인가요?
+
+http.createServer 함수에 넘긴 콜백 함수는 http 요청의 헤더를 모두 받으면 호출된다. 즉, body가 아직 다 전송되지 않아도 콜백 함수가 호출되는 것이다. POST 요청은 보통 요청 데이터를 body에 담기 때문에 body에 대한 처리를 해줘야 한다.
 
 ## 만약 API 엔드포인트(URL)가 아주 많다고 한다면, HTTP POST 요청의 `Content-Type` 헤더에 따라 다른 방식으로 동작하는 서버를 어떻게 정리하면 좋을까요?
 
