@@ -1,14 +1,12 @@
 import fs from 'fs/promises';
-import path from 'path';
+import {PICTURE_FILE_PATH} from "../../constants.mjs";
 
 export default class PicService {
-  static PICTURE_PATH = path.resolve() + '/static/pic.jpg';
-
   uploadPicture(picture) {
-    return fs.writeFile(PicService.PICTURE_PATH, picture);
+    return fs.writeFile(PICTURE_FILE_PATH, picture);
   }
 
   getPicture() {
-    return fs.readFile(PicService.PICTURE_PATH);
+    return fs.readFile(PICTURE_FILE_PATH);
   }
 }

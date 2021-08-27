@@ -6,19 +6,23 @@ export default class RequestHandlerManager {
   }
 
   async handle(req, res) {
-    const parsedUrl = this.#parseUrl(req);
-    req.query = this.#convertIntoObj(parsedUrl.searchParams);
-    req.body = await this.#parseBody(req);
-    req.pathname = parsedUrl.pathname;
+    await this.#parseRequestData(req);
     const request = `${req.method} ${req.pathname}`
     const requestHandler = this.#requestHandlers.find(
       requestHandler => requestHandler.has(request)
     );
     if (!requestHandler) {
       res.statusCode = 404;
-      res.end();
+      return res.end();
     }
     await requestHandler.handle(request, {req, res});
+  }
+
+  #parseRequestData = async (req) => {
+    const parsedUrl = this.#parseUrl(req);
+    req.query = this.#convertIntoObj(parsedUrl.searchParams);
+    req.body = await this.#parseBody(req);
+    req.pathname = parsedUrl.pathname;
   }
 
   #parseUrl = (req) => {
@@ -32,10 +36,10 @@ export default class RequestHandlerManager {
       data.push(chunk);
     }
     return req.headers['content-type'] === 'application/json'
-      ? JSON.parse(data.toString())
+      ? JSON.parse(data)
       : req.headers['content-type'] === 'image/jpeg'
-      ? Buffer.concat(data)
-      : null;
+        ? Buffer.concat(data)
+        : null;
   }
 
   #convertIntoObj = (map) => {
