@@ -37,7 +37,7 @@ export default class PicRequestHandler extends RequestHandler {
       .get('/pic/download', async (req, res) => {
         try {
           const picture = await this.#picService.getPicture();
-          res.writeHead(200, {'Content-Disposition': 'attachment;filename=pic.jpg'});
+          res.writeHead(200, {'Content-Disposition': 'attachment;filename=pic.jpg', 'Content-Type': 'application/octet-stream'});
           res.write(picture);
         } catch (e) {
           res.statusCode = 500;
