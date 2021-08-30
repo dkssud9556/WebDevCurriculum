@@ -14,7 +14,8 @@ class Notepad {
     this.#notepadDOM.addEventListener('saveFile', this.#onSaveFile);
     this.#notepadDOM.addEventListener('selectTab', this.#onSelectTab);
     document.addEventListener('keydown', this.#onNewFile);
-    this.#explorer.loadFiles(storage.getFileNames());
+    storage.getFileNames()
+      .then(fileNames => this.#explorer.loadFiles(fileNames));
   }
 
   #render = () => {
@@ -48,12 +49,12 @@ class Notepad {
     this.#tabBar.updateSelectedTabContent(e.detail.content);
   }
 
-  #onClickFile = (e) => {
+  #onClickFile = async (e) => {
     const tab = this.#tabBar.getTabByFileName(e.detail.fileName);
     if (tab) {
       this.#selectExistentTab(tab);
     } else {
-      this.#openNewTab(e.detail.fileName);
+      await this.#openNewTab(e.detail.fileName);
     }
   }
 
@@ -62,32 +63,32 @@ class Notepad {
     this.#tabBar.changeSelectedTab(tab.fileName);
   }
 
-  #openNewTab = (fileName) => {
-    const content = this.#storage.getFileContentByName(fileName);
+  #openNewTab = async (fileName) => {
+    const content = await this.#storage.getFileContentByName(fileName);
     this.#textArea.setValue(content);
     this.#tabBar.openNewTab({fileName, content, saved: true});
   }
 
-  #onSaveFile = (e) => {
+  #onSaveFile = async (e) => {
     const tab = this.#tabBar.getSelectedTab();
     if (tab.saved) {
-      this.#storage.save({
+      await this.#storage.save({
         fileName: tab.fileName,
         content: tab.content
       });
       this.#tabBar.setSelectedTabSaved();
     } else {
-      this.#saveNewFile(tab);
+      await this.#saveNewFile(tab);
     }
   }
 
-  #saveNewFile = (tab) => {
+  #saveNewFile = async (tab) => {
     const newFileName = prompt('저장할 파일명을 입력해주세요.');
-    if (this.#storage.isExistsFileName(newFileName)) {
+    if (await this.#storage.isExistsFileName(newFileName)) {
       return alert('파일명이 중복되었습니다.');
     }
 
-    this.#storage.saveAndUpdateFileNames({
+    await this.#storage.saveNewFile({
       fileName: newFileName,
       content: tab.content
     });

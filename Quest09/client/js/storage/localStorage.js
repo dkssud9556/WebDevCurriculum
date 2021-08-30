@@ -1,29 +1,27 @@
 class LocalStorage {
-  saveAndUpdateFileNames(tabInfo) {
-    this.save(tabInfo);
-    this.updateFileNames(tabInfo.fileName);
+  async saveNewFile(tabInfo) {
+    const fileNames = localStorage.getItem('fileNames');
+    if (!fileNames) {
+      localStorage.setItem('fileNames', tabInfo.fileName);
+    } else {
+      localStorage.setItem('fileNames', `${fileNames}:${tabInfo.fileName}`);
+    }
+    await this.save(tabInfo);
   }
 
-  getFileContentByName(fileName) {
+  async getFileContentByName(fileName) {
     return localStorage.getItem('file:' + fileName);
   }
 
-  save({fileName, content}) {
+  async save({fileName, content}) {
     localStorage.setItem('file:' + fileName, content);
   }
 
-  updateFileNames(fileName) {
-    if (!localStorage.getItem('fileNames')) {
-      return localStorage.setItem('fileNames', fileName);
-    }
-    localStorage.setItem('fileNames', localStorage.getItem('fileNames') + ':' + fileName);
-  }
-
-  getFileNames() {
+  async getFileNames() {
     return localStorage.getItem('fileNames')?.split(':') ?? [];
   }
 
-  isExistsFileName(fileName) {
+  async isExistsFileName(fileName) {
     return this.getFileNames().find(v => v === fileName);
   }
 }

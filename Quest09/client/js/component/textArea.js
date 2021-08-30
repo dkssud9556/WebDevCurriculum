@@ -2,7 +2,7 @@ class TextArea {
   #textAreaDOM;
 
   constructor(parent) {
-    this.#textArea = this.#createTextArea(parent);
+    this.#textAreaDOM = this.#createTextArea(parent);
     this.#textAreaDOM.oninput = this.#setSelectedTabUnsaved;
     this.#textAreaDOM.onkeydown = this.#onKeydown;
   }
