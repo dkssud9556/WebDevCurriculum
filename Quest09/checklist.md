@@ -138,4 +138,12 @@ Same-Origin Policy로 인해 도메인이 다른 서버와는 AJAX 요청을 주
 
 ## `fetch` API는 구현할 수 없지만 `XMLHttpRequest`로는 구현할 수 있는 기능이 있을까요?
 
+요청의 각 상태에 따른 처리를 해줄 수 있다. (uninitialized, loading, loaded, interactive, complete)
+
 ## REST 이전에는 HTTP API에 어떤 패러다임들이 있었을까요? REST의 대안으로는 어떤 것들이 제시되고 있을까요?
+
+- REST 이전
+  - SOAP
+- REST의 대안
+  - GraphQL
+  - gRPC
