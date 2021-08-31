@@ -1,8 +1,10 @@
 import fileService from "../../service/file.js";
-import saveFileSchema from "./schema/saveFile.js";
-import existsFileSchema from "./schema/existsFile.js";
-import getContentSchema from "./schema/getContent.js";
-import updateFileSchema from "./schema/updateFile.js";
+import {
+  saveFileSchema,
+  existsFileSchema,
+  getContentSchema,
+  updateFileSchema,
+} from "./schema/index.js";
 
 export default (fastify, opts, next) => {
   fastify

@@ -14,8 +14,7 @@ if (!existsSync(JSON_FOLDER_PATH)) {
 
 class JsonFileRepository {
   async findByFileName(fileName) {
-    const filesBuffer = await fs.readFile(JSON_FILES_PATH);
-    const files = JSON.parse(filesBuffer.toString());
+    const files = await this.#loadAsJson(JSON_FILES_PATH);
     return {
       fileName,
       content: files[fileName],
@@ -23,21 +22,17 @@ class JsonFileRepository {
   }
 
   async findAllNames() {
-    const fileNamesBuffer = await fs.readFile(JSON_FILENAMES_PATH);
-    return JSON.parse(fileNamesBuffer.toString());
+    return this.#loadAsJson(JSON_FILENAMES_PATH);
   }
 
   async existsByFileName(fileName) {
-    const fileNamesBuffer = await fs.readFile(JSON_FILENAMES_PATH);
-    const fileNames = JSON.parse(fileNamesBuffer.toString());
+    const fileNames = await this.#loadAsJson(JSON_FILENAMES_PATH);
     return fileNames.findIndex((v) => v === fileName) !== -1;
   }
 
   async save({ fileName, content }) {
-    const fileNamesBuffer = await fs.readFile(JSON_FILENAMES_PATH);
-    const filesBuffer = await fs.readFile(JSON_FILES_PATH);
-    const fileNames = JSON.parse(fileNamesBuffer.toString());
-    const files = JSON.parse(filesBuffer.toString());
+    const fileNames = await this.#loadAsJson(JSON_FILENAMES_PATH);
+    const files = await this.#loadAsJson(JSON_FILES_PATH);
     fileNames.push(fileName);
     files[fileName] = content;
     await fs.writeFile(JSON_FILENAMES_PATH, JSON.stringify(fileNames));
@@ -45,10 +40,14 @@ class JsonFileRepository {
   }
 
   async updateByFileName({ fileName, content }) {
-    const filesBuffer = await fs.readFile(JSON_FILES_PATH);
-    const files = JSON.parse(filesBuffer.toString());
+    const files = await this.#loadAsJson(JSON_FILES_PATH);
     files[fileName] = content;
     await fs.writeFile(JSON_FILES_PATH, JSON.stringify(files));
+  }
+
+  async #loadAsJson(filePath) {
+    const buffer = await fs.readFile(filePath);
+    return JSON.parse(buffer.toString());
   }
 }
 
