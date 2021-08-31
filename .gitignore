@@ -1,4 +1,10 @@
-package-lock.json
-node_modules/
-.DS_Store
-.idea
+node_modules/*
+bower_components/*
+**/node_modules/*
+**/bower_components/*
+
+**/.DS_Store
+**/Thumbs.db
+npm-debug.log
+
+.idea/
