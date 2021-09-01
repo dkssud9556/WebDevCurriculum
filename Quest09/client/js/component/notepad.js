@@ -39,7 +39,7 @@ class Notepad {
   };
 
   #onNewFile = (e) => {
-    if (e.key === "n" && (e.ctrlKey || e.metaKey)) {
+    if (e.code === "KeyN" && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
       if (this.#tabBar.isExistsTabByFileName("newfile")) {
         return;
@@ -61,13 +61,13 @@ class Notepad {
   #onClickFile = async (e) => {
     const tab = this.#tabBar.getTabByFileName(e.detail.fileName);
     if (tab) {
-      this.#selectExistentTab(tab);
+      this.#selectTab(tab);
     } else {
       await this.#openNewTab(e.detail.fileName);
     }
   };
 
-  #selectExistentTab = (tab) => {
+  #selectTab = (tab) => {
     this.#textArea.setValue(tab.content);
     this.#tabBar.changeSelectedTab(tab.fileName);
   };
@@ -102,7 +102,7 @@ class Notepad {
       content: tab.content,
     });
     this.#explorer.loadFile(newFileName);
-    this.#tabBar.updateTabName(newFileName);
+    this.#tabBar.updateSelectedTabName(newFileName);
   };
 
   #onSelectTab = (e) => {
@@ -116,7 +116,7 @@ class Notepad {
     file.remove();
     if (this.#tabBar.isExistsTabByFileName(file.fileName)) {
       const tab = this.#tabBar.getTabByFileName(file.fileName);
-      tab?.remove();
+      tab.remove();
     }
   };
 

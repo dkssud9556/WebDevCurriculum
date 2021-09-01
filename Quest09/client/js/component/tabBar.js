@@ -29,8 +29,8 @@ class TabBar {
     this.#selectedTab?.setSaved();
   };
 
-  updateTabName = (newFileName) => {
-    this.#tabMap.delete("newfile");
+  updateSelectedTabName = (newFileName) => {
+    this.#tabMap.delete(this.#selectedTab.fileName);
     this.#selectedTab.updateFileName(newFileName);
     this.#selectedTab.updateSaved(true);
     this.#tabMap.set(newFileName, this.#selectedTab);
