@@ -14,13 +14,13 @@
       ["index.js","index.html","Main.java"]
       ```
 
-## GET `/files/existence?fileName=???`
+## GET `/files/:fileName/existence`
 
 - 개요 : 요청하는 fileName을 가진 파일이 존재하는지 확인하는 API
 
 - Request
 
-  - query
+  - path parameter
     - fileName (string)
 
 - Response
@@ -83,7 +83,7 @@
   - 404
     - 해당 fileName을 가진 파일은 존재하지 않는다.
 
-## PATCH `/files/:fileName/fileName`
+## PATCH `/files/:fileName/file-name`
 
 - 개요 : 요청하는 fileName을 가진 파일의 파일명을 업데이트하는 API
 - Request
@@ -98,11 +98,11 @@
   - 409
     - 해당 newFileName을 가진 파일이 이미 존재한다.
 
-## DELETE `/files?fileName=???`
+## DELETE `/files/:fileName`
 
 - 개요 : 요청하는 fileName을 가진 파일을 삭제하는 API
 - Request
-  - query
+  - path parameter
     - fileName (string)
 - Response
   - 200

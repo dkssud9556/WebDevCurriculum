@@ -1,5 +1,5 @@
 export default {
-  querystring: {
+  params: {
     type: "object",
     properties: {
       fileName: { type: "string" },

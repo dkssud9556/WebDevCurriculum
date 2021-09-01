@@ -2,7 +2,7 @@ const baseUrl = "http://localhost:8000";
 
 class ServerStorage {
   async saveNewFile(tabInfo) {
-    const response = await fetch(`${baseUrl}/files`, {
+    await fetch(`${baseUrl}/files`, {
       headers: { "Content-Type": "application/json" },
       method: "POST",
       body: JSON.stringify(tabInfo),
@@ -19,14 +19,11 @@ class ServerStorage {
   }
 
   async save({ fileName, content }) {
-    const response = await fetch(
-      `${baseUrl}/files/${encodeURI(fileName)}/content`,
-      {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content }),
-      }
-    );
+    await fetch(`${baseUrl}/files/${encodeURI(fileName)}/content`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content }),
+    });
   }
 
   async getFileNames() {
@@ -38,7 +35,7 @@ class ServerStorage {
 
   async isExistsFileName(fileName) {
     const response = await fetch(
-      `${baseUrl}/files/existence?fileName=${fileName}`
+      `${baseUrl}/files/${encodeURI(fileName)}/existence`
     );
     if (response.ok) {
       return response.json();
@@ -46,22 +43,16 @@ class ServerStorage {
   }
 
   async deleteFile(fileName) {
-    const response = await fetch(
-      `${baseUrl}/files?fileName=${encodeURI(fileName)}`,
-      {
-        method: "DELETE",
-      }
-    );
+    await fetch(`${baseUrl}/files/${encodeURI(fileName)}`, {
+      method: "DELETE",
+    });
   }
 
   async updateFileName({ fileName, newFileName }) {
-    const response = await fetch(
-      `${baseUrl}/files/${encodeURI(fileName)}/fileName`,
-      {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ newFileName }),
-      }
-    );
+    await fetch(`${baseUrl}/files/${encodeURI(fileName)}/file-name`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ newFileName }),
+    });
   }
 }

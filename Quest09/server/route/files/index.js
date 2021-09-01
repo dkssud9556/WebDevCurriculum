@@ -13,10 +13,14 @@ export default (fastify, opts, next) => {
     .get("/name", async (request, reply) => {
       return fileService.getFileNames();
     })
-    .get("/existence", { schema: existsFileSchema }, async (request, reply) => {
-      const { fileName } = request.query;
-      return fileService.exists(fileName);
-    })
+    .get(
+      "/:fileName/existence",
+      { schema: existsFileSchema },
+      async (request, reply) => {
+        const { fileName } = request.params;
+        return fileService.exists(fileName);
+      }
+    )
     .get(
       "/:fileName/content",
       { schema: getContentSchema },
@@ -39,12 +43,16 @@ export default (fastify, opts, next) => {
         reply.send();
       }
     )
-    .delete("/", { schema: deleteFileSchema }, async (request, reply) => {
-      await fileService.deleteFile(request.query.fileName);
-      reply.send();
-    })
+    .delete(
+      "/:fileName",
+      { schema: deleteFileSchema },
+      async (request, reply) => {
+        await fileService.deleteFile(request.params.fileName);
+        reply.send();
+      }
+    )
     .patch(
-      "/:fileName/fileName",
+      "/:fileName/file-name",
       { schema: updateFileNameSchema },
       async (request, reply) => {
         const { fileName } = request.params;
