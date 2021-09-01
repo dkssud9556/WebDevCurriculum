@@ -102,7 +102,7 @@ class Notepad {
       content: tab.content,
     });
     this.#explorer.loadFile(newFileName);
-    this.#tabBar.updateSelectedTabName(newFileName);
+    this.#tabBar.updateNewFileTabName(newFileName);
   };
 
   #onSelectTab = (e) => {
