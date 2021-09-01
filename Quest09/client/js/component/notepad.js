@@ -19,6 +19,8 @@ class Notepad {
     this.#notepadDOM.addEventListener("clickFile", this.#onClickFile);
     this.#notepadDOM.addEventListener("saveFile", this.#onSaveFile);
     this.#notepadDOM.addEventListener("selectTab", this.#onSelectTab);
+    this.#notepadDOM.addEventListener("deleteFile", this.#onDeleteFile);
+    this.#notepadDOM.addEventListener("renameFile", this.#onRenameFile);
     document.addEventListener("keydown", this.#onNewFile);
     storage
       .getFileNames()
@@ -106,5 +108,31 @@ class Notepad {
   #onSelectTab = (e) => {
     this.#tabBar.changeSelectedTab(e.detail.fileName);
     this.#textArea.setValue(e.detail.content);
+  };
+
+  #onDeleteFile = async (e) => {
+    const { file } = e.detail;
+    await this.#storage.deleteFile(file.fileName);
+    file.remove();
+    if (this.#tabBar.isExistsTabByFileName(file.fileName)) {
+      const tab = this.#tabBar.getTabByFileName(file.fileName);
+      tab?.remove();
+    }
+  };
+
+  #onRenameFile = async (e) => {
+    const { file } = e.detail;
+    const newFileName = prompt("새로운 파일명을 입력해주세요.");
+    await this.#storage.updateFileName({
+      fileName: file.fileName,
+      newFileName,
+    });
+    file.updateFileName(newFileName);
+    if (this.#tabBar.isExistsTabByFileName(file.fileName)) {
+      this.#tabBar.renameTab({
+        fileName: file.fileName,
+        newFileName,
+      });
+    }
   };
 }

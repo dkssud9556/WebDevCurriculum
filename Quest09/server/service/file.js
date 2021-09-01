@@ -35,6 +35,20 @@ class FileService {
     }
     await this.#fileRepository.updateByFileName({ fileName, content });
   }
+
+  async deleteFile(fileName) {
+    if (!(await this.#fileRepository.existsByFileName(fileName))) {
+      throw new FileNotFoundError();
+    }
+    await this.#fileRepository.deleteByFileName(fileName);
+  }
+
+  async renameFile({ fileName, newFileName }) {
+    if (!(await this.#fileRepository.existsByFileName(fileName))) {
+      throw new FileNotFoundError();
+    }
+    await this.#fileRepository.updateFileName({ fileName, newFileName });
+  }
 }
 
 export default new FileService(fileRepository);

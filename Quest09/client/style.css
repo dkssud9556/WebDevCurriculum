@@ -27,18 +27,45 @@ body {
     grid-row: 1 / 3;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .file {
-    width: 300px;
+    width: 280px;
     color: white;
     overflow: hidden;
     text-overflow: ellipsis;
     margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .file:hover {
     background-color: #262A31;
+    cursor: pointer;
+}
+
+.file-button-div {
+
+}
+
+.file-delete-button {
+    background: none;
+    border: none;
+    color: orangered;
+}
+
+.file-delete-button:hover {
+    cursor: pointer;
+}
+
+.file-rename-button {
+    background: none;
+    border: none;
+    color: cornflowerblue;
+}
+
+.file-rename-button:hover {
     cursor: pointer;
 }
 
@@ -53,7 +80,8 @@ body {
     max-width: 150px;
     width: 150px;
     height: 100%;
-    background-color: aqua;
+    background-color: var(--tab-background-color);
+    color: darkgray;
     display: flex;
     align-items: center;
 }
@@ -73,6 +101,11 @@ body {
 .tab-component > button {
     background: none;
     border: none;
+    color: darkgray;
+}
+
+.tab-component > button:hover {
+    cursor: pointer;
 }
 
 .tab-component-unsaved::after {
@@ -80,7 +113,8 @@ body {
 }
 
 .tab-component-selected {
-    background-color: white;
+    background-color: var(--text-area-background-color);
+    color: white;
 }
 
 .text-area {

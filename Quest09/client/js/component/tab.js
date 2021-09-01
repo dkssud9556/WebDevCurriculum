@@ -7,6 +7,8 @@ class Tab {
   #closeButton;
   #fileNameSpan;
 
+  #parentDOM;
+
   get fileName() {
     return this.#fileName;
   }
@@ -19,64 +21,84 @@ class Tab {
     return this.#saved;
   }
 
-  constructor(parent, {fileName = 'newfile', content = '', saved = false}) {
+  constructor(
+    parentDOM,
+    { fileName = "newfile", content = "", saved = false }
+  ) {
+    this.#parentDOM = parentDOM;
     this.#fileName = fileName;
     this.#content = content;
     this.#saved = saved;
-    this.#tabDOM = this.#createTab(parent);
+    this.#tabDOM = this.#createTab();
     this.#tabDOM.onclick = this.#onClickTab;
     this.#closeButton.onclick = this.#onClickCloseButton;
   }
 
   #onClickTab = (e) => {
-    this.#tabDOM.dispatchEvent(new CustomEvent('selectTab', {
-      bubbles: true, detail: {fileName: this.#fileName, content: this.#content}
-    }));
-  }
+    this.#tabDOM.dispatchEvent(
+      new CustomEvent("selectTab", {
+        bubbles: true,
+        detail: { fileName: this.#fileName, content: this.#content },
+      })
+    );
+  };
 
   #onClickCloseButton = (e) => {
     e.stopPropagation();
-    this.#tabDOM.dispatchEvent(new CustomEvent('removeTab', {
-      bubbles: true, detail: {tab: this.#tabDOM, fileName: this.#fileName}
-    }));
-  }
+    this.#tabDOM.dispatchEvent(
+      new CustomEvent("removeTab", {
+        bubbles: true,
+        detail: { tab: this },
+      })
+    );
+  };
 
-  #createTab = (parent) => {
-    this.#closeButton = ElementCreator.create({tag: 'button', textContent: 'X'});
-    this.#fileNameSpan = ElementCreator.create({tag: 'span', textContent: this.#fileName});
-    return ElementCreator.create({
-      classList: ['tab-component'],
-      children: [this.#fileNameSpan, this.#closeButton],
-      parent
+  #createTab = () => {
+    this.#closeButton = ElementCreator.create({
+      tag: "button",
+      textContent: "X",
     });
-  }
+    this.#fileNameSpan = ElementCreator.create({
+      tag: "span",
+      textContent: this.#fileName,
+    });
+    return ElementCreator.create({
+      classList: ["tab-component"],
+      children: [this.#fileNameSpan, this.#closeButton],
+      parent: this.#parentDOM,
+    });
+  };
 
   updateFileName = (fileName) => {
     this.#fileName = fileName;
     this.#fileNameSpan.textContent = fileName;
-  }
+  };
 
   updateSaved = (saved) => {
     this.#saved = saved;
-  }
+  };
 
   updateContent = (content) => {
     this.#content = content;
-  }
+  };
 
   select = () => {
-    this.#tabDOM.classList.add('tab-component-selected');
-  }
+    this.#tabDOM.classList.add("tab-component-selected");
+  };
 
   unselect = () => {
-    this.#tabDOM.classList.remove('tab-component-selected');
-  }
+    this.#tabDOM.classList.remove("tab-component-selected");
+  };
 
   setUnsaved = () => {
-    this.#tabDOM.classList.add('tab-component-unsaved');
-  }
+    this.#tabDOM.classList.add("tab-component-unsaved");
+  };
 
   setSaved = () => {
-    this.#tabDOM.classList.remove('tab-component-unsaved');
-  }
+    this.#tabDOM.classList.remove("tab-component-unsaved");
+  };
+
+  remove = () => {
+    this.#parentDOM.removeChild(this.#tabDOM);
+  };
 }

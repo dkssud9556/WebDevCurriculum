@@ -6,18 +6,18 @@ class Explorer {
   }
 
   #createSection = (parent) => {
-    return ElementCreator.create({tag: 'section', classList: ['explorer'], parent});
-  }
+    return ElementCreator.create({
+      tag: "section",
+      classList: ["explorer"],
+      parent,
+    });
+  };
 
   loadFile = (fileName) => {
-    const fileDiv = ElementCreator.create({textContent: fileName, classList: ['file']});
-    fileDiv.onclick = (e) => this.#explorerDOM.dispatchEvent(new CustomEvent('clickFile', {
-      bubbles: true, detail: {fileName}
-    }));
-    this.#explorerDOM.appendChild(fileDiv);
-  }
+    new File(this.#explorerDOM, { fileName });
+  };
 
   loadFiles = (fileNames) => {
-    fileNames.forEach(fileName => this.loadFile(fileName));
-  }
+    fileNames.forEach((fileName) => this.loadFile(fileName));
+  };
 }

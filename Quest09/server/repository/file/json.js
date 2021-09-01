@@ -45,6 +45,25 @@ class JsonFileRepository {
     await fs.writeFile(JSON_FILES_PATH, JSON.stringify(files));
   }
 
+  async deleteByFileName(fileName) {
+    let fileNames = await this.#loadAsJson(JSON_FILENAMES_PATH);
+    const files = await this.#loadAsJson(JSON_FILES_PATH);
+    delete files[fileName];
+    fileNames = fileNames.filter((v) => v !== fileName);
+    await fs.writeFile(JSON_FILENAMES_PATH, JSON.stringify(fileNames));
+    await fs.writeFile(JSON_FILES_PATH, JSON.stringify(files));
+  }
+
+  async updateFileName({ fileName, newFileName }) {
+    const fileNames = await this.#loadAsJson(JSON_FILENAMES_PATH);
+    const files = await this.#loadAsJson(JSON_FILES_PATH);
+    fileNames[fileNames.findIndex((v) => v === fileName)] = newFileName;
+    files[newFileName] = files[fileName];
+    delete files[fileName];
+    await fs.writeFile(JSON_FILENAMES_PATH, JSON.stringify(fileNames));
+    await fs.writeFile(JSON_FILES_PATH, JSON.stringify(files));
+  }
+
   async #loadAsJson(filePath) {
     const buffer = await fs.readFile(filePath);
     return JSON.parse(buffer.toString());

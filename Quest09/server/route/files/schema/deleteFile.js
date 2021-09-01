@@ -1,10 +1,9 @@
 export default {
-  body: {
+  querystring: {
     type: "object",
     properties: {
       fileName: { type: "string" },
-      content: { type: "string" },
     },
-    required: ["fileName", "content"],
+    required: ["fileName"],
   },
 };

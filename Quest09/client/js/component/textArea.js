@@ -8,25 +8,34 @@ class TextArea {
   }
 
   #createTextArea = (parent) => {
-    return ElementCreator.create({tag: 'textarea', classList: ['text-area'], parent});
-  }
+    return ElementCreator.create({
+      tag: "textarea",
+      classList: ["text-area"],
+      parent,
+    });
+  };
 
   setValue = (content) => {
     this.#textAreaDOM.value = content;
-  }
+  };
 
   #setSelectedTabUnsaved = (e) => {
-    this.#textAreaDOM.dispatchEvent(new CustomEvent('contentModification', {
-      bubbles: true, detail: {content: this.#textAreaDOM.value}
-    }));
-  }
+    this.#textAreaDOM.dispatchEvent(
+      new CustomEvent("contentModification", {
+        bubbles: true,
+        detail: { content: this.#textAreaDOM.value },
+      })
+    );
+  };
 
   #onKeydown = (e) => {
-    if (e.key === 's' && (e.ctrlKey || e.metaKey)) {
+    if (e.key === "s" && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
-      this.#textAreaDOM.dispatchEvent(new CustomEvent('saveFile', {
-        bubbles: true
-      }));
+      this.#textAreaDOM.dispatchEvent(
+        new CustomEvent("saveFile", {
+          bubbles: true,
+        })
+      );
     }
-  }
+  };
 }
