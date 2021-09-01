@@ -47,6 +47,9 @@ class FileService {
     if (!(await this.#fileRepository.existsByFileName(fileName))) {
       throw new FileNotFoundError();
     }
+    if (await this.#fileRepository.existsByFileName(newFileName)) {
+      throw new FileNameConflictError();
+    }
     await this.#fileRepository.updateFileName({ fileName, newFileName });
   }
 }
