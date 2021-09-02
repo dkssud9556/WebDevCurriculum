@@ -22,13 +22,21 @@ class LocalStorage {
   }
 
   async isExistsFileName(fileName) {
-    return this.getFileNames().find((v) => v === fileName);
+    return (await this.getFileNames()).find((v) => v === fileName);
   }
 
   async deleteFile(fileName) {
-    let fileNames = localStorage.getItem("fileNames")?.split(":") ?? [];
+    let fileNames = await this.getFileNames();
     fileNames = fileNames.filter((v) => v !== fileName);
     localStorage.setItem("fileNames", fileNames.join(":"));
     localStorage.removeItem("file:" + fileName);
+  }
+
+  async updateFileName({ fileName, newFileName }) {
+    await this.saveNewFile({
+      fileName: newFileName,
+      content: await this.getFileContentByName(fileName),
+    });
+    await this.deleteFile(fileName);
   }
 }

@@ -10,7 +10,7 @@ const server = fastify({
   schemaErrorFormatter: (errors, dataVar) => new InvalidParameterError(),
 });
 
-server.register(cors, { origin: "*" });
+server.register(cors, { origin: "http://localhost:3000" });
 route(server);
 server.setErrorHandler(errorHandler);
 
