@@ -120,7 +120,7 @@ Representational State Transfer의 약자로, 소프트웨어가 가지고 있�
 
 ## CORS란 무엇인가요? 이러한 기능이 왜 필요할까요? CORS는 어떻게 구현될까요?
 
-- Same-Origin Policy : 프로토콜, 호스트, 포트가 모두 같은 도메인을 가진 서버와만 AJAX 요청을 주고 받을 수 있도록 하는 정책. XSS, CSRF와 같은 공격을 방지하기 위해 존재하는 정책이다.
+- Same-Origin Policy : 프로토콜, 호스트, 포트가 모두 같은 도메인을 가진 서버와만 AJAX 요청을 주고 받을 수 있도록 하는 정책. 
 
 Same-Origin Policy로 인해 도메인이 다른 서버와는 AJAX 요청을 주고 받을 수 없지만, 웹의 확장을 위해서 Cross-Origin 요청이 무조건 필요했기에 Same-Origin Policy의 예외 사항을 둔게 CORS (Cross Origin Resource Sharing)이다. 
 
