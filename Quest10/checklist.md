@@ -77,3 +77,9 @@ JWT의 구조는 크게 세 부분으로 나뉜다. JSON 형태의 각 부분은
 # Advanced
 
 ## Web Authentication API(WebAuthn)은 무엇인가요?
+
+The Fast ID Online Allliance와 World Wide Web Consortium에서 암호를 대체하기 위해 만든 새로운 웹 표준 (Public key 기반의 인증)
+
+- 내장 인증 : 지문인식, 얼굴인식, 모바일 핀번호 -> OS 레벨에서 구현되어 있어야 하므로 스마트폰 단말에서 주로 사용한다.
+- 외부 인증 : USB/NFC/블루투스 방식의 하드웨어 보안키, 전용 인증 어플
+
