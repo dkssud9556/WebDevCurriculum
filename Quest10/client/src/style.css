@@ -1,0 +1,125 @@
+:root {
+    --tab-background-color: #21252B;
+    --text-area-background-color: #282C34;
+    --explorer-background-color: #21252B;
+}
+
+span {
+    box-sizing: content-box;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.notepad {
+    display: grid;
+    grid-template-rows: 1fr 13fr;
+    grid-template-columns: 300px 1fr;
+    height: 100vh;
+}
+
+.explorer {
+    background-color: var(--explorer-background-color);
+    width: 100%;
+    height: 100%;
+    grid-row: 1 / 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.file {
+    width: 280px;
+    color: white;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.file:hover {
+    background-color: #262A31;
+    cursor: pointer;
+}
+
+.file-button-div {
+
+}
+
+.file-delete-button {
+    background: none;
+    border: none;
+    color: orangered;
+}
+
+.file-delete-button:hover {
+    cursor: pointer;
+}
+
+.file-rename-button {
+    background: none;
+    border: none;
+    color: cornflowerblue;
+}
+
+.file-rename-button:hover {
+    cursor: pointer;
+}
+
+.tab {
+    background-color: var(--tab-background-color);
+    display: flex;
+    overflow: auto;
+}
+
+.tab-component {
+    min-width: 150px;
+    max-width: 150px;
+    width: 150px;
+    height: 100%;
+    background-color: var(--tab-background-color);
+    color: darkgray;
+    display: flex;
+    align-items: center;
+}
+
+.tab-component:hover {
+    cursor: pointer;
+}
+
+.tab-component > span {
+    width: 100px;
+    max-width: 100px;
+    margin-left: 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.tab-component > button {
+    background: none;
+    border: none;
+    color: darkgray;
+}
+
+.tab-component > button:hover {
+    cursor: pointer;
+}
+
+.tab-component-unsaved::after {
+    content: '●';
+}
+
+.tab-component-selected {
+    background-color: var(--text-area-background-color);
+    color: white;
+}
+
+.text-area {
+    background-color: var(--text-area-background-color);
+    border: none;
+    outline: none;
+    color: white;
+}
