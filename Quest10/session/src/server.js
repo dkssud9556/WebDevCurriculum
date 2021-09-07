@@ -1,5 +1,7 @@
 import fastify from "fastify";
 import cors from "fastify-cors";
+import fastifyCookie from "fastify-cookie";
+import fastifySession from "fastify-session";
 
 import route from "./route/index.js";
 import errorHandler from "./errorHandler.js";
@@ -11,6 +13,14 @@ const server = fastify({
 });
 
 server.register(cors, { origin: "http://localhost:3000" });
+server.register(fastifyCookie);
+server.register(fastifySession, {
+  secret: "secretsecretsecretsecretsecretsecretsecretsecret",
+  cookie: { secure: false },
+  maxAge: 1,
+  resave: false,
+  saveUninitialized: false,
+});
 route(server);
 server.setErrorHandler(errorHandler);
 
