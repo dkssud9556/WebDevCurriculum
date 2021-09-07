@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="js/storage/serverStorage.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <form id="login-form">
+      <input type="text" id="username" />
+      <input type="password" id="password" />
+      <button>로그인</button>
+    </form>
+    <script>
+      document.getElementById("login-form").onsubmit = (e) => {
+        e.preventDefault();
+        const storage = new ServerStorage();
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        storage
+          .login({ username, password })
+          .then(() => {
+            alert("로그인 성공");
+            window.location.replace("http://localhost:3000");
+          })
+          .catch((err) => {
+            console.log(err);
+            alert("아이디 또는 비밀번호가 올바른지 확인하세요.");
+          });
+      };
+    </script>
+  </body>
+</html>

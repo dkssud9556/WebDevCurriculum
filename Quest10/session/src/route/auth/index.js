@@ -1,5 +1,3 @@
-import { uid } from "uid";
-
 import authService from "../../service/auth.js";
 import { loginSchema } from "./schema/index.js";
 import AlreadyAuthenticatedError from "../../error/alreadyAuthenticated.js";
@@ -10,6 +8,7 @@ export default (fastify, opts, next) => {
     method: "POST",
     schema: loginSchema,
     preHandler: (request, reply, done) => {
+      console.log(request.session);
       if (request.session && request.session.username) {
         throw new AlreadyAuthenticatedError();
       }

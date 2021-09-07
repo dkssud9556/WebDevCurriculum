@@ -10,6 +10,7 @@ import {
 import UnauthenticatedError from "../../error/unauthenticated.js";
 
 const preHandler = (request, reply, done) => {
+  console.log(request.session);
   if (!request.session || !request.session.username) {
     throw new UnauthenticatedError();
   }

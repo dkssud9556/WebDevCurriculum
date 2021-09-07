@@ -12,12 +12,16 @@ const server = fastify({
   schemaErrorFormatter: (errors, dataVar) => new InvalidParameterError(),
 });
 
-server.register(cors, { origin: "http://localhost:3000" });
+server.register(cors, { origin: "http://localhost:3000", credentials: true });
 server.register(fastifyCookie);
 server.register(fastifySession, {
   secret: "secretsecretsecretsecretsecretsecretsecretsecret",
-  cookie: { secure: false },
-  maxAge: 1,
+  cookie: {
+    secure: false,
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60,
+    path: "/",
+  },
   resave: false,
   saveUninitialized: false,
 });

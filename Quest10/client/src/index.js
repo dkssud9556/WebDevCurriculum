@@ -1,8 +1,16 @@
-const handler = require("serve-handler");
-const http = require("http");
+const express = require("express");
+const path = require("path");
 
-const server = http.createServer((req, res) => {
-  return handler(req, res, { public: "./src" });
+const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use("/", express.static(path.resolve() + "/src"));
+app.use("/login", (req, res, next) => {
+  res.sendFile(path.resolve() + "/src/login.html");
+});
+app.use("/", (req, res, next) => {
+  res.sendFile(path.resolve() + "/src/index.html");
 });
 
-server.listen(3000);
+app.listen(3000);

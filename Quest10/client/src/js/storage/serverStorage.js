@@ -6,12 +6,14 @@ class ServerStorage {
       headers: { "Content-Type": "application/json" },
       method: "POST",
       body: JSON.stringify(tabInfo),
+      credentials: "include",
     });
   }
 
   async getFileContentByName(fileName) {
     const response = await fetch(
-      `${baseUrl}/files/${encodeURI(fileName)}/content`
+      `${baseUrl}/files/${encodeURI(fileName)}/content`,
+      { credentials: "include" }
     );
     if (response.ok) {
       return response.text();
@@ -23,11 +25,14 @@ class ServerStorage {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ content }),
+      credentials: "include",
     });
   }
 
   async getFileNames() {
-    const response = await fetch(`${baseUrl}/files/name`);
+    const response = await fetch(`${baseUrl}/files/name`, {
+      credentials: "include",
+    });
     if (response.ok) {
       return response.json();
     }
@@ -35,7 +40,8 @@ class ServerStorage {
 
   async isExistsFileName(fileName) {
     const response = await fetch(
-      `${baseUrl}/files/${encodeURI(fileName)}/existence`
+      `${baseUrl}/files/${encodeURI(fileName)}/existence`,
+      { credentials: "include" }
     );
     if (response.ok) {
       return response.json();
@@ -45,6 +51,7 @@ class ServerStorage {
   async deleteFile(fileName) {
     await fetch(`${baseUrl}/files/${encodeURI(fileName)}`, {
       method: "DELETE",
+      credentials: "include",
     });
   }
 
@@ -53,6 +60,19 @@ class ServerStorage {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ newFileName }),
+      credentials: "include",
     });
+  }
+
+  async login({ username, password }) {
+    const response = await fetch(`${baseUrl}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
+      credentials: "include",
+    });
+    if (!response.ok) {
+      throw response;
+    }
   }
 }
