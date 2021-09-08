@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import authService from "../../service/auth.js";
 import { loginSchema } from "./schema/index.js";
 import jwtCheck from "../../middleware/jwtCheck.js";
+import { JWT_SECRET } from "../../config.js";
 
 export default (fastify, opts, next) => {
   fastify
@@ -14,7 +15,7 @@ export default (fastify, opts, next) => {
         await authService.login(request.body);
         const token = jwt.sign(
           { username: request.body.username },
-          "jwtsecret",
+          JWT_SECRET,
           {
             expiresIn: "2h",
           }

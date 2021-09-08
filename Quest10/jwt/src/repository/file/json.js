@@ -1,10 +1,8 @@
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import fs from "fs/promises";
-import path from "path";
-import { users } from "../user/memory.js";
 
-const JSON_FOLDER_PATH = `${path.resolve()}/storage`;
-const JSON_FILES_PATH = `${JSON_FOLDER_PATH}/files.json`;
+import { users } from "../user/memory.js";
+import { JSON_FOLDER_PATH, JSON_FILES_PATH } from "../../config.js";
 
 if (!existsSync(JSON_FOLDER_PATH)) {
   mkdirSync(JSON_FOLDER_PATH);

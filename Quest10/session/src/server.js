@@ -6,6 +6,7 @@ import fastifySession from "fastify-session";
 import route from "./route/index.js";
 import errorHandler from "./errorHandler.js";
 import InvalidParameterError from "./error/invalidParameter.js";
+import { SESSION_SECRET } from "./config.js";
 
 const server = fastify({
   logger: true,
@@ -15,11 +16,10 @@ const server = fastify({
 server.register(cors, { origin: "http://localhost:3000", credentials: true });
 server.register(fastifyCookie);
 server.register(fastifySession, {
-  secret: "secretsecretsecretsecretsecretsecretsecretsecret",
+  secret: SESSION_SECRET,
   cookie: {
     secure: false,
     httpOnly: true,
-    maxAge: 1000 * 60 * 60,
     path: "/",
   },
   resave: false,
