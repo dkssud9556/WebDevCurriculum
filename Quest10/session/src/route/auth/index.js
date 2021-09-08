@@ -28,7 +28,7 @@ export default (fastify, opts, next) => {
       handler: (request, reply) => {
         request.sessionStore.destroy(request.session.sessionId, () => {
           request.session = null;
-          reply.send();
+          reply.clearCookie("sessionId").send();
         });
       },
     });

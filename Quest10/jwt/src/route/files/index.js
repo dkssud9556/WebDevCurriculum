@@ -7,59 +7,90 @@ import {
   deleteFileSchema,
   updateFileNameSchema,
 } from "./schema/index.js";
+import jwtCheck from "../../middleware/jwtCheck.js";
 
 export default (fastify, opts, next) => {
   fastify
-    .get("/name", async (request, reply) => {
-      return fileService.getFileNames();
+    .route({
+      url: "/name",
+      method: "GET",
+      preHandler: jwtCheck,
+      handler: async (request, reply) => {
+        const { username } = request.payload;
+        return fileService.getFileNames(username);
+      },
     })
-    .get(
-      "/:fileName/existence",
-      { schema: existsFileSchema },
-      async (request, reply) => {
+    .route({
+      url: "/:fileName/existence",
+      method: "GET",
+      schema: existsFileSchema,
+      preHandler: jwtCheck,
+      handler: async (request, reply) => {
         const { fileName } = request.params;
-        return fileService.exists(fileName);
-      }
-    )
-    .get(
-      "/:fileName/content",
-      { schema: getContentSchema },
-      async (request, reply) => {
-        const { fileName } = request.params;
-        return fileService.getContent(fileName);
-      }
-    )
-    .post("/", { schema: saveFileSchema }, async (request, reply) => {
-      await fileService.saveFile(request.body);
-      reply.send();
+        const { username } = request.payload;
+        return fileService.exists({ fileName, username });
+      },
     })
-    .patch(
-      "/:fileName/content",
-      { schema: updateFileContentSchema },
-      async (request, reply) => {
+    .route({
+      url: "/:fileName/content",
+      method: "GET",
+      schema: getContentSchema,
+      preHandler: jwtCheck,
+      handler: async (request, reply) => {
+        const { fileName } = request.params;
+        const { username } = request.payload;
+        return fileService.getContent({ fileName, username });
+      },
+    })
+    .route({
+      url: "/",
+      method: "POST",
+      schema: saveFileSchema,
+      preHandler: jwtCheck,
+      handler: async (request, reply) => {
+        const { fileName, content } = request.body;
+        const { username } = request.payload;
+        await fileService.saveFile({ fileName, content, username });
+        reply.send();
+      },
+    })
+    .route({
+      url: "/:fileName/content",
+      method: "PATCH",
+      schema: updateFileContentSchema,
+      preHandler: jwtCheck,
+      handler: async (request, reply) => {
         const { fileName } = request.params;
         const { content } = request.body;
-        await fileService.updateFile({ fileName, content });
+        const { username } = request.payload;
+        await fileService.updateFile({ fileName, content, username });
         reply.send();
-      }
-    )
-    .delete(
-      "/:fileName",
-      { schema: deleteFileSchema },
-      async (request, reply) => {
-        await fileService.deleteFile(request.params.fileName);
-        reply.send();
-      }
-    )
-    .patch(
-      "/:fileName/file-name",
-      { schema: updateFileNameSchema },
-      async (request, reply) => {
+      },
+    })
+    .route({
+      url: "/:fileName/file-name",
+      method: "PATCH",
+      schema: updateFileNameSchema,
+      preHandler: jwtCheck,
+      handler: async (request, reply) => {
         const { fileName } = request.params;
         const { newFileName } = request.body;
-        await fileService.renameFile({ fileName, newFileName });
+        const { username } = request.payload;
+        await fileService.renameFile({ fileName, newFileName, username });
         reply.send();
-      }
-    );
+      },
+    })
+    .route({
+      url: "/:fileName",
+      method: "DELETE",
+      schema: deleteFileSchema,
+      preHandler: jwtCheck,
+      handler: async (request, reply) => {
+        const { fileName } = request.params;
+        const { username } = request.payload;
+        await fileService.deleteFile({ fileName, username });
+        reply.send();
+      },
+    });
   next();
 };

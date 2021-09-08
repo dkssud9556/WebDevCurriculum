@@ -1,67 +1,58 @@
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import fs from "fs/promises";
 import path from "path";
+import { users } from "../user/memory.js";
 
 const JSON_FOLDER_PATH = `${path.resolve()}/storage`;
 const JSON_FILES_PATH = `${JSON_FOLDER_PATH}/files.json`;
-const JSON_FILENAMES_PATH = `${JSON_FOLDER_PATH}/filenames.json`;
 
 if (!existsSync(JSON_FOLDER_PATH)) {
   mkdirSync(JSON_FOLDER_PATH);
-  writeFileSync(JSON_FILES_PATH, JSON.stringify({}));
-  writeFileSync(JSON_FILENAMES_PATH, JSON.stringify([]));
+  const initValue = {};
+  users.forEach((user) => (initValue[user.username] = {}));
+  writeFileSync(JSON_FILES_PATH, JSON.stringify(initValue));
 }
 
 class JsonFileRepository {
-  async findByFileName(fileName) {
+  async findByUsernameAndFileName({ username, fileName }) {
     const files = await this.#loadAsJson(JSON_FILES_PATH);
-    return {
-      fileName,
-      content: files[fileName],
-    };
+    return files[username][fileName]
+      ? { fileName, content: files[username][fileName] }
+      : null;
   }
 
-  async findAllNames() {
-    return this.#loadAsJson(JSON_FILENAMES_PATH);
+  async findAllNamesByUsername(username) {
+    const files = await this.#loadAsJson(JSON_FILES_PATH);
+    return Object.keys(files[username]);
   }
 
-  async existsByFileName(fileName) {
-    const fileNames = await this.#loadAsJson(JSON_FILENAMES_PATH);
+  async existsByUsernameAndFileName({ username, fileName }) {
+    const fileNames = await this.findAllNamesByUsername(username);
     return fileNames.findIndex((v) => v === fileName) !== -1;
   }
 
-  async save({ fileName, content }) {
-    const fileNames = await this.#loadAsJson(JSON_FILENAMES_PATH);
+  async save({ username, fileName, content }) {
     const files = await this.#loadAsJson(JSON_FILES_PATH);
-    fileNames.push(fileName);
-    files[fileName] = content;
-    await fs.writeFile(JSON_FILENAMES_PATH, JSON.stringify(fileNames));
+    files[username][fileName] = content;
     await fs.writeFile(JSON_FILES_PATH, JSON.stringify(files));
   }
 
-  async updateByFileName({ fileName, content }) {
+  async updateContent({ username, fileName, content }) {
     const files = await this.#loadAsJson(JSON_FILES_PATH);
-    files[fileName] = content;
+    files[username][fileName] = content;
     await fs.writeFile(JSON_FILES_PATH, JSON.stringify(files));
   }
 
-  async deleteByFileName(fileName) {
-    let fileNames = await this.#loadAsJson(JSON_FILENAMES_PATH);
+  async deleteByUsernameAndFileName({ username, fileName }) {
     const files = await this.#loadAsJson(JSON_FILES_PATH);
-    delete files[fileName];
-    fileNames = fileNames.filter((v) => v !== fileName);
-    await fs.writeFile(JSON_FILENAMES_PATH, JSON.stringify(fileNames));
+    delete files[username][fileName];
     await fs.writeFile(JSON_FILES_PATH, JSON.stringify(files));
   }
 
-  async updateFileName({ fileName, newFileName }) {
-    const fileNames = await this.#loadAsJson(JSON_FILENAMES_PATH);
+  async updateFileName({ username, fileName, newFileName }) {
     const files = await this.#loadAsJson(JSON_FILES_PATH);
-    fileNames[fileNames.findIndex((v) => v === fileName)] = newFileName;
-    files[newFileName] = files[fileName];
-    delete files[fileName];
-    await fs.writeFile(JSON_FILENAMES_PATH, JSON.stringify(fileNames));
-    await fs.writeFile(JSON_FILES_PATH, JSON.stringify(files));
+    files[username][newFileName] = files[username][fileName];
+    delete files[username][fileName];
   }
 
   async #loadAsJson(filePath) {

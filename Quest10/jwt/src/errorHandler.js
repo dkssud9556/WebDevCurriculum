@@ -1,6 +1,7 @@
 import BusinessError from "./error/businessError.js";
 
 export default (error, request, reply) => {
+  console.log(error);
   if (error instanceof BusinessError) {
     return reply
       .code(error.statusCode)
