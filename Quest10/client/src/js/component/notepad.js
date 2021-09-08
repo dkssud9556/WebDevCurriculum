@@ -21,10 +21,33 @@ class Notepad {
     this.#notepadDOM.addEventListener("selectTab", this.#onSelectTab);
     this.#notepadDOM.addEventListener("deleteFile", this.#onDeleteFile);
     this.#notepadDOM.addEventListener("renameFile", this.#onRenameFile);
+    this.#notepadDOM.addEventListener("removeTab", this.#onRemoveTab);
+    this.#notepadDOM.addEventListener("logout", this.#onLogout);
     document.addEventListener("keydown", this.#onNewFile);
     storage
       .getFileNames()
-      .then((fileNames) => this.#explorer.loadFiles(fileNames));
+      .then((fileNames) => this.#explorer.loadFiles(fileNames))
+      .then(() => storage.getTabStatus())
+      .then(async (tabStatus) => {
+        await Promise.all(
+          tabStatus.openTabs.map((openTab) => {
+            if (openTab === "newfile") {
+              return this.#tabBar.openNewTab({ saved: false });
+            }
+            return this.#openNewTab(openTab);
+          })
+        );
+        if (tabStatus.selectedTab) {
+          const tab = this.#tabBar.getTabByFileName(tabStatus.selectedTab);
+          await this.#selectTab(tab);
+        }
+      })
+      .catch((err) => {
+        if (err.status === 403) {
+          alert("로그인이 필요합니다.");
+          window.location.replace("/login");
+        }
+      });
   }
 
   #render = () => {
@@ -38,7 +61,7 @@ class Notepad {
     document.body.appendChild(this.#notepadDOM);
   };
 
-  #onNewFile = (e) => {
+  #onNewFile = async (e) => {
     if (e.code === "KeyN" && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
       if (this.#tabBar.isExistsTabByFileName("newfile")) {
@@ -61,13 +84,13 @@ class Notepad {
   #onClickFile = async (e) => {
     const tab = this.#tabBar.getTabByFileName(e.detail.fileName);
     if (tab) {
-      this.#selectTab(tab);
+      await this.#selectTab(tab);
     } else {
       await this.#openNewTab(e.detail.fileName);
     }
   };
 
-  #selectTab = (tab) => {
+  #selectTab = async (tab) => {
     this.#textArea.setValue(tab.content);
     this.#tabBar.changeSelectedTab(tab.fileName);
   };
@@ -105,7 +128,7 @@ class Notepad {
     this.#tabBar.updateNewFileTabName(newFileName);
   };
 
-  #onSelectTab = (e) => {
+  #onSelectTab = async (e) => {
     this.#tabBar.changeSelectedTab(e.detail.fileName);
     this.#textArea.setValue(e.detail.content);
   };
@@ -134,5 +157,19 @@ class Notepad {
         newFileName,
       });
     }
+  };
+
+  #onRemoveTab = async (e) => {
+    this.#tabBar.removeTab(e.detail.tab);
+  };
+
+  #onLogout = async (e) => {
+    const selectedTab = this.#tabBar.getSelectedTab();
+    await this.#storage.updateTabStatus({
+      openTabs: this.#tabBar.getOpenTabs(),
+      selectedTab: selectedTab ? selectedTab.fileName : null,
+    });
+    await this.#storage.logout();
+    window.location.replace("/login");
   };
 }

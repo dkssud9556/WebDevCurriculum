@@ -26,11 +26,17 @@
           .login({ username, password })
           .then(() => {
             alert("로그인 성공");
-            window.location.replace("http://localhost:3000");
+            window.location.replace("/");
           })
           .catch((err) => {
-            console.log(err);
-            alert("아이디 또는 비밀번호가 올바른지 확인하세요.");
+            if (err.status === 400) {
+              alert("아이디 비밀번호를 모두 입력해주세요.");
+            } else if (err.status === 403) {
+              alert("아이디 또는 비밀번호가 틀렸습니다.");
+            } else if (err.status === 409) {
+              alert("이미 로그인 상태입니다.");
+              window.location.replace("/");
+            }
           });
       };
     </script>

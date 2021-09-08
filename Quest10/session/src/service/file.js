@@ -1,12 +1,15 @@
 import fileRepository from "../repository/file/json.js";
+import userRepository from "../repository/user/memory.js";
 import FileNameConflictError from "../error/fileNameConflict.js";
 import FileNotFoundError from "../error/fileNotFound.js";
 
 class FileService {
   #fileRepository;
+  #userRepository;
 
-  constructor(fileRepository) {
+  constructor(fileRepository, userRepository) {
     this.#fileRepository = fileRepository;
+    this.#userRepository = userRepository;
   }
 
   async getFileNames(username) {
@@ -95,4 +98,4 @@ class FileService {
   }
 }
 
-export default new FileService(fileRepository);
+export default new FileService(fileRepository, userRepository);

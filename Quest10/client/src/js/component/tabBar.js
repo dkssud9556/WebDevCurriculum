@@ -5,7 +5,6 @@ class TabBar {
 
   constructor(parent) {
     this.#tabBarDOM = this.#createSection(parent);
-    this.#tabBarDOM.addEventListener("removeTab", this.#onRemoveTab);
   }
 
   #createSection = (parent) => {
@@ -16,11 +15,10 @@ class TabBar {
     });
   };
 
-  #onRemoveTab = (e) => {
-    this.removeTab(e.detail.tab);
-  };
-
   removeTab = (tab) => {
+    if (this.#selectedTab.fileName === tab.fileName) {
+      this.#selectedTab = null;
+    }
     this.#tabMap.delete(tab.fileName);
     tab.remove();
   };
@@ -71,6 +69,10 @@ class TabBar {
     this.#tabMap.delete(fileName);
     tab.updateFileName(newFileName);
     this.#tabMap.set(newFileName, tab);
+  };
+
+  getOpenTabs = () => {
+    return Array.from(this.#tabMap.keys());
   };
 
   #createNewTab = ({ fileName, content, saved }) => {

@@ -7,22 +7,14 @@ import {
   deleteFileSchema,
   updateFileNameSchema,
 } from "./schema/index.js";
-import UnauthenticatedError from "../../error/unauthenticated.js";
-
-const preHandler = (request, reply, done) => {
-  console.log(request.session);
-  if (!request.session || !request.session.username) {
-    throw new UnauthenticatedError();
-  }
-  done();
-};
+import sessionCheck from "../../middleware/sessionCheck.js";
 
 export default (fastify, opts, next) => {
   fastify
     .route({
       url: "/name",
       method: "GET",
-      preHandler,
+      preHandler: sessionCheck,
       handler: async (request, reply) => {
         const { username } = request.session;
         return fileService.getFileNames(username);
@@ -32,7 +24,7 @@ export default (fastify, opts, next) => {
       url: "/:fileName/existence",
       method: "GET",
       schema: existsFileSchema,
-      preHandler,
+      preHandler: sessionCheck,
       handler: async (request, reply) => {
         const { fileName } = request.params;
         const { username } = request.session;
@@ -43,7 +35,7 @@ export default (fastify, opts, next) => {
       url: "/:fileName/content",
       method: "GET",
       schema: getContentSchema,
-      preHandler,
+      preHandler: sessionCheck,
       handler: async (request, reply) => {
         const { fileName } = request.params;
         const { username } = request.session;
@@ -54,7 +46,7 @@ export default (fastify, opts, next) => {
       url: "/",
       method: "POST",
       schema: saveFileSchema,
-      preHandler,
+      preHandler: sessionCheck,
       handler: async (request, reply) => {
         const { fileName, content } = request.body;
         const { username } = request.session;
@@ -66,7 +58,7 @@ export default (fastify, opts, next) => {
       url: "/:fileName/content",
       method: "PATCH",
       schema: updateFileContentSchema,
-      preHandler,
+      preHandler: sessionCheck,
       handler: async (request, reply) => {
         const { fileName } = request.params;
         const { content } = request.body;
@@ -79,7 +71,7 @@ export default (fastify, opts, next) => {
       url: "/:fileName/file-name",
       method: "PATCH",
       schema: updateFileNameSchema,
-      preHandler,
+      preHandler: sessionCheck,
       handler: async (request, reply) => {
         const { fileName } = request.params;
         const { newFileName } = request.body;
@@ -92,7 +84,7 @@ export default (fastify, opts, next) => {
       url: "/:fileName",
       method: "DELETE",
       schema: deleteFileSchema,
-      preHandler,
+      preHandler: sessionCheck,
       handler: async (request, reply) => {
         const { fileName } = request.params;
         const { username } = request.session;

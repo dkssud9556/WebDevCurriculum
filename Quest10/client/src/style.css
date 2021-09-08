@@ -28,6 +28,20 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
+}
+
+.logout-button {
+    width: 100%;
+    background: red;
+    border: none;
+    height: 10%;
+    color: white;
+    font-size: 30px;
+}
+
+.logout-button:hover {
+    cursor: pointer;
 }
 
 .file {
