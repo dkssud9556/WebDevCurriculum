@@ -9,12 +9,6 @@ export default (fastify, opts, next) => {
       url: "/login",
       method: "POST",
       schema: loginSchema,
-      preHandler: (request, reply, done) => {
-        if (request.session && request.session.username) {
-          throw new AlreadyAuthenticatedError();
-        }
-        done();
-      },
       handler: async (request, reply) => {
         await authService.login(request.body);
         request.session.username = request.body.username;
@@ -26,9 +20,11 @@ export default (fastify, opts, next) => {
       method: "POST",
       preHandler: sessionCheck,
       handler: (request, reply) => {
-        request.sessionStore.destroy(request.session.sessionId, () => {
-          request.session = null;
-          reply.clearCookie("sessionId").send();
+        request.destroySession((err) => {
+          if (err) {
+            throw err;
+          }
+          reply.done();
         });
       },
     });
