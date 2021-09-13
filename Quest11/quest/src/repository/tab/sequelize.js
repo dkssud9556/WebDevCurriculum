@@ -11,7 +11,8 @@ class SequelizeTabRepository {
     const tabs = await this.#TabModel.findAll({ where: { username } });
     return {
       username,
-      selectedTab: tabs.find((tab) => tab.isSelected === true)?.fileName,
+      selectedTab:
+        tabs.find((tab) => tab.isSelected === true)?.fileName ?? null,
       openTabs: tabs.map((tab) => tab.fileName),
     };
   }

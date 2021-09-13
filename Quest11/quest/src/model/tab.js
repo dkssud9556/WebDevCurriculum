@@ -23,6 +23,7 @@ export default (sequelize) => {
       modelName: "Tab",
       timestamps: false,
       underscored: true,
+      indexes: [{ unique: true, fields: ["username", "file_name"] }],
     }
   );
 };

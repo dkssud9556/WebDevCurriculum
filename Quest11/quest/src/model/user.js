@@ -20,6 +20,7 @@ export default (sequelize) => {
       modelName: "User",
       timestamps: false,
       underscored: true,
+      indexes: [{ unique: true, fields: ["username"] }],
     }
   );
 };

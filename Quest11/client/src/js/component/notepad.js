@@ -29,7 +29,6 @@ class Notepad {
       .then((fileNames) => this.#explorer.loadFiles(fileNames))
       .then(() => storage.getTabStatus())
       .then(async (tabStatus) => {
-        console.log(tabStatus);
         await Promise.all(
           tabStatus.openTabs.map((openTab) => {
             if (openTab === "newfile") {
