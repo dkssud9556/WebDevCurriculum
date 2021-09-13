@@ -16,9 +16,11 @@ tabInit(sequelize);
 
 sequelize.models.File.belongsTo(sequelize.models.User, {
   foreignKey: "username",
+  onDelete: "cascade",
 });
 sequelize.models.Tab.belongsTo(sequelize.models.User, {
   foreignKey: "username",
+  onDelete: "cascade",
 });
 
 export default sequelize;

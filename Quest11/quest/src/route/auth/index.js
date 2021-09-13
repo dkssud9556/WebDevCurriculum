@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 import authService from "../../service/auth.js";
-import { loginSchema } from "./schema/index.js";
+import { loginSchema, registerSchema } from "./schema/index.js";
 import jwtCheck from "../../middleware/jwtCheck.js";
 import { JWT_SECRET } from "../../config.js";
 
@@ -21,6 +21,15 @@ export default (fastify, opts, next) => {
           }
         );
         reply.setCookie("token", token, { httpOnly: true, path: "/" }).send();
+      },
+    })
+    .route({
+      url: "/",
+      method: "POST",
+      schema: registerSchema,
+      handler: async (request, reply) => {
+        await authService.register(request.body);
+        reply.send();
       },
     })
     .route({
