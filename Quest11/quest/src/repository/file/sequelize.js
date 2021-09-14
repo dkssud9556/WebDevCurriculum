@@ -8,15 +8,16 @@ class SequelizeFileRepository {
   }
 
   async findByUsernameAndFileName({ username, fileName }) {
-    return this.#FileModel.findOne({ where: { username, name: fileName } });
+    return this.#FileModel.findOne({ where: { username, fileName } });
   }
 
   async findAllNamesByUsername(username) {
     const files = await this.#FileModel.findAll({
       where: { username },
-      attributes: ["name"],
+      attributes: ["fileName"],
     });
-    return files.map((file) => file.name);
+    console.log(files);
+    return files.map((file) => file.fileName);
   }
 
   async existsByUsernameAndFileName({ username, fileName }) {
@@ -30,7 +31,7 @@ class SequelizeFileRepository {
       file.content = content;
       await file.save();
     } else {
-      await this.#FileModel.create({ username, name: fileName, content });
+      await this.#FileModel.create({ username, fileName, content });
     }
   }
 
@@ -47,7 +48,7 @@ class SequelizeFileRepository {
 
   async updateFileName({ username, fileName, newFileName }) {
     const file = await this.findByUsernameAndFileName({ username, fileName });
-    file.name = newFileName;
+    file.fileName = newFileName;
     await file.save();
   }
 }

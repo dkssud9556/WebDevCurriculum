@@ -5,7 +5,7 @@ class File extends Sequelize.Model {}
 export default (sequelize) => {
   File.init(
     {
-      name: {
+      fileName: {
         type: Sequelize.DataTypes.STRING,
         primaryKey: true,
       },
@@ -23,7 +23,7 @@ export default (sequelize) => {
       modelName: "File",
       timestamps: false,
       underscored: true,
-      indexes: [{ unique: true, fields: ["username", "name"] }],
+      indexes: [{ unique: true, fields: ["username", "file_name"] }],
     }
   );
 };
