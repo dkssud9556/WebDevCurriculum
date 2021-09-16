@@ -16,7 +16,6 @@ class SequelizeFileRepository {
       where: { username },
       attributes: ["fileName"],
     });
-    console.log(files);
     return files.map((file) => file.fileName);
   }
 
