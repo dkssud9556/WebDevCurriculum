@@ -11,6 +11,10 @@ class SequelizeFileRepository {
     return this.#FileModel.findOne({ where: { username, fileName } });
   }
 
+  async findAllByUsername(username) {
+    return this.#FileModel.findAll({ where: { username } });
+  }
+
   async findAllNamesByUsername(username) {
     const files = await this.#FileModel.findAll({
       where: { username },

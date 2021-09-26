@@ -10,11 +10,11 @@ export default {
   Query: {
     user: wrapException(
       jwtCheck(async (parent, args, context) => {
-        const { username } = args;
-        if (context.payload.username !== username) {
-          throw new UnauthenticatedError();
-        }
-        return context.loaders.usersLoader.load(username);
+        return {
+          __typename: "UserSuccess",
+          message: "User success",
+          user: context.user,
+        };
       })
     ),
   },
@@ -25,6 +25,15 @@ export default {
       const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: "2h" });
       context.reply.setCookie("token", token, { httpOnly: true, path: "/" });
       return { __typename: "LoginSuccess", message: "Login success" };
+    }),
+    register: wrapException(async (parent, args, context) => {
+      const { username, password } = args;
+      await authService.register({ username, password });
+      return { __typename: "RegisterSuccess", message: "Register success" };
+    }),
+    logout: wrapException(async (parent, args, context) => {
+      context.reply.clearCookie("token");
+      return { __typename: "LogoutSuccess", message: "Logout success" };
     }),
   },
 };

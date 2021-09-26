@@ -7,14 +7,6 @@ export default gql`
     tabs: [Tab!]!
   }
 
-  type Query {
-    user(username: String!): UserResult
-  }
-
-  type Mutation {
-    login(username: String!, password: String!): LoginResult
-  }
-
   union UserResult = UserSuccess | Unauthenticated
 
   type UserSuccess implements Success {
@@ -31,5 +23,22 @@ export default gql`
   type InvalidLoginInfo implements BusinessError {
     message: String!
     statusCode: Int!
+  }
+
+  union RegisterResult = RegisterSuccess | UsernameDuplication
+
+  type RegisterSuccess implements Success {
+    message: String!
+  }
+
+  type UsernameDuplication implements BusinessError {
+    message: String!
+    statusCode: Int!
+  }
+
+  union LogoutResult = LogoutSuccess
+
+  type LogoutSuccess implements Success {
+    message: String!
   }
 `;

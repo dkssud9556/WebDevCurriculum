@@ -9,11 +9,12 @@ export default (func) => async (parent, args, context, info) => {
     throw new UnauthenticatedError();
   }
   try {
-    context.payload = jwt.verify(context.token, JWT_SECRET);
-    const user = await userRepository.findByUsername(context.payload.username);
+    const payload = jwt.verify(context.token, JWT_SECRET);
+    const user = await userRepository.findByUsername(payload.username);
     if (!user) {
       throw new UnauthenticatedError();
     }
+    context.user = user;
     return await func(parent, args, context, info);
   } catch (err) {
     throw err;
