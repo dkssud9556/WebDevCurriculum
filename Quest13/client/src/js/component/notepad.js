@@ -47,7 +47,7 @@ class Notepad {
         }
       })
       .catch((err) => {
-        if (err.status === 403) {
+        if (err.statusCode === 403) {
           alert("로그인이 필요합니다.");
           window.location.replace("/login");
         }

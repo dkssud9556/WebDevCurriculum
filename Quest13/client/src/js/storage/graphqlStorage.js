@@ -1,16 +1,31 @@
 class GraphqlStorage {
   static #url = "http://localhost:8000/graphql";
-  static #request(query) {
-    return fetch(this.#url, {
+  static async #request(queryName, query) {
+    const response = await fetch(this.#url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
       body: JSON.stringify({ query }),
     });
+    const data = await response.json();
+    if (
+      !data.data[queryName].__typename ||
+      !data.data[queryName].__typename.endsWith("Success")
+    ) {
+      if (data.data[queryName].__typename) {
+        throw new BusinessError(
+          data.data[queryName].message,
+          data.data[queryName].statusCode
+        );
+      }
+      throw new InternalServerError();
+    }
+    return data;
   }
 
   async login({ username, password }) {
-    const response = await GraphqlStorage.#request(
+    await GraphqlStorage.#request(
+      "login",
       `
         mutation {
           login(username: "${username}", password: "${password}") {
@@ -26,14 +41,11 @@ class GraphqlStorage {
         }
       `
     );
-    const result = await response.json();
-    if (result.data.login.__typename !== "LoginSuccess") {
-      throw result;
-    }
   }
 
   async getFileContentByName(fileName) {
-    const response = await GraphqlStorage.#request(
+    const data = await GraphqlStorage.#request(
+      "file",
       `
         query {
           file(fileName: "${fileName}") {
@@ -52,15 +64,12 @@ class GraphqlStorage {
         }
       `
     );
-    const result = await response.json();
-    if (result.data.file.__typename !== "FileSuccess") {
-      throw result;
-    }
-    return result.data.file.file.content;
+    return data.data.file.file.content;
   }
 
   async getFileNames() {
-    const response = await GraphqlStorage.#request(
+    const data = await GraphqlStorage.#request(
+      "files",
       `
         query {
           files {
@@ -79,15 +88,12 @@ class GraphqlStorage {
         }
       `
     );
-    const result = await response.json();
-    if (result.data.files.__typename !== "FilesSuccess") {
-      throw result;
-    }
-    return result.data.files.files.map((file) => file.fileName);
+    return data.data.files.files.map((file) => file.fileName);
   }
 
   async isExistsFileName(fileName) {
-    const response = await GraphqlStorage.#request(
+    const data = await GraphqlStorage.#request(
+      "file",
       `
         query {
           file(fileName: "${fileName}") {
@@ -106,15 +112,12 @@ class GraphqlStorage {
         }
       `
     );
-    const result = await response.json();
-    if (result.data.file.__typename !== "FileSuccess") {
-      throw result;
-    }
-    return !!result.data.file.file;
+    return !!data.data.file.file;
   }
 
   async logout() {
-    const response = await GraphqlStorage.#request(
+    await GraphqlStorage.#request(
+      "logout",
       `
         mutation {
           logout {
@@ -126,14 +129,11 @@ class GraphqlStorage {
         }
       `
     );
-    const result = await response.json();
-    if (result.data.logout.__typename !== "LogoutSuccess") {
-      throw result;
-    }
   }
 
   async saveNewFile(tabInfo) {
-    const response = await GraphqlStorage.#request(
+    await GraphqlStorage.#request(
+      "saveFile",
       `
         mutation {
           saveFile(fileName: "${tabInfo.fileName}", content: "${tabInfo.content}") {
@@ -149,14 +149,11 @@ class GraphqlStorage {
         }
       `
     );
-    const result = await response.json();
-    if (result.data.saveFile.__typename !== "SaveFileSuccess") {
-      throw result;
-    }
   }
 
   async save({ fileName, content }) {
-    const response = await GraphqlStorage.#request(
+    await GraphqlStorage.#request(
+      "updateFileContent",
       `
         mutation {
           updateFileContent(fileName: "${fileName}", content: "${content}") {
@@ -172,16 +169,11 @@ class GraphqlStorage {
         }
       `
     );
-    const result = await response.json();
-    if (
-      result.data.updateFileContent.__typename !== "UpdateFileContentSuccess"
-    ) {
-      throw result;
-    }
   }
 
   async deleteFile(fileName) {
-    const response = await GraphqlStorage.#request(
+    await GraphqlStorage.#request(
+      "deleteFile",
       `
         mutation {
           deleteFile(fileName: "${fileName}") {
@@ -197,14 +189,11 @@ class GraphqlStorage {
         }
       `
     );
-    const result = await response.json();
-    if (result.data.deleteFile.__typename !== "DeleteFileSuccess") {
-      throw result;
-    }
   }
 
   async updateFileName({ fileName, newFileName }) {
-    const response = await GraphqlStorage.#request(
+    await GraphqlStorage.#request(
+      "renameFile",
       `
         mutation {
           renameFile(fileName: "${fileName}", newFileName: "${newFileName}") {
@@ -220,14 +209,11 @@ class GraphqlStorage {
         }
       `
     );
-    const result = await response.json();
-    if (result.data.renameFile.__typename !== "RenameFileSuccess") {
-      throw result;
-    }
   }
 
   async getTabs() {
-    const response = await GraphqlStorage.#request(
+    const data = await GraphqlStorage.#request(
+      "tabs",
       `
         query {
           tabs {
@@ -247,15 +233,12 @@ class GraphqlStorage {
         }
       `
     );
-    const result = await response.json();
-    if (result.data.tabs.__typename !== "TabsSuccess") {
-      throw result;
-    }
-    return result.data.tabs.tabs;
+    return data.data.tabs.tabs;
   }
 
   async updateTabStatus({ openTabs, selectedTab }) {
-    const response = await GraphqlStorage.#request(
+    await GraphqlStorage.#request(
+      "updateTabs",
       `
         mutation {
           updateTabs(openTabs: ${JSON.stringify(
@@ -273,9 +256,5 @@ class GraphqlStorage {
         }
       `
     );
-    const result = await response.json();
-    if (result.data.updateTabs.__typename !== "UpdateTabsSuccess") {
-      throw result;
-    }
   }
 }
