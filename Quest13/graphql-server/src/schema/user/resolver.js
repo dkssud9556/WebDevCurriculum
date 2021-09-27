@@ -33,7 +33,7 @@ export default {
     },
 
     tabs: async (parent, args, context) => {
-      return tabRepository.findByUsername(context.user.username);
+      return tabRepository.findAllByUsername(context.user.username);
     },
   },
 };

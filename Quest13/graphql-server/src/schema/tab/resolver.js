@@ -8,7 +8,7 @@ export default {
     tabs: wrapException(
       jwtCheck(async (parent, args, context) => {
         const { username } = context.user;
-        const tabs = await tabRepository.findByUsername(username);
+        const tabs = await tabRepository.findAllByUsername(username);
         return {
           __typename: "TabsSuccess",
           message: "Tabs success",
