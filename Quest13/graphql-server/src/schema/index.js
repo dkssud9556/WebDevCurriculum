@@ -2,7 +2,7 @@ import { makeExecutableSchema } from "graphql-tools";
 import { gql } from "apollo-server-fastify";
 
 import { userResolver, userTypeDef } from "./user/index.js";
-import { tabTypeDef } from "./tab/index.js";
+import { tabResolver, tabTypeDef } from "./tab/index.js";
 import { fileTypeDef, fileResolver } from "./file/index.js";
 
 const rootTypeDef = gql`
@@ -19,12 +19,21 @@ const rootTypeDef = gql`
     user: UserResult
     files: FilesResult
     file(fileName: String!): FileResult
+    tabs: TabsResult
   }
 
   type Mutation {
     login(username: String!, password: String!): LoginResult
     register(username: String!, password: String!): RegisterResult
     logout: LogoutResult
+    saveFile(fileName: String!, content: String!): SaveFileResult
+    updateFileContent(
+      fileName: String!
+      content: String!
+    ): UpdateFileContentResult
+    deleteFile(fileName: String!): DeleteFileResult
+    renameFile(fileName: String!, newFileName: String!): RenameFileResult
+    updateTabs(openTabs: [String!]!, selectedTab: String!): UpdateTabsResult
   }
 
   type InvalidParameter implements BusinessError {
@@ -40,5 +49,5 @@ const rootTypeDef = gql`
 
 export default makeExecutableSchema({
   typeDefs: [rootTypeDef, userTypeDef, tabTypeDef, fileTypeDef],
-  resolvers: [userResolver, fileResolver],
+  resolvers: [userResolver, fileResolver, tabResolver],
 });

@@ -50,9 +50,10 @@ class SequelizeFileRepository {
   }
 
   async updateFileName({ username, fileName, newFileName }) {
-    const file = await this.findByUsernameAndFileName({ username, fileName });
-    file.fileName = newFileName;
-    await file.save();
+    await this.#FileModel.update(
+      { fileName: newFileName },
+      { where: { username, fileName } }
+    );
   }
 }
 

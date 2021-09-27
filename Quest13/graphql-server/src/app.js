@@ -30,7 +30,7 @@ app.register(cookie);
   await server.start();
   app.register(
     server.createHandler({
-      // cors: { origin: "http://localhost:3000", credentials: true },
+      cors: { origin: "http://localhost:3000", credentials: true },
     })
   );
   await app.listen(8000);

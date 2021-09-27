@@ -12,6 +12,7 @@ export default (func) => async (parent, args, context, info) => {
         statusCode,
       };
     }
+    console.log(err);
     throw err;
   }
 };

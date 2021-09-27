@@ -8,7 +8,7 @@ class SequelizeTabRepository {
   }
 
   async findByUsername(username) {
-    const tabs = await this.#TabModel.findAll({ where: { username } });
+    return this.#TabModel.findAll({ where: { username } });
     return {
       username,
       selectedTab:

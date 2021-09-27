@@ -15,8 +15,8 @@ export default (func) => async (parent, args, context, info) => {
       throw new UnauthenticatedError();
     }
     context.user = user;
-    return await func(parent, args, context, info);
   } catch (err) {
-    throw err;
+    throw new UnauthenticatedError();
   }
+  return await func(parent, args, context, info);
 };

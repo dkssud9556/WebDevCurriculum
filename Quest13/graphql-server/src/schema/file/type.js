@@ -25,4 +25,40 @@ export default gql`
     message: String!
     statusCode: Int!
   }
+
+  union SaveFileResult = SaveFileSuccess | Unauthenticated | FileNameConflict
+
+  type SaveFileSuccess implements Success {
+    message: String!
+  }
+
+  type FileNameConflict implements BusinessError {
+    message: String!
+    statusCode: Int!
+  }
+
+  union UpdateFileContentResult =
+      UpdateFileContentSuccess
+    | Unauthenticated
+    | FileNotFound
+
+  type UpdateFileContentSuccess implements Success {
+    message: String!
+  }
+
+  union DeleteFileResult = DeleteFileSuccess | Unauthenticated | FileNotFound
+
+  type DeleteFileSuccess implements Success {
+    message: String!
+  }
+
+  union RenameFileResult =
+      RenameFileSuccess
+    | Unauthenticated
+    | FileNotFound
+    | FileNameConflict
+
+  type RenameFileSuccess implements Success {
+    message: String!
+  }
 `;
