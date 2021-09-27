@@ -7,6 +7,9 @@ class GraphqlStorage {
       credentials: "include",
       body: JSON.stringify({ query }),
     });
+    if (response.status === 400) {
+      throw new BusinessError("Invalid parameter", 400);
+    }
     const data = await response.json();
     if (
       !data.data[queryName].__typename ||
