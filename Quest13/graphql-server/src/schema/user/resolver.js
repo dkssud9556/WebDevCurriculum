@@ -2,21 +2,10 @@ import jwt from "jsonwebtoken";
 
 import authService from "../../service/auth.js";
 import wrapException from "../../middleware/wrapException.js";
-import jwtCheck from "../../middleware/jwtCheck.js";
 import { JWT_SECRET } from "../../config.js";
+import { fileRepository, tabRepository } from "../../repository/index.js";
 
 export default {
-  Query: {
-    user: wrapException(
-      jwtCheck(async (parent, args, context) => {
-        return {
-          __typename: "UserSuccess",
-          message: "User success",
-          user: context.user,
-        };
-      })
-    ),
-  },
   Mutation: {
     login: wrapException(async (parent, args, context) => {
       const { username, password } = args;
@@ -25,14 +14,26 @@ export default {
       context.reply.setCookie("token", token, { httpOnly: true, path: "/" });
       return { __typename: "LoginSuccess", message: "Login success" };
     }),
+
     register: wrapException(async (parent, args, context) => {
       const { username, password } = args;
       await authService.register({ username, password });
       return { __typename: "RegisterSuccess", message: "Register success" };
     }),
+
     logout: wrapException(async (parent, args, context) => {
       context.reply.clearCookie("token");
       return { __typename: "LogoutSuccess", message: "Logout success" };
     }),
+  },
+
+  User: {
+    files: async (parent, args, context) => {
+      return fileRepository.findAllByUsername(context.user.username);
+    },
+
+    tabs: async (parent, args, context) => {
+      return tabRepository.findByUsername(context.user.username);
+    },
   },
 };

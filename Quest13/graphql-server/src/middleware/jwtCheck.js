@@ -14,7 +14,7 @@ export default (func) => async (parent, args, context, info) => {
     if (!user) {
       throw new UnauthenticatedError();
     }
-    context.user = user;
+    context.user = payload;
   } catch (err) {
     throw new UnauthenticatedError();
   }

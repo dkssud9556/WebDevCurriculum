@@ -16,7 +16,6 @@ const rootTypeDef = gql`
   }
 
   type Query {
-    user: UserResult
     files: FilesResult
     file(fileName: String!): FileResult
     tabs: TabsResult

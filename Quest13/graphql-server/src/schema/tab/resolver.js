@@ -17,6 +17,7 @@ export default {
       })
     ),
   },
+
   Mutation: {
     updateTabs: wrapException(
       jwtCheck(async (parent, args, context) => {
@@ -29,5 +30,11 @@ export default {
         };
       })
     ),
+  },
+
+  Tab: {
+    user: async (parent, args, context) => {
+      return context.loaders.usersLoader.load(context.user.username);
+    },
   },
 };

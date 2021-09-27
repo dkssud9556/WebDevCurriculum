@@ -16,6 +16,7 @@ export default {
         };
       })
     ),
+
     file: wrapException(
       jwtCheck(async (parent, args, context) => {
         const { username } = context.user;
@@ -32,6 +33,7 @@ export default {
       })
     ),
   },
+
   Mutation: {
     saveFile: wrapException(
       jwtCheck(async (parent, args, context) => {
@@ -44,6 +46,7 @@ export default {
         };
       })
     ),
+
     updateFileContent: wrapException(
       jwtCheck(async (parent, args, context) => {
         const { username } = context.user;
@@ -55,6 +58,7 @@ export default {
         };
       })
     ),
+
     deleteFile: wrapException(
       jwtCheck(async (parent, args, context) => {
         const { username } = context.user;
@@ -66,6 +70,7 @@ export default {
         };
       })
     ),
+
     renameFile: wrapException(
       jwtCheck(async (parent, args, context) => {
         const { username } = context.user;
@@ -77,5 +82,11 @@ export default {
         };
       })
     ),
+  },
+
+  File: {
+    user: async (parent, args, context) => {
+      return context.loaders.usersLoader.load(context.user.username);
+    },
   },
 };
