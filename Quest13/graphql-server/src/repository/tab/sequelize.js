@@ -1,4 +1,8 @@
+import Sequelize from "sequelize";
+
 import sequelize from "../../model/index.js";
+
+const { Op } = Sequelize;
 
 class SequelizeTabRepository {
   #TabModel;
@@ -9,6 +13,12 @@ class SequelizeTabRepository {
 
   async findAllByUsername(username) {
     return this.#TabModel.findAll({ where: { username } });
+  }
+
+  async findAllIn(usernames) {
+    return this.#TabModel.findAll({
+      where: { username: { [Op.in]: usernames } },
+    });
   }
 
   async save({ username, openTabs, selectedTab }) {

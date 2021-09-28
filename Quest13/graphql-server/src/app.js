@@ -3,7 +3,7 @@ import cookie from "fastify-cookie";
 import { ApolloServer } from "apollo-server-fastify";
 
 import schema from "./schema/index.js";
-import { usersLoader } from "./dataLoader.js";
+import { filesLoader, tabsLoader, usersLoader } from "./dataLoader.js";
 import sequelize from "./model/index.js";
 
 const server = new ApolloServer({
@@ -12,6 +12,8 @@ const server = new ApolloServer({
     return {
       loaders: {
         usersLoader: usersLoader(),
+        filesLoader: filesLoader(),
+        tabsLoader: tabsLoader(),
       },
       reply,
       token: request.cookies.token,

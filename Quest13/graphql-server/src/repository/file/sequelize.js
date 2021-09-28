@@ -1,4 +1,8 @@
+import Sequelize from "sequelize";
+
 import sequelize from "../../model/index.js";
+
+const { Op } = Sequelize;
 
 class SequelizeFileRepository {
   #FileModel;
@@ -54,6 +58,12 @@ class SequelizeFileRepository {
       { fileName: newFileName },
       { where: { username, fileName } }
     );
+  }
+
+  async findAllIn(usernames) {
+    return this.#FileModel.findAll({
+      where: { username: { [Op.in]: usernames } },
+    });
   }
 }
 
