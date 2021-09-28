@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 import authService from "../../service/auth.js";
 import wrapException from "../../middleware/wrapException.js";
 import { JWT_SECRET } from "../../config.js";
-import { fileRepository, tabRepository } from "../../repository/index.js";
 
 export default {
   Mutation: {
