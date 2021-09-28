@@ -18,7 +18,7 @@ class SequelizeUserRepository {
     await this.#UserModel.create({ username, password });
   }
 
-  async findIn(usernames) {
+  async findAllIn(usernames) {
     return this.#UserModel.findAll({
       where: { username: { [Op.in]: usernames } },
     });
