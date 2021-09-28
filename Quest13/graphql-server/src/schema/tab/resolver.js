@@ -1,6 +1,5 @@
 import wrapException from "../../middleware/wrapException.js";
 import jwtCheck from "../../middleware/jwtCheck.js";
-import { tabRepository } from "../../repository/index.js";
 import tabService from "../../service/tab.js";
 
 export default {
@@ -8,7 +7,7 @@ export default {
     tabs: wrapException(
       jwtCheck(async (parent, args, context) => {
         const { username } = context.user;
-        const tabs = await tabRepository.findAllByUsername(username);
+        const tabs = await tabService.getTabs(username);
         return {
           __typename: "TabsSuccess",
           message: "Tabs success",

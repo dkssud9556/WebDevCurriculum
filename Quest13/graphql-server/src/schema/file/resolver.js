@@ -1,6 +1,5 @@
 import wrapException from "../../middleware/wrapException.js";
 import jwtCheck from "../../middleware/jwtCheck.js";
-import { fileRepository } from "../../repository/index.js";
 import fileService from "../../service/file.js";
 
 export default {
@@ -8,7 +7,7 @@ export default {
     files: wrapException(
       jwtCheck(async (parent, args, context) => {
         const { username } = context.user;
-        const files = await fileRepository.findAllByUsername(username);
+        const files = await fileService.getFiles(username);
         return {
           __typename: "FilesSuccess",
           message: "Files success",
@@ -21,10 +20,7 @@ export default {
       jwtCheck(async (parent, args, context) => {
         const { username } = context.user;
         const { fileName } = args;
-        const file = await fileRepository.findByUsernameAndFileName({
-          username,
-          fileName,
-        });
+        const file = await fileService.getFile({ username, fileName });
         return {
           __typename: "FileSuccess",
           message: "File success",

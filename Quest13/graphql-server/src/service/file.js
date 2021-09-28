@@ -11,12 +11,12 @@ class FileService {
     this.#userRepository = userRepository;
   }
 
-  async getFileNames(username) {
-    return this.#fileRepository.findAllNamesByUsername(username);
+  async getFiles(username) {
+    return this.#fileRepository.findAllByUsername(username);
   }
 
-  async exists({ username, fileName }) {
-    return this.#fileRepository.existsByUsernameAndFileName({
+  async getFile({ username, fileName }) {
+    return this.#fileRepository.findByUsernameAndFileName({
       username,
       fileName,
     });
@@ -32,17 +32,6 @@ class FileService {
       throw new FileNameConflictError();
     }
     this.#fileRepository.save({ username, fileName, content });
-  }
-
-  async getContent({ username, fileName }) {
-    const file = await this.#fileRepository.findByUsernameAndFileName({
-      username,
-      fileName,
-    });
-    if (!file) {
-      throw new FileNotFoundError();
-    }
-    return file.content;
   }
 
   async updateFile({ username, fileName, content }) {

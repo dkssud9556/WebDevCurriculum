@@ -7,8 +7,8 @@ class TabService {
     this.#tabRepository = tabRepository;
   }
 
-  async getTabStatus(username) {
-    return this.#tabRepository.findByUsername(username);
+  async getTabs(username) {
+    return this.#tabRepository.findAllByUsername(username);
   }
 
   async updateTabStatus({ username, openTabs, selectedTab }) {
