@@ -28,8 +28,7 @@ export default {
         return {
           __typename: "FileSuccess",
           message: "File success",
-          username,
-          fileName,
+          file,
         };
       })
     ),
