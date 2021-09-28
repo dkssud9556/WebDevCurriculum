@@ -149,15 +149,16 @@ class Notepad {
 
   #onRenameFile = async (e) => {
     const { file } = e.detail;
+    const fileName = file.fileName;
     const newFileName = prompt("새로운 파일명을 입력해주세요.");
     await this.#storage.updateFileName({
       fileName: file.fileName,
       newFileName,
     });
     file.updateFileName(newFileName);
-    if (this.#tabBar.isExistsTabByFileName(file.fileName)) {
+    if (this.#tabBar.isExistsTabByFileName(fileName)) {
       this.#tabBar.renameTab({
-        fileName: file.fileName,
+        fileName,
         newFileName,
       });
     }
