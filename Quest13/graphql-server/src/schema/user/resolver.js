@@ -29,11 +29,11 @@ export default {
 
   User: {
     files: async (parent, args, context) => {
-      return fileRepository.findAllByUsername(context.user.username);
+      return fileRepository.findAllByUsername(parent.username);
     },
 
     tabs: async (parent, args, context) => {
-      return tabRepository.findAllByUsername(context.user.username);
+      return tabRepository.findAllByUsername(parent.username);
     },
   },
 };

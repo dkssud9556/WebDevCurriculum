@@ -86,7 +86,7 @@ export default {
 
   File: {
     user: async (parent, args, context) => {
-      return context.loaders.usersLoader.load(context.user.username);
+      return context.loaders.usersLoader.load(parent.username);
     },
   },
 };
