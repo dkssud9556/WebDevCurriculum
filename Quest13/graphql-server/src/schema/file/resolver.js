@@ -28,7 +28,8 @@ export default {
         return {
           __typename: "FileSuccess",
           message: "File success",
-          file,
+          username,
+          fileName,
         };
       })
     ),
@@ -86,7 +87,7 @@ export default {
 
   File: {
     user: async (parent, args, context) => {
-      return context.loaders.usersLoader.load(parent.username);
+      return context.loaders.userLoader.load(parent.username);
     },
   },
 };

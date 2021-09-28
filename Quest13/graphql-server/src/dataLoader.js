@@ -5,7 +5,7 @@ import {
   userRepository,
 } from "./repository/index.js";
 
-export const usersLoader = () =>
+export const userLoader = () =>
   new DataLoader(async (usernames) => {
     const users = await userRepository.findAllIn(usernames);
     return usernames.map((username) =>

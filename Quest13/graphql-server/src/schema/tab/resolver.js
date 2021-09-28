@@ -34,7 +34,7 @@ export default {
 
   Tab: {
     user: async (parent, args, context) => {
-      return context.loaders.usersLoader.load(parent.username);
+      return context.loaders.userLoader.load(parent.username);
     },
   },
 };
