@@ -6,12 +6,12 @@ export default class ElementCreator {
     children = [],
     parent,
   }: {
-    tag?: string;
-    textContent?: string;
-    classList?: string[];
-    children?: HTMLElement[];
-    parent?: HTMLElement;
-  }) {
+        tag?: string;
+        textContent?: string;
+        classList?: string[];
+        children?: HTMLElement[];
+        parent?: HTMLElement;
+    }) {
     const result = document.createElement(tag);
     result.classList.add(...classList);
     result.textContent = textContent;
@@ -28,11 +28,11 @@ export default class ElementCreator {
     children = [],
     parent,
   }: {
-    classList?: string[];
-    children?: HTMLElement[];
-    textContent?: string;
-    parent?: HTMLElement;
-  }) {
+        classList?: string[];
+        children?: HTMLElement[];
+        textContent?: string;
+        parent?: HTMLElement;
+    }) {
     const result = document.createElement('textarea');
     result.classList.add(...classList);
     result.textContent = textContent;

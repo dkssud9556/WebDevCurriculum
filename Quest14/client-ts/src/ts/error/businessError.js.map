@@ -1,1 +1,0 @@
-{"version":3,"file":"businessError.js","sourceRoot":"","sources":["businessError.ts"],"names":[],"mappings":"AAAA,MAAM,aAAc,SAAQ,KAAK;IAK/B,YAAY,OAAO,EAAE,UAAU;QAC7B,KAAK,CAAC,OAAO,CAAC,CAAC;QACf,IAAI,CAAC,OAAO,GAAG,OAAO,CAAC;QACvB,IAAI,CAAC,UAAU,GAAG,UAAU,CAAC;IAC/B,CAAC;CACF"}
