@@ -1,1 +1,3 @@
-graphql-server/storage/
+server/storage/
+dist/
+.parcel-cache/
