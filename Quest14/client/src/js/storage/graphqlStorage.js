@@ -1,24 +1,25 @@
 class GraphqlStorage {
-  static #url = "http://localhost:8000/graphql";
+  static #url = 'http://localhost:8000/graphql';
+
   static async #request(queryName, query) {
     const response = await fetch(this.#url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify({ query }),
     });
     if (response.status === 400) {
-      throw new BusinessError("Invalid parameter", 400);
+      throw new BusinessError('Invalid parameter', 400);
     }
     const data = await response.json();
     if (
-      !data.data[queryName].__typename ||
-      !data.data[queryName].__typename.endsWith("Success")
+      !data.data[queryName].__typename
+      || !data.data[queryName].__typename.endsWith('Success')
     ) {
       if (data.data[queryName].__typename) {
         throw new BusinessError(
           data.data[queryName].message,
-          data.data[queryName].statusCode
+          data.data[queryName].statusCode,
         );
       }
       throw new InternalServerError();
@@ -28,7 +29,7 @@ class GraphqlStorage {
 
   async login({ username, password }) {
     await GraphqlStorage.#request(
-      "login",
+      'login',
       `
         mutation {
           login(username: "${username}", password: "${password}") {
@@ -42,13 +43,13 @@ class GraphqlStorage {
             }
           }
         }
-      `
+      `,
     );
   }
 
   async getFileContentByName(fileName) {
     const data = await GraphqlStorage.#request(
-      "file",
+      'file',
       `
         query {
           file(fileName: "${fileName}") {
@@ -65,14 +66,14 @@ class GraphqlStorage {
             }
           }
         }
-      `
+      `,
     );
     return data.data.file.file.content;
   }
 
   async getFileNames() {
     const data = await GraphqlStorage.#request(
-      "files",
+      'files',
       `
         query {
           files {
@@ -89,14 +90,14 @@ class GraphqlStorage {
             }
           }
         }
-      `
+      `,
     );
     return data.data.files.files.map((file) => file.fileName);
   }
 
   async isExistsFileName(fileName) {
     const data = await GraphqlStorage.#request(
-      "file",
+      'file',
       `
         query {
           file(fileName: "${fileName}") {
@@ -113,14 +114,14 @@ class GraphqlStorage {
             }
           }
         }
-      `
+      `,
     );
     return !!data.data.file.file;
   }
 
   async logout() {
     await GraphqlStorage.#request(
-      "logout",
+      'logout',
       `
         mutation {
           logout {
@@ -130,13 +131,13 @@ class GraphqlStorage {
             }
           }
         }
-      `
+      `,
     );
   }
 
   async saveNewFile(tabInfo) {
     await GraphqlStorage.#request(
-      "saveFile",
+      'saveFile',
       `
         mutation {
           saveFile(fileName: "${tabInfo.fileName}", content: "${tabInfo.content}") {
@@ -150,13 +151,13 @@ class GraphqlStorage {
             }
           }
         }
-      `
+      `,
     );
   }
 
   async save({ fileName, content }) {
     await GraphqlStorage.#request(
-      "updateFileContent",
+      'updateFileContent',
       `
         mutation {
           updateFileContent(fileName: "${fileName}", content: "${content}") {
@@ -170,13 +171,13 @@ class GraphqlStorage {
             }
           }
         }
-      `
+      `,
     );
   }
 
   async deleteFile(fileName) {
     await GraphqlStorage.#request(
-      "deleteFile",
+      'deleteFile',
       `
         mutation {
           deleteFile(fileName: "${fileName}") {
@@ -190,13 +191,13 @@ class GraphqlStorage {
             }
           }
         }
-      `
+      `,
     );
   }
 
   async updateFileName({ fileName, newFileName }) {
     await GraphqlStorage.#request(
-      "renameFile",
+      'renameFile',
       `
         mutation {
           renameFile(fileName: "${fileName}", newFileName: "${newFileName}") {
@@ -210,13 +211,13 @@ class GraphqlStorage {
             }
           }
         }
-      `
+      `,
     );
   }
 
   async getTabs() {
     const data = await GraphqlStorage.#request(
-      "tabs",
+      'tabs',
       `
         query {
           tabs {
@@ -234,19 +235,19 @@ class GraphqlStorage {
             }
           }
         }
-      `
+      `,
     );
     return data.data.tabs.tabs;
   }
 
   async updateTabStatus({ openTabs, selectedTab }) {
     await GraphqlStorage.#request(
-      "updateTabs",
+      'updateTabs',
       `
         mutation {
           updateTabs(openTabs: ${JSON.stringify(
-            openTabs
-          )}, selectedTab: "${selectedTab}") {
+    openTabs,
+  )}, selectedTab: "${selectedTab}") {
             __typename
             ... on UpdateTabsSuccess {
               message
@@ -257,7 +258,7 @@ class GraphqlStorage {
             }
           }
         }
-      `
+      `,
     );
   }
 }

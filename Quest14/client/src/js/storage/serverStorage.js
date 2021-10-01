@@ -1,12 +1,12 @@
-const baseUrl = "http://localhost:8000";
+const baseUrl = 'http://localhost:8000';
 
 class ServerStorage {
   async saveNewFile(tabInfo) {
     const response = await fetch(`${baseUrl}/files`, {
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
       body: JSON.stringify(tabInfo),
-      credentials: "include",
+      credentials: 'include',
     });
     if (!response.ok) {
       throw response;
@@ -16,24 +16,23 @@ class ServerStorage {
   async getFileContentByName(fileName) {
     const response = await fetch(
       `${baseUrl}/files/${encodeURI(fileName)}/content`,
-      { credentials: "include" }
+      { credentials: 'include' },
     );
     if (response.ok) {
       return response.text();
-    } else {
-      throw response;
     }
+    throw response;
   }
 
   async save({ fileName, content }) {
     const response = await fetch(
       `${baseUrl}/files/${encodeURI(fileName)}/content`,
       {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ content }),
-        credentials: "include",
-      }
+        credentials: 'include',
+      },
     );
     if (!response.ok) {
       throw response;
@@ -42,31 +41,29 @@ class ServerStorage {
 
   async getFileNames() {
     const response = await fetch(`${baseUrl}/files/name`, {
-      credentials: "include",
+      credentials: 'include',
     });
     if (response.ok) {
       return response.json();
-    } else {
-      throw response;
     }
+    throw response;
   }
 
   async isExistsFileName(fileName) {
     const response = await fetch(
       `${baseUrl}/files/${encodeURI(fileName)}/existence`,
-      { credentials: "include" }
+      { credentials: 'include' },
     );
     if (response.ok) {
       return response.json();
-    } else {
-      throw response;
     }
+    throw response;
   }
 
   async deleteFile(fileName) {
     const response = await fetch(`${baseUrl}/files/${encodeURI(fileName)}`, {
-      method: "DELETE",
-      credentials: "include",
+      method: 'DELETE',
+      credentials: 'include',
     });
     if (!response.ok) {
       throw response;
@@ -77,11 +74,11 @@ class ServerStorage {
     const response = await fetch(
       `${baseUrl}/files/${encodeURI(fileName)}/file-name`,
       {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ newFileName }),
-        credentials: "include",
-      }
+        credentials: 'include',
+      },
     );
     if (!response.ok) {
       throw response;
@@ -90,10 +87,10 @@ class ServerStorage {
 
   async login({ username, password }) {
     const response = await fetch(`${baseUrl}/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
-      credentials: "include",
+      credentials: 'include',
     });
     if (!response.ok) {
       throw response;
@@ -101,19 +98,18 @@ class ServerStorage {
   }
 
   async getTabStatus() {
-    const response = await fetch(`${baseUrl}/tabs`, { credentials: "include" });
+    const response = await fetch(`${baseUrl}/tabs`, { credentials: 'include' });
     if (response.ok) {
       return response.json();
-    } else {
-      throw response;
     }
+    throw response;
   }
 
   async updateTabStatus({ openTabs, selectedTab }) {
     const response = await fetch(`${baseUrl}/tabs`, {
-      method: "PATCH",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
+      method: 'PATCH',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ openTabs, selectedTab }),
     });
     if (!response.ok) {
@@ -123,8 +119,8 @@ class ServerStorage {
 
   async logout() {
     const response = await fetch(`${baseUrl}/auth/logout`, {
-      method: "POST",
-      credentials: "include",
+      method: 'POST',
+      credentials: 'include',
     });
     if (!response.ok) {
       throw response;

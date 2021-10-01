@@ -1,6 +1,6 @@
 class InternalServerError {
   constructor() {
-    this.message = "Internal server error";
+    this.message = 'Internal server error';
     this.statusCode = 500;
   }
 }

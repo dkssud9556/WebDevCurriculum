@@ -1,10 +1,14 @@
 class Tab {
   #fileName;
+
   #content;
+
   #saved;
 
   #tabDOM;
+
   #closeButton;
+
   #fileNameSpan;
 
   #parentDOM;
@@ -23,7 +27,7 @@ class Tab {
 
   constructor(
     parentDOM,
-    { fileName = "newfile", content = "", saved = false }
+    { fileName = 'newfile', content = '', saved = false },
   ) {
     this.#parentDOM = parentDOM;
     this.#fileName = fileName;
@@ -34,36 +38,36 @@ class Tab {
     this.#closeButton.onclick = this.#onClickCloseButton;
   }
 
-  #onClickTab = (e) => {
+  #onClickTab = () => {
     this.#tabDOM.dispatchEvent(
-      new CustomEvent("selectTab", {
+      new CustomEvent('selectTab', {
         bubbles: true,
         detail: { fileName: this.#fileName, content: this.#content },
-      })
+      }),
     );
   };
 
   #onClickCloseButton = (e) => {
     e.stopPropagation();
     this.#tabDOM.dispatchEvent(
-      new CustomEvent("removeTab", {
+      new CustomEvent('removeTab', {
         bubbles: true,
         detail: { tab: this },
-      })
+      }),
     );
   };
 
   #createTab = () => {
     this.#closeButton = ElementCreator.create({
-      tag: "button",
-      textContent: "X",
+      tag: 'button',
+      textContent: 'X',
     });
     this.#fileNameSpan = ElementCreator.create({
-      tag: "span",
+      tag: 'span',
       textContent: this.#fileName,
     });
     return ElementCreator.create({
-      classList: ["tab-component"],
+      classList: ['tab-component'],
       children: [this.#fileNameSpan, this.#closeButton],
       parent: this.#parentDOM,
     });
@@ -83,19 +87,19 @@ class Tab {
   };
 
   select = () => {
-    this.#tabDOM.classList.add("tab-component-selected");
+    this.#tabDOM.classList.add('tab-component-selected');
   };
 
   unselect = () => {
-    this.#tabDOM.classList.remove("tab-component-selected");
+    this.#tabDOM.classList.remove('tab-component-selected');
   };
 
   setUnsaved = () => {
-    this.#tabDOM.classList.add("tab-component-unsaved");
+    this.#tabDOM.classList.add('tab-component-unsaved');
   };
 
   setSaved = () => {
-    this.#tabDOM.classList.remove("tab-component-unsaved");
+    this.#tabDOM.classList.remove('tab-component-unsaved');
   };
 
   remove = () => {

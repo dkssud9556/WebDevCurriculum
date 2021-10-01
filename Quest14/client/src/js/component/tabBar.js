@@ -1,19 +1,19 @@
 class TabBar {
   #tabBarDOM;
+
   #tabMap = new Map();
+
   #selectedTab;
 
   constructor(parent) {
     this.#tabBarDOM = this.#createSection(parent);
   }
 
-  #createSection = (parent) => {
-    return ElementCreator.create({
-      tag: "section",
-      classList: ["tab"],
-      parent,
-    });
-  };
+  #createSection = (parent) => ElementCreator.create({
+    tag: 'section',
+    classList: ['tab'],
+    parent,
+  });
 
   removeTab = (tab) => {
     if (this.#selectedTab.fileName === tab.fileName) {
@@ -28,16 +28,14 @@ class TabBar {
   };
 
   updateNewFileTabName = (newFileName) => {
-    this.#tabMap.delete("newfile");
+    this.#tabMap.delete('newfile');
     this.#selectedTab.updateFileName(newFileName);
     this.#selectedTab.updateSaved(true);
     this.#tabMap.set(newFileName, this.#selectedTab);
     this.setSelectedTabSaved();
   };
 
-  isExistsTabByFileName = (fileName) => {
-    return this.#tabMap.has(fileName);
-  };
+  isExistsTabByFileName = (fileName) => this.#tabMap.has(fileName);
 
   changeSelectedTab = (fileName) => {
     this.#selectedTab?.unselect();
@@ -45,19 +43,15 @@ class TabBar {
     this.#selectedTab.select();
   };
 
-  openNewTab = ({ fileName = "newfile", content = "", saved = false }) => {
+  openNewTab = ({ fileName = 'newfile', content = '', saved = false }) => {
     const newTab = this.#createNewTab({ fileName, content, saved });
     this.#tabMap.set(fileName, newTab);
     this.changeSelectedTab(fileName);
   };
 
-  getSelectedTab = () => {
-    return this.#selectedTab;
-  };
+  getSelectedTab = () => this.#selectedTab;
 
-  getTabByFileName = (fileName) => {
-    return this.#tabMap.get(fileName);
-  };
+  getTabByFileName = (fileName) => this.#tabMap.get(fileName);
 
   updateSelectedTabContent = (content) => {
     this.#selectedTab.updateContent(content);
@@ -71,11 +65,11 @@ class TabBar {
     this.#tabMap.set(newFileName, tab);
   };
 
-  getOpenTabs = () => {
-    return Array.from(this.#tabMap.keys());
-  };
+  getOpenTabs = () => Array.from(this.#tabMap.keys());
 
-  #createNewTab = ({ fileName, content, saved }) => {
-    return new Tab(this.#tabBarDOM, { fileName, content, saved });
-  };
+  #createNewTab = ({
+    fileName,
+    content,
+    saved,
+  }) => new Tab(this.#tabBarDOM, { fileName, content, saved });
 }

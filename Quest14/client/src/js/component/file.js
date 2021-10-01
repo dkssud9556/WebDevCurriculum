@@ -1,7 +1,10 @@
 class File {
   #fileDOM;
+
   #fileNameSpan;
+
   #deleteButton;
+
   #renameButton;
 
   #parentDOM;
@@ -23,53 +26,53 @@ class File {
 
   #createFile = () => {
     this.#deleteButton = ElementCreator.create({
-      tag: "button",
-      textContent: "X",
-      classList: ["file-delete-button"],
+      tag: 'button',
+      textContent: 'X',
+      classList: ['file-delete-button'],
     });
     this.#renameButton = ElementCreator.create({
-      tag: "button",
-      textContent: "●",
-      classList: ["file-rename-button"],
+      tag: 'button',
+      textContent: '●',
+      classList: ['file-rename-button'],
     });
     const buttonDiv = ElementCreator.create({
-      classList: ["file-button-div"],
+      classList: ['file-button-div'],
       children: [this.#renameButton, this.#deleteButton],
     });
     this.#fileNameSpan = ElementCreator.create({
-      tab: "span",
+      tab: 'span',
       textContent: this.#fileName,
     });
     this.#fileDOM = ElementCreator.create({
-      classList: ["file"],
+      classList: ['file'],
       children: [this.#fileNameSpan, buttonDiv],
     });
     this.#parentDOM.appendChild(this.#fileDOM);
   };
 
-  #onClickFile = (e) => {
+  #onClickFile = () => {
     this.#fileDOM.dispatchEvent(
-      new CustomEvent("clickFile", {
+      new CustomEvent('clickFile', {
         bubbles: true,
         detail: { fileName: this.#fileName },
-      })
+      }),
     );
   };
 
   #onClickDeleteButton = (e) => {
     e.stopPropagation();
     this.#fileDOM.dispatchEvent(
-      new CustomEvent("deleteFile", {
+      new CustomEvent('deleteFile', {
         bubbles: true,
         detail: { file: this },
-      })
+      }),
     );
   };
 
   #onClickRenameButton = (e) => {
     e.stopPropagation();
     this.#fileDOM.dispatchEvent(
-      new CustomEvent("renameFile", { bubbles: true, detail: { file: this } })
+      new CustomEvent('renameFile', { bubbles: true, detail: { file: this } }),
     );
   };
 
