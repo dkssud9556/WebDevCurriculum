@@ -1,0 +1,49 @@
+{
+  "name": "graphql-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run lint:fix && npm run build && node dist/app.js",
+    "dev": "nodemon --exec ts-node -r tsconfig-paths/register src/app.ts",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint --fix src/**/*.ts",
+    "build": "tsc && tscpaths -p tsconfig.json -s src -o dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server-core": "^3.3.0",
+    "apollo-server-fastify": "^3.3.0",
+    "bcrypt": "^5.0.1",
+    "dataloader": "^2.0.0",
+    "fastify": "^3.21.6",
+    "fastify-cookie": "^5.3.1",
+    "fastify-cors": "^6.0.2",
+    "graphql": "^15.6.0",
+    "graphql-tools": "^8.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "sequelize": "^6.6.5",
+    "sqlite3": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/bluebird": "^3.5.36",
+    "@types/jsonwebtoken": "^8.5.5",
+    "@types/node": "^10.17.60",
+    "@types/validator": "^13.6.3",
+    "@typescript-eslint/eslint-plugin": "^4.32.0",
+    "@typescript-eslint/parser": "^4.32.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-import": "^2.24.2",
+    "nodemon": "^2.0.13",
+    "ts-node": "^10.2.1",
+    "tsconfig-paths": "^3.11.0",
+    "tscpaths": "^0.0.9",
+    "typescript": "^4.4.3"
+  }
+}
