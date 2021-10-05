@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "CommonJS",
+    "outDir": "dist",
+    "strictPropertyInitialization": true,
+    "strictNullChecks": true,
+    "moduleResolution": "Node",
+    "baseUrl": "src",
+    "removeComments": true,
+    "noUnusedLocals": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "paths": {
+      "@model/*": ["./model/*"],
+      "@repository/*": ["./repository/*"],
+      "@service/*": ["./service/*"],
+      "@schema/*": ["./schema/*"],
+      "@error/*": ["./error/*"],
+      "@middleware/*": ["./middleware/*"],
+      "@entity/*": ["./entity/*"],
+      "@src/*": ["./*"]
+    }
+  }
+}
