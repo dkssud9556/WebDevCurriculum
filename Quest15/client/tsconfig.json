@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "CommonJS",
+    "outDir": "src/ts",
+    "strictNullChecks": true,
+    "moduleResolution": "Node",
+    "baseUrl": "src/ts",
+    "removeComments": true,
+    "noUnusedLocals": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "lib": ["ES6", "DOM"]
+  },
+  "include": ["src/ts/**/*.ts"],
+  "exclude": []
+}

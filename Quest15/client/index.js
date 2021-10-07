@@ -5,12 +5,12 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use('/', express.static(`${path.resolve()}/src`));
-app.use('/login', (req, res) => {
-  res.sendFile(`${path.resolve()}/src/login.html`);
+app.use('/', express.static(`${path.resolve()}/dist`));
+app.use('/login', (req, res, next) => {
+  res.sendFile(`${path.resolve()}/dist/login.html`);
 });
-app.use('/', (req, res) => {
-  res.sendFile(`${path.resolve()}/src/index.html`);
+app.use('/', (req, res, next) => {
+  res.sendFile(`${path.resolve()}/dist/index.html`);
 });
 
 app.listen(3000, () => {

@@ -1,8 +1,12 @@
-class GraphqlStorage {
-  static #url = 'http://localhost:8000/graphql';
+import BusinessError from '../error/businessError';
+import InternalServerError from '../error/internalServerError';
+import Storage from './index';
 
-  static async #request(queryName, query) {
-    const response = await fetch(this.#url, {
+export default class GraphqlStorage implements Storage {
+  private static url = 'http://localhost:8000/graphql';
+
+  private static async request(queryName, query) {
+    const response = await fetch(this.url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
@@ -27,14 +31,14 @@ class GraphqlStorage {
     return data;
   }
 
-  async login({ username, password }) {
-    await GraphqlStorage.#request(
-      'login',
+  async deleteFile(fileName: string): Promise<void> {
+    await GraphqlStorage.request(
+      'deleteFile',
       `
         mutation {
-          login(username: "${username}", password: "${password}") {
-            __typename,
-            ... on LoginSuccess {
+          deleteFile(fileName: "${fileName}") {
+            __typename
+            ... on DeleteFileSuccess {
               message
             }
             ... on BusinessError {
@@ -47,8 +51,8 @@ class GraphqlStorage {
     );
   }
 
-  async getFileContentByName(fileName) {
-    const data = await GraphqlStorage.#request(
+  async getFileContentByName(fileName: string): Promise<string> {
+    const data = await GraphqlStorage.request(
       'file',
       `
         query {
@@ -71,8 +75,8 @@ class GraphqlStorage {
     return data.data.file.file.content;
   }
 
-  async getFileNames() {
-    const data = await GraphqlStorage.#request(
+  async getFileNames(): Promise<string[]> {
+    const data = await GraphqlStorage.request(
       'files',
       `
         query {
@@ -95,128 +99,8 @@ class GraphqlStorage {
     return data.data.files.files.map((file) => file.fileName);
   }
 
-  async isExistsFileName(fileName) {
-    const data = await GraphqlStorage.#request(
-      'file',
-      `
-        query {
-          file(fileName: "${fileName}") {
-            __typename
-            ... on FileSuccess {
-              message
-              file {
-                content
-              }
-            }
-            ... on BusinessError {
-              message
-              statusCode
-            }
-          }
-        }
-      `,
-    );
-    return !!data.data.file.file;
-  }
-
-  async logout() {
-    await GraphqlStorage.#request(
-      'logout',
-      `
-        mutation {
-          logout {
-            __typename
-            ... on LogoutSuccess {
-              message
-            }
-          }
-        }
-      `,
-    );
-  }
-
-  async saveNewFile(tabInfo) {
-    await GraphqlStorage.#request(
-      'saveFile',
-      `
-        mutation {
-          saveFile(fileName: "${tabInfo.fileName}", content: "${tabInfo.content}") {
-            __typename
-            ... on SaveFileSuccess {
-              message
-            }
-            ... on BusinessError {
-              message
-              statusCode
-            }
-          }
-        }
-      `,
-    );
-  }
-
-  async save({ fileName, content }) {
-    await GraphqlStorage.#request(
-      'updateFileContent',
-      `
-        mutation {
-          updateFileContent(fileName: "${fileName}", content: "${content}") {
-            __typename
-            ... on UpdateFileContentSuccess {
-              message
-            }
-            ... on BusinessError {
-              message
-              statusCode
-            }
-          }
-        }
-      `,
-    );
-  }
-
-  async deleteFile(fileName) {
-    await GraphqlStorage.#request(
-      'deleteFile',
-      `
-        mutation {
-          deleteFile(fileName: "${fileName}") {
-            __typename
-            ... on DeleteFileSuccess {
-              message
-            }
-            ... on BusinessError {
-              message
-              statusCode
-            }
-          }
-        }
-      `,
-    );
-  }
-
-  async updateFileName({ fileName, newFileName }) {
-    await GraphqlStorage.#request(
-      'renameFile',
-      `
-        mutation {
-          renameFile(fileName: "${fileName}", newFileName: "${newFileName}") {
-            __typename
-            ... on RenameFileSuccess {
-              message
-            }
-            ... on BusinessError {
-              message
-              statusCode
-            }
-          }
-        }
-      `,
-    );
-  }
-
-  async getTabs() {
-    const data = await GraphqlStorage.#request(
+  async getTabs(): Promise<{ fileName: string; isSelected: boolean }[]> {
+    const data = await GraphqlStorage.request(
       'tabs',
       `
         query {
@@ -240,8 +124,155 @@ class GraphqlStorage {
     return data.data.tabs.tabs;
   }
 
-  async updateTabStatus({ openTabs, selectedTab }) {
-    await GraphqlStorage.#request(
+  async isExistsFileName(fileName: string): Promise<boolean> {
+    const data = await GraphqlStorage.request(
+      'file',
+      `
+        query {
+          file(fileName: "${fileName}") {
+            __typename
+            ... on FileSuccess {
+              message
+              file {
+                content
+              }
+            }
+            ... on BusinessError {
+              message
+              statusCode
+            }
+          }
+        }
+      `,
+    );
+    return !!data.data.file.file;
+  }
+
+  async login({
+    username,
+    password,
+  }: {
+    username: string;
+    password: string;
+  }): Promise<void> {
+    await GraphqlStorage.request(
+      'login',
+      `
+        mutation {
+          login(username: "${username}", password: "${password}") {
+            __typename,
+            ... on LoginSuccess {
+              message
+            }
+            ... on BusinessError {
+              message
+              statusCode
+            }
+          }
+        }
+      `,
+    );
+  }
+
+  async logout(): Promise<void> {
+    await GraphqlStorage.request(
+      'logout',
+      `
+        mutation {
+          logout {
+            __typename
+            ... on LogoutSuccess {
+              message
+            }
+          }
+        }
+      `,
+    );
+  }
+
+  async save({
+    fileName,
+    content,
+  }: {
+    fileName: string;
+    content: string;
+  }): Promise<void> {
+    await GraphqlStorage.request(
+      'updateFileContent',
+      `
+        mutation {
+          updateFileContent(fileName: "${fileName}", content: "${content}") {
+            __typename
+            ... on UpdateFileContentSuccess {
+              message
+            }
+            ... on BusinessError {
+              message
+              statusCode
+            }
+          }
+        }
+      `,
+    );
+  }
+
+  async saveNewFile(file: {
+    fileName: string;
+    content: string;
+  }): Promise<void> {
+    await GraphqlStorage.request(
+      'saveFile',
+      `
+        mutation {
+          saveFile(fileName: "${file.fileName}", content: "${file.content}") {
+            __typename
+            ... on SaveFileSuccess {
+              message
+            }
+            ... on BusinessError {
+              message
+              statusCode
+            }
+          }
+        }
+      `,
+    );
+  }
+
+  async updateFileName({
+    fileName,
+    newFileName,
+  }: {
+    fileName: string;
+    newFileName: string;
+  }): Promise<void> {
+    await GraphqlStorage.request(
+      'renameFile',
+      `
+        mutation {
+          renameFile(fileName: "${fileName}", newFileName: "${newFileName}") {
+            __typename
+            ... on RenameFileSuccess {
+              message
+            }
+            ... on BusinessError {
+              message
+              statusCode
+            }
+          }
+        }
+      `,
+    );
+  }
+
+  async updateTabStatus({
+    openTabs,
+    selectedTab,
+  }: {
+    openTabs: string[];
+    selectedTab: string | null;
+  }): Promise<void> {
+    await GraphqlStorage.request(
       'updateTabs',
       `
         mutation {
