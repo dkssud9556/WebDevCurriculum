@@ -1,11 +1,14 @@
 import TabRepository from '@repository/tab';
-import { Service } from 'typedi';
+import {Inject, Service} from 'typedi';
+import SequelizeTabRepository from "@repository/tab/sequelize";
 
 @Service()
 export default class TabService {
   private readonly tabRepository: TabRepository;
 
-  constructor(tabRepository: TabRepository) {
+  constructor(
+      @Inject(() => SequelizeTabRepository) tabRepository: TabRepository
+  ) {
     this.tabRepository = tabRepository;
   }
 

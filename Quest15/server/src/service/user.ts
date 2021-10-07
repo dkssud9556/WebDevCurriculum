@@ -1,12 +1,15 @@
 import UserRepository from '@repository/user';
 import User from '@entity/user';
-import { Service } from 'typedi';
+import {Inject, Service} from 'typedi';
+import SequelizeUserRepository from "@repository/user/sequelize";
 
 @Service()
 export default class UserService {
   private readonly userRepository: UserRepository
 
-  constructor(userRepository: UserRepository) {
+  constructor(
+      @Inject(() => SequelizeUserRepository) userRepository: UserRepository
+  ) {
     this.userRepository = userRepository;
   }
 

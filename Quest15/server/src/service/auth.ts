@@ -1,8 +1,9 @@
 import InvalidLoginInfoError from '@error/invalidLoginInfo';
 import UsernameDuplicationError from '@error/usernameDuplication';
 import UserRepository from '@repository/user';
-import { Service } from 'typedi';
-import PasswordEncoder from '@src/passwordEncoder';
+import {Inject, Service} from 'typedi';
+import PasswordEncoder, {BcryptPasswordEncoder} from '@src/passwordEncoder';
+import SequelizeUserRepository from "@repository/user/sequelize";
 
 @Service()
 export default class AuthService {
@@ -10,7 +11,10 @@ export default class AuthService {
 
   private readonly passwordEncoder: PasswordEncoder;
 
-  constructor(userRepository: UserRepository, passwordEncoder: PasswordEncoder) {
+  constructor(
+      @Inject(() => SequelizeUserRepository) userRepository: UserRepository,
+      @Inject(() => BcryptPasswordEncoder) passwordEncoder: PasswordEncoder
+  ) {
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
   }
