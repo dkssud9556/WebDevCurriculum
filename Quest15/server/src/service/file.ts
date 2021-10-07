@@ -1,7 +1,9 @@
 import FileNameConflictError from '@error/fileNameConflict';
 import FileNotFoundError from '@error/fileNotFound';
 import FileRepository from '@repository/file';
+import { Service } from 'typedi';
 
+@Service()
 export default class FileService {
   private readonly fileRepository: FileRepository;
 
@@ -18,6 +20,10 @@ export default class FileService {
       username,
       fileName,
     });
+  }
+
+  async getFilesIn(usernames: readonly string[]) {
+    return this.fileRepository.findAllIn(usernames as string[]);
   }
 
   async saveFile(fileInfo: { username: string, fileName: string, content: string }) {

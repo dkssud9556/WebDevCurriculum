@@ -1,4 +1,4 @@
-import { makeExecutableSchema } from 'graphql-tools';
+import { makeExecutableSchema } from '@graphql-tools/schema';
 import { gql } from 'apollo-server-fastify';
 
 import { userResolver, userTypeDef } from '@schema/user';

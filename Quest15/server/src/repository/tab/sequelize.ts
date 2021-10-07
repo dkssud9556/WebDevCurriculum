@@ -2,7 +2,9 @@ import { TabModel} from "@model/tab";
 import Tab from "@entity/tab";
 import TabRepository from "@repository/tab/index";
 import {Op} from "sequelize";
+import {Service} from "typedi";
 
+@Service()
 export default class SequelizeTabRepository implements TabRepository {
   async findAllByUsername(username: string): Promise<Tab[]> {
     const tabs = await TabModel.findAll({ where: { username } });

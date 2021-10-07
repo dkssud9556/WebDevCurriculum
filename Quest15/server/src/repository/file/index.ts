@@ -8,4 +8,5 @@ export default interface FileRepository {
     save(file: FileAttributes): Promise<void>;
     deleteByPk(pk: FilePk): Promise<void>;
     updateFileName({username, fileName, newFileName}: {username: string, fileName: string, newFileName: string}): Promise<void>;
+    findAllIn(usernames: string[]): Promise<File[]>;
 }

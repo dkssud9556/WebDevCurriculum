@@ -11,6 +11,8 @@
     "noUnusedLocals": true,
     "sourceMap": true,
     "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "paths": {
       "@model/*": ["./model/*"],
       "@repository/*": ["./repository/*"],
@@ -21,5 +23,7 @@
       "@entity/*": ["./entity/*"],
       "@src/*": ["./*"]
     }
-  }
+  },
+  "exclude": [
+    "./test/**/*", "jest.config.ts"]
 }

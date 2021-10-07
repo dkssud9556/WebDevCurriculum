@@ -1,8 +1,11 @@
-import UserRepository from "@repository/user/index";
-import { UserModel} from "@model/user";
-import User, {UserPk} from "@entity/user";
 import {Op} from "sequelize";
+import {Service} from "typedi";
 
+import UserRepository from "@repository/user/index";
+import {UserModel} from "@model/user";
+import User, {UserPk} from "@entity/user";
+
+@Service()
 export default class SequelizeUserRepository implements UserRepository {
   async findByPk(pk: UserPk): Promise<User | null> {
     const user = await UserModel.findOne({ where: { username: pk } });

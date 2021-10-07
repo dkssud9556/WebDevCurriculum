@@ -1,19 +1,23 @@
-import bcrypt from 'bcrypt';
-
 import InvalidLoginInfoError from '@error/invalidLoginInfo';
 import UsernameDuplicationError from '@error/usernameDuplication';
 import UserRepository from '@repository/user';
+import { Service } from 'typedi';
+import PasswordEncoder from '@src/passwordEncoder';
 
+@Service()
 export default class AuthService {
   private readonly userRepository: UserRepository;
 
-  constructor(userRepository: UserRepository) {
+  private readonly passwordEncoder: PasswordEncoder;
+
+  constructor(userRepository: UserRepository, passwordEncoder: PasswordEncoder) {
     this.userRepository = userRepository;
+    this.passwordEncoder = passwordEncoder;
   }
 
   async login({ username, password }: {username: string, password: string}) {
     const user = await this.userRepository.findByPk(username);
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    if (!user || !(await this.passwordEncoder.compare(password, user.password))) {
       throw new InvalidLoginInfoError();
     }
   }
@@ -23,10 +27,9 @@ export default class AuthService {
     if (user) {
       throw new UsernameDuplicationError();
     }
-    const salt = await bcrypt.genSalt(10);
     await this.userRepository.save({
       username,
-      password: await bcrypt.hash(password, salt),
+      password: await this.passwordEncoder.encode(password),
     });
   }
 }

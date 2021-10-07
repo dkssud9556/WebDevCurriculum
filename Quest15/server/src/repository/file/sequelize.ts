@@ -2,7 +2,9 @@ import {FileModel} from "@model/file";
 import FileRepository from "@repository/file/index";
 import File, {FilePk} from "@entity/file";
 import {Op} from "sequelize";
+import {Service} from "typedi";
 
+@Service()
 export default class SequelizeFileRepository implements FileRepository {
   async findByPk(pk: FilePk): Promise<File | null> {
     const file = await FileModel.findOne({ where: pk });

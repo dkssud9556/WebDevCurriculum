@@ -1,14 +1,14 @@
 import jwt from "jsonwebtoken";
 
 import wrapException from "@middleware/wrapException";
-import { JWT_SECRET } from "@src/config";
+import config from "@src/config";
 
 export default {
   Mutation: {
     login: wrapException(async (parent, args, context) => {
       const { username, password } = args;
       await context.services.authService.login({ username, password });
-      const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: "2d" });
+      const token = jwt.sign({ username }, config.JWT_SECRET, { expiresIn: "2d" });
       context.reply.setCookie("token", token, { httpOnly: true, path: "/" });
       return { __typename: "LoginSuccess", message: "Login success" };
     }),

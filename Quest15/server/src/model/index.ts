@@ -1,14 +1,21 @@
-import { Sequelize } from 'sequelize';
+import { Options, Sequelize } from 'sequelize';
 
-import { STORAGE_FOLDER_PATH } from '../config';
-import userInit from './user';
-import fileInit from './file';
-import tabInit from './tab';
+import config from '@src/config';
+import userInit from '@model/user';
+import fileInit from '@model/file';
+import tabInit from '@model/tab';
 
-const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: `${STORAGE_FOLDER_PATH}/database.sqlite`,
-});
+const createSequelize = () => {
+  if (process.env.NODE_ENV === 'test') {
+    const { url, dialect, logging } = config.SEQUELIZE_OPTION;
+    return new Sequelize(url as string, {
+      dialect, logging,
+    } as Options);
+  }
+  return new Sequelize(config.SEQUELIZE_OPTION as Options);
+};
+
+const sequelize = createSequelize();
 
 userInit(sequelize);
 fileInit(sequelize);

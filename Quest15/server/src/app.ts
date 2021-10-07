@@ -1,12 +1,13 @@
+import 'reflect-metadata'
 import fastify from "fastify";
 import cookie from "fastify-cookie";
-import { ApolloServer } from "apollo-server-fastify";
+import {ApolloServer} from "apollo-server-fastify";
 import bcrypt from "bcrypt";
 
-import schema from "@schema/index";
-import { filesLoader, tabsLoader, userLoader } from "@src/dataLoader";
 import sequelize from "@model/index";
-import * as services from '@service/index';
+import schema from "@src/schema";
+import {filesLoader, tabsLoader, userLoader} from "@src/dataLoader";
+import services from "@src/service";
 
 const server = new ApolloServer({
   schema,
@@ -15,13 +16,13 @@ const server = new ApolloServer({
       loaders: {
         userLoader: userLoader(),
         filesLoader: filesLoader(),
-        tabsLoader: tabsLoader(),
+        tabsLoader: tabsLoader()
       },
       services,
       reply,
-      token: request.cookies.token,
-    };
-  },
+      token: request.cookies.token
+    }
+  }
 });
 
 const app = fastify({

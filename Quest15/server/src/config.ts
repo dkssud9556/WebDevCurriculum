@@ -1,6 +1,16 @@
 import path from "path";
 
-export const JWT_SECRET = "jwtsecret";
-
-export const STORAGE_FOLDER_PATH = `${path.resolve()}/storage`;
-export const JSON_FILES_PATH = `${STORAGE_FOLDER_PATH}/files.json`;
+export default process.env.NODE_ENV === 'test' ? {
+    JWT_SECRET: 'jwtsecret',
+    SEQUELIZE_OPTION: {
+        url: 'sqlite::memory:',
+        dialect: 'sqlite',
+        logging: false
+    }
+} : {
+    JWT_SECRET: 'jwtsecret',
+    SEQUELIZE_OPTION: {
+        dialect: 'sqlite',
+        storage: `${path.resolve()}/storage/database.sqlite`
+    }
+}

@@ -2,6 +2,7 @@
  * For a detailed explanation regarding each configuration property and type check, visit:
  * https://jestjs.io/docs/configuration
  */
+import path from "path";
 
 export default {
   // All imported modules in your tests should be mocked automatically
@@ -147,7 +148,7 @@ export default {
 
   // The glob patterns Jest uses to detect test files
   // testMatch: [
-  //   "**/__tests__/**/*.[jt]s?(x)",
+  //   "**/test/**/*.[jt]s?(x)",
   //   "**/?(*.)+(spec|test).[tj]s?(x)"
   // ],
 
@@ -191,4 +192,18 @@ export default {
 
   // Whether to use watchman for file crawling
   // watchman: true,
+  moduleNameMapper: {
+    "^@service/(.*)$": `${path.resolve()}/src/service/$1`,
+    "^@error/(.*)$": `${path.resolve()}/src/error/$1`,
+    "^@middleware/(.*)$": `${path.resolve()}/src/middleware/$1`,
+    "^@model/(.*)$": `${path.resolve()}/src/model/$1`,
+    "^@repository/(.*)$": `${path.resolve()}/src/repository/$1`,
+    "^@schema/(.*)$": `${path.resolve()}/src/schema/$1`,
+    "^@entity/(.*)$": `${path.resolve()}/src/entity/$1`,
+    "^@src/(.*)$": `${path.resolve()}/src/$1`
+  },
+  transformIgnorePatterns: ['.js'],
+  transform: {
+    "^.+\\.ts?$": "ts-jest"
+  }
 };
