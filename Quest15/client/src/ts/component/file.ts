@@ -52,7 +52,7 @@ export default class File {
     this.parentDOM.appendChild(this.fileDOM);
   };
 
-  onClickFile = (e: Event) => {
+  private onClickFile = (e: Event) => {
     this.fileDOM.dispatchEvent(
       new CustomEvent('clickFile', {
         bubbles: true,
@@ -61,7 +61,7 @@ export default class File {
     );
   };
 
-  onClickDeleteButton = (e: Event) => {
+  private onClickDeleteButton = (e: Event) => {
     e.stopPropagation();
     this.fileDOM.dispatchEvent(
       new CustomEvent('deleteFile', {
@@ -71,7 +71,7 @@ export default class File {
     );
   };
 
-  onClickRenameButton = (e: Event) => {
+  private onClickRenameButton = (e: Event) => {
     e.stopPropagation();
     this.fileDOM.dispatchEvent(
       new CustomEvent('renameFile', { bubbles: true, detail: { file: this } }),

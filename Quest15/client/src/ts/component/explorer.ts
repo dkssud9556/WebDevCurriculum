@@ -38,7 +38,7 @@ export default class Explorer {
     fileNames.forEach((fileName) => this.loadFile(fileName));
   };
 
-  onClickLogoutButton = (e: Event) => {
+  private onClickLogoutButton = (e: Event) => {
     this.explorerDOM.dispatchEvent(
       new CustomEvent('logout', { bubbles: true }),
     );

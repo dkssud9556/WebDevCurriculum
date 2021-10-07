@@ -67,7 +67,7 @@ export default class Tab {
     );
   };
 
-  createTab = () => {
+  private createTab = () => {
     this.closeButton = ElementCreator.create({
       tag: 'button',
       textContent: 'X',
