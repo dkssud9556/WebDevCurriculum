@@ -1,15 +1,15 @@
 import FileNameConflictError from '@error/fileNameConflict';
 import FileNotFoundError from '@error/fileNotFound';
 import FileRepository from '@repository/file';
-import {Inject, Service} from 'typedi';
-import SequelizeFileRepository from "@repository/file/sequelize";
+import { Inject, Service } from 'typedi';
+import SequelizeFileRepository from '@repository/file/sequelize';
 
 @Service()
 export default class FileService {
   private readonly fileRepository: FileRepository;
 
   constructor(
-      @Inject(() => SequelizeFileRepository) fileRepository: FileRepository
+      @Inject(() => SequelizeFileRepository) fileRepository: FileRepository,
   ) {
     this.fileRepository = fileRepository;
   }
