@@ -65,7 +65,9 @@ Jest는 describe, test 등 테스트를 작성할 수 있는 메소드를 제공
 
 ## Puppeteer는 어떤 일을 하며 어떻게 사용하는 테스트 프레임워크일까요?
 
-Puppeteer는 Chromium을 사용하여 Headless browser로 사용된다. Puppeteer를 설치해서 코드를 작성하여 SPA를 크롤링할 수 있으며, 렌더링된 페이지를 이미지 파일로 만들수도 있고, DOM 컨텍스트에서 자바스크립트 코드를 실행시킬 수도 있다. 신기하다.
+Puppeteer는 Chromium을 사용하여 Headless browser로 사용된다. Puppeteer를 설치해서 코드를 작성하여 SPA를 크롤링할 수 있으며, 렌더링된 페이지를 이미지 파일로 만들수도 있고, DOM 컨텍스트에서 자바스크립트 코드를 실행시킬 수도 있다.
+
+Puppeteer를 사용해서 e2e 테스트를 할 수 있다.
 
 # Advanced
 
