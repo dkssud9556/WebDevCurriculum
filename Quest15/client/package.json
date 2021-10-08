@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "npm test && npm run lint:fix && npm run build && node index.js",
-    "start:test": "npm run build && node index.js",
+    "start:test": "npm run build:test && node index.js",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint --fix src/**/*.ts",
     "build": "webpack",
+    "build:test": "cross-env NODE_ENV=test webpack",
     "test": "jest"
   },
   "keywords": [],
@@ -28,6 +29,7 @@
     "@typescript-eslint/eslint-plugin": "^4.32.0",
     "@typescript-eslint/parser": "^4.32.0",
     "babel-loader": "^8.2.2",
+    "cross-env": "^7.0.3",
     "css-loader": "^6.3.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",

@@ -5,8 +5,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 module.exports = {
   mode: 'production',
   entry: {
-    index: './src/ts/index.ts',
-    login: './src/ts/login.ts'
+    index: `./src/ts/index${process.env.NODE_ENV === 'test' ? '-test' : ''}.ts`,
+    login: `./src/ts/login${process.env.NODE_ENV === 'test' ? '-test' : ''}.ts`
   },
   output: {
     path: path.resolve( __dirname, 'dist' ),

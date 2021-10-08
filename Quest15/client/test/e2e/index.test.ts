@@ -5,7 +5,7 @@ describe('test', () => {
     let page: Page;
 
     beforeAll(async () => {
-        browser = await puppeteer.launch();
+        browser = await puppeteer.launch({ headless: false, slowMo: 50 });
         page = await browser.newPage();
     });
 
@@ -15,10 +15,15 @@ describe('test', () => {
         expect(title).toEqual('로그인');
     });
 
-    test('Main page title', async () => {
-        await page.goto('http://localhost:3000');
-        const title = await page.title();
-        expect(title).toEqual('메모장');
+    test('login test', async () => {
+        await page.goto('http://localhost:3000/login');
+        await page.type('#username', 'user1');
+        await page.type('#password', 'pass1');
+        page.on('dialog', async dialog => {
+            expect(dialog.message()).toEqual('로그인 성공');
+            await dialog.accept();
+        });
+        await page.click('button');
     });
 
     afterAll(() => browser.close());
