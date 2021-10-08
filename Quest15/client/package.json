@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm test && npm run lint:fix && npm run build && node index.js",
+    "start:test": "npm run build && node index.js",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint --fix src/**/*.ts",
     "build": "webpack",
