@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  test-graphql-server:
+    build: .
+    ports:
+      - "80:8000"
