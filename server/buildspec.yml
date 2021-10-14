@@ -9,6 +9,7 @@ phases:
       - npm install
   build:
     commands:
+      - cd server
       - npm run lint:fix
       - npm run test
       - npm run build
