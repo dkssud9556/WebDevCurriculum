@@ -9,6 +9,7 @@ phases:
       - cd server
       - npm install
   build:
+    on-failure: ABORT
     commands:
       - npm run lint:fix
       - npm run test
