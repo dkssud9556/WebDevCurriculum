@@ -11,7 +11,7 @@ phases:
   build:
     commands:
       - npm run lint:fix
-      - npm run test 
+      - npm run test
       - npm run build
       - docker login --username $DOCKER_USERNAME --password-stdin $DOCKER_PASSWORD
       - docker build -t $DOCKER_IMAGE_TAG .
