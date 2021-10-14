@@ -2,7 +2,9 @@ FROM node:latest
 
 WORKDIR /server
 
-COPY . ./
+COPY ./dist ./
+COPY ./node_modules ./
+COPY ./package.json ./
 
 RUN npm install
 
