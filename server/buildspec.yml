@@ -13,8 +13,11 @@ phases:
       - npm run lint:fix
       - npm run test
       - npm run build
+      - docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+      - docker build -t $DOCKER_IMAGE_TAG .
   post_build:
     commands:
+      - docker push $DOCKER_IMAGE_TAG
       - echo Build completed
 
 artifacts:
