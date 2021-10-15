@@ -20,10 +20,4 @@ phases:
     commands:
       - docker push $DOCKER_IMAGE_TAG
       - echo Build completed
-
-artifacts:
-  files:
-    - dist/*
-    - node_modules/*
-    - package.json
-  
+      
