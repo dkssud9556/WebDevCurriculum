@@ -8,7 +8,10 @@ export default class ElasticSearchLogger implements Logger {
     private readonly client: elasticsearch.Client;
 
     constructor() {
-        this.client = new elasticsearch.Client({ host: config.ELASTIC_SEARCH_URL })
+        this.client = new elasticsearch.Client({
+            host: config.ELASTIC_SEARCH_URL,
+            ssl: { rejectUnauthorized: false }
+        })
     }
 
     async putLog(logData: LogType): Promise<void> {
