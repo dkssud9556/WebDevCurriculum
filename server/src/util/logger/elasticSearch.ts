@@ -10,7 +10,7 @@ export default class ElasticSearchLogger implements Logger {
     constructor() {
         this.client = new elasticsearch.Client({
             host: config.ELASTIC_SEARCH_URL,
-            ssl: { rejectUnauthorized: false }
+            ssl: { rejectUnauthorized: false, pfx: [] }
         })
     }
 
