@@ -200,7 +200,8 @@ export default {
     "^@repository/(.*)$": `${path.resolve()}/src/repository/$1`,
     "^@schema/(.*)$": `${path.resolve()}/src/schema/$1`,
     "^@entity/(.*)$": `${path.resolve()}/src/entity/$1`,
-    "^@src/(.*)$": `${path.resolve()}/src/$1`
+    "^@src/(.*)$": `${path.resolve()}/src/$1`,
+    "^@library/(.*)$": `${path.resolve()}/src/library/$1`
   },
   transformIgnorePatterns: ['.js'],
   transform: {

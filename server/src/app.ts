@@ -20,13 +20,14 @@ const server = new ApolloServer({
       },
       services,
       reply,
+      request,
       token: request.cookies.token
     }
   }
 });
 
 const app = fastify({
-  logger: true,
+  logger: true
 });
 
 app.register(cookie);

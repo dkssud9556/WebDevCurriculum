@@ -21,7 +21,8 @@
       "@error/*": ["./error/*"],
       "@middleware/*": ["./middleware/*"],
       "@entity/*": ["./entity/*"],
-      "@src/*": ["./*"]
+      "@src/*": ["./*"],
+      "@library/*": ["./library/*"]
     }
   },
   "exclude": [

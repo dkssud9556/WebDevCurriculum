@@ -12,5 +12,6 @@ export default process.env.NODE_ENV === 'test' ? {
     SEQUELIZE_OPTION: {
         dialect: 'sqlite',
         storage: `${path.resolve()}/storage/database.sqlite`
-    }
+    },
+    ELASTIC_SEARCH_URL: process.env.ELASTIC_SEARCH_URL
 }

@@ -29,6 +29,7 @@ import {
     saveFileMutation,
     updateFileContentMutation
 } from "../gqlQuery";
+import LogService, {EmptyLogger, Logger} from "@service/log";
 
 describe('e2e test', () => {
     const users = DummyCreator.createUsers();
@@ -40,6 +41,7 @@ describe('e2e test', () => {
     let fileRepository: FileRepository;
     let tabRepository: TabRepository;
     let passwordEncoder: PasswordEncoder;
+    let logger: Logger;
 
     beforeAll(async () => {
         await sequelize.sync({ force: true });
@@ -47,6 +49,7 @@ describe('e2e test', () => {
         fileRepository = Container.get(SequelizeFileRepository);
         tabRepository = Container.get(SequelizeTabRepository);
         passwordEncoder = Container.get(BcryptPasswordEncoder);
+        logger = new EmptyLogger();
         server = new ApolloServer({
             schema,
             context: ({ request, reply }) => {
@@ -60,7 +63,8 @@ describe('e2e test', () => {
                         authService: new AuthService(userRepository, passwordEncoder),
                         userService: new UserService(userRepository),
                         fileService: new FileService(fileRepository),
-                        tabService: new TabService(tabRepository)
+                        tabService: new TabService(tabRepository),
+                        logService: new LogService(logger)
                     },
                     reply,
                     token
@@ -165,7 +169,7 @@ describe('e2e test', () => {
             query: renameFileMutation(fileInfo)
         });
         const body = JSON.parse(response.body);
-
+        console.log(body)
         expect(body.data.renameFile.__typename).toEqual('RenameFileSuccess');
         const renamedFile = await FileModel.findOne({
             where: {
