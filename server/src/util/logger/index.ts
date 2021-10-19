@@ -1,7 +1,7 @@
 export type LogType = {
     message: string;
     apiName: string;
-    statusCode: number;
+    statusCode: string;
 }
 
 export default interface Logger {
