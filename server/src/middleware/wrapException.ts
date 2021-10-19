@@ -6,7 +6,7 @@ export default (func) => async (parent, args, context, info) => {
     await context.services.logService.log({
       apiName: result.__typename,
       message: result.message,
-      statusCode: 200
+      statusCode: 200,
     });
     return result;
   } catch (err) {
@@ -15,7 +15,7 @@ export default (func) => async (parent, args, context, info) => {
       await context.services.logService.log({
         apiName: typename,
         message,
-        statusCode
+        statusCode,
       });
       return {
         __typename: typename,

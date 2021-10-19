@@ -18,7 +18,10 @@
         "ts": "never",
         "tsx": "never"
       }
-    ]
+    ],
+    "no-underscore-dangle": "off",
+    "no-unused-vars": "warn",
+    "class-methods-use-this": "off"
   },
   "settings": {
     "import/resolver": {
