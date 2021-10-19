@@ -1,8 +1,9 @@
+import { Inject, Service } from 'typedi';
+
 import InvalidLoginInfoError from '@error/invalidLoginInfo';
 import UsernameDuplicationError from '@error/usernameDuplication';
 import UserRepository from '@repository/user';
-import { Inject, Service } from 'typedi';
-import PasswordEncoder, { BcryptPasswordEncoder } from '@src/passwordEncoder';
+import PasswordEncoder, { BcryptPasswordEncoder } from '@util/passwordEncoder';
 import SequelizeUserRepository from '@repository/user/sequelize';
 
 @Service()

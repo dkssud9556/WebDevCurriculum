@@ -6,7 +6,7 @@ import bcrypt from "bcrypt";
 
 import sequelize from "@model/index";
 import schema from "@src/schema";
-import {filesLoader, tabsLoader, userLoader} from "@src/dataLoader";
+import {filesLoader, tabsLoader, userLoader} from "@util/dataLoader";
 import services from "@src/service";
 
 const server = new ApolloServer({

@@ -22,7 +22,8 @@
       "@middleware/*": ["./middleware/*"],
       "@entity/*": ["./entity/*"],
       "@src/*": ["./*"],
-      "@library/*": ["./library/*"]
+      "@library/*": ["./library/*"],
+      "@util/*": ["./util/*"]
     }
   },
   "exclude": [

@@ -3,7 +3,7 @@ import {Container} from "typedi";
 import sequelize from "@model/index";
 import AuthService from "@service/auth";
 import UserRepository from "@repository/user";
-import PasswordEncoder, {BcryptPasswordEncoder} from "@src/passwordEncoder";
+import PasswordEncoder, {BcryptPasswordEncoder} from "../../../src/util/passwordEncoder";
 import SequelizeUserRepository from "@repository/user/sequelize";
 import {UserModel} from "@model/user";
 

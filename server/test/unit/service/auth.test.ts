@@ -4,7 +4,7 @@ import AuthService from '@service/auth';
 import SequelizeUserRepository from "@repository/user/sequelize";
 import UserRepository from "@repository/user";
 import InvalidLoginInfoError from "@error/invalidLoginInfo";
-import PasswordEncoder, {BcryptPasswordEncoder} from "@src/passwordEncoder";
+import PasswordEncoder, {BcryptPasswordEncoder} from "../../../src/util/passwordEncoder";
 import UsernameDuplicationError from "@error/usernameDuplication";
 
 const createUser = () => ({ username: 'user1', password: 'pass1' });

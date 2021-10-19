@@ -1,8 +1,8 @@
 import {Client, RequestParams} from "@elastic/elasticsearch";
 import config from "@src/config";
-import {Logger, LogType} from "@service/log";
+import Logger, {LogType} from "@util/logger/index";
 
-export class ElasticSearchLogger implements Logger {
+export default class ElasticSearchLogger implements Logger {
     private readonly INDEX_NAME = 'server_api_logs';
     private readonly client: Client;
 

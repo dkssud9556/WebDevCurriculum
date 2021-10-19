@@ -1,15 +1,6 @@
 import { Inject, Service } from 'typedi';
-import { ElasticSearchLogger } from '@library/elasticSearch/elasticSearch';
-
-export type LogType = {
-    message: string;
-    apiName: string;
-    statusCode: number;
-}
-
-export interface Logger {
-    putLog(logData: LogType): Promise<void>;
-}
+import ElasticSearchLogger from '@util/logger/elasticSearch';
+import Logger, { LogType } from '@util/logger';
 
 @Service()
 export default class LogService {
@@ -22,8 +13,4 @@ export default class LogService {
     async log(logData: LogType): Promise<void> {
       await this.logger.putLog(logData);
     }
-}
-
-export class EmptyLogger implements Logger {
-  async putLog(logData: LogType): Promise<void> {}
 }

@@ -9,7 +9,7 @@ import {UserModel} from "@model/user";
 import sequelize from "@model/index";
 import DummyCreator from "../dummyCreator";
 import schema from "@schema/index";
-import {filesLoader, tabsLoader, userLoader} from "@src/dataLoader";
+import {filesLoader, tabsLoader, userLoader} from "../../src/util/dataLoader";
 import AuthService from "@service/auth";
 import UserRepository from "@repository/user";
 import FileRepository from "@repository/file";
@@ -17,7 +17,7 @@ import TabRepository from "@repository/tab";
 import SequelizeUserRepository from "@repository/user/sequelize";
 import SequelizeFileRepository from "@repository/file/sequelize";
 import SequelizeTabRepository from "@repository/tab/sequelize";
-import PasswordEncoder, {BcryptPasswordEncoder} from "@src/passwordEncoder";
+import PasswordEncoder, {BcryptPasswordEncoder} from "../../src/util/passwordEncoder";
 import UserService from "@service/user";
 import FileService from "@service/file";
 import TabService from "@service/tab";
@@ -29,7 +29,9 @@ import {
     saveFileMutation,
     updateFileContentMutation
 } from "../gqlQuery";
-import LogService, {EmptyLogger, Logger} from "@service/log";
+import LogService from "@service/log"
+import Logger from '@util/logger';
+import EmptyLogger from "@util/logger/emptyLogger";
 
 describe('e2e test', () => {
     const users = DummyCreator.createUsers();
