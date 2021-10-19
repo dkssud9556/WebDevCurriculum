@@ -1,18 +1,19 @@
-import {Client, RequestParams} from "@elastic/elasticsearch";
+import elasticsearch from 'elasticsearch';
+
 import config from "@src/config";
 import Logger, {LogType} from "@util/logger/index";
 
 export default class ElasticSearchLogger implements Logger {
     private readonly INDEX_NAME = 'server_api_logs';
-    private readonly client: Client;
+    private readonly client: elasticsearch.Client;
 
     constructor() {
-        this.client = new Client({ node: config.ELASTIC_SEARCH_URL });
+        this.client = new elasticsearch.Client({ host: config.ELASTIC_SEARCH_URL })
     }
 
     async putLog(logData: LogType): Promise<void> {
         try {
-            const data: RequestParams.Index = {
+            const data = {
                 index: this.INDEX_NAME,
                 body: {
                     ...logData,
@@ -26,7 +27,7 @@ export default class ElasticSearchLogger implements Logger {
         }
     }
 
-    private async requestElasticSearch(data: RequestParams.Index) {
+    private async requestElasticSearch(data) {
         await this.client.index(data);
     }
 }
