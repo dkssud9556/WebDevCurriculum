@@ -33,6 +33,15 @@ AWS의 ElasticSearch Service는 ElasticSearch 클러스터를 쉽게 배포, 운
 
 ## Grafana의 Panel 형식에는 어떤 것이 있을까요? 로그를 보기에 적합한 판넬은 어떤 형태일까요?
 
+- Time series
+- Bar chart
+- Stat
+- Gauge
+- Bar gauge
+- Table
+- Pie chart
+- Heat map
+
 # Advanced
 
 ## ElasticSearch와 Grafana는 어떤 라이센스로 배포되고 있을까요? AWS와 같은 클라우드 제공자들이 이러한 오픈소스를 서비스화 하는 것을 둘러싼 논란은 어떤 논점일까요?
