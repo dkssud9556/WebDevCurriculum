@@ -10,8 +10,9 @@ export default process.env.NODE_ENV === 'test' ? {
 } : {
     JWT_SECRET: 'jwtsecret',
     SEQUELIZE_OPTION: {
-        dialect: 'sqlite',
-        storage: `${path.resolve()}/storage/database.sqlite`
+        dialect: 'mysql',
+        username: process.env.MYSQL_USERNAME,
+        password: process.env.MYSQL_PASSWORD
     },
     ELASTIC_SEARCH_URL: process.env.ELASTIC_SEARCH_URL
 }
