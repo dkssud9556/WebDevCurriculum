@@ -1,5 +1,3 @@
-import path from "path";
-
 export default process.env.NODE_ENV === 'test' ? {
     JWT_SECRET: 'jwtsecret',
     SEQUELIZE_OPTION: {
