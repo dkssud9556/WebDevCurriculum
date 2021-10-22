@@ -12,7 +12,6 @@ import services from "@src/service";
 const server = new ApolloServer({
   schema,
   context: ({ request, reply }) => {
-    console.log(request.cookies);
     return {
       loaders: {
         userLoader: userLoader(),
