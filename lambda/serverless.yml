@@ -1,0 +1,20 @@
+service: editor-graphql-server
+
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: dev
+  region: ap-northeast-2
+  lambdaHashingVersion: 20201221
+
+functions:
+  login:
+    handler: handler.login
+    memorySize: 128
+    events:
+      - http:
+          path: login
+          method: post
+          cors: true
