@@ -22,8 +22,6 @@ const rootTypeDef = gql`
   }
 
   type Mutation {
-    login(username: String!, password: String!): LoginResult
-    register(username: String!, password: String!): RegisterResult
     logout: LogoutResult
     saveFile(fileName: String!, content: String!): SaveFileResult
     updateFileContent(

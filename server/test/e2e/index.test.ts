@@ -10,14 +10,12 @@ import sequelize from "@model/index";
 import DummyCreator from "../dummyCreator";
 import schema from "@schema/index";
 import {filesLoader, tabsLoader, userLoader} from "../../src/util/dataLoader";
-import AuthService from "@service/auth";
 import UserRepository from "@repository/user";
 import FileRepository from "@repository/file";
 import TabRepository from "@repository/tab";
 import SequelizeUserRepository from "@repository/user/sequelize";
 import SequelizeFileRepository from "@repository/file/sequelize";
 import SequelizeTabRepository from "@repository/tab/sequelize";
-import PasswordEncoder, {BcryptPasswordEncoder} from "../../src/util/passwordEncoder";
 import UserService from "@service/user";
 import FileService from "@service/file";
 import TabService from "@service/tab";
@@ -42,7 +40,6 @@ describe('e2e test', () => {
     let userRepository: UserRepository;
     let fileRepository: FileRepository;
     let tabRepository: TabRepository;
-    let passwordEncoder: PasswordEncoder;
     let logger: Logger;
 
     beforeAll(async () => {
@@ -50,7 +47,6 @@ describe('e2e test', () => {
         userRepository = Container.get(SequelizeUserRepository);
         fileRepository = Container.get(SequelizeFileRepository);
         tabRepository = Container.get(SequelizeTabRepository);
-        passwordEncoder = Container.get(BcryptPasswordEncoder);
         logger = new EmptyLogger();
         server = new ApolloServer({
             schema,
@@ -62,7 +58,6 @@ describe('e2e test', () => {
                         tabsLoader: tabsLoader()
                     },
                     services: {
-                        authService: new AuthService(userRepository, passwordEncoder),
                         userService: new UserService(userRepository),
                         fileService: new FileService(fileRepository),
                         tabService: new TabService(tabRepository),

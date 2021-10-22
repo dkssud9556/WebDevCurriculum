@@ -26,7 +26,7 @@ export default (func) => async (parent, args, context, info) => {
     await context.services.logService.log({
       apiName: 'Internal Server Error',
       message: 'Internal server error',
-      statusCode: '500'
+      statusCode: '500',
     });
     console.log(err);
     throw err;
